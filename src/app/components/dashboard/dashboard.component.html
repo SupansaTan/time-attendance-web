@@ -1,1 +1,4 @@
-<p>dashboard works!</p>
+<div *ngFor="let employee of employees">
+  <p>{{ employee.employee_id }}</p>
+  <p>{{ employee.first_name + " " + employee.last_name }}</p>
+</div>

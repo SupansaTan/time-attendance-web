@@ -5,6 +5,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ConfirmRegisterComponent } from './confirm-register/confirm-register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AuthenticationRoutingModule } from './authentication-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ResetPasswordComponent
   ],
   imports: [
-    CommonModule
+    HttpClientModule,
+    CommonModule,
+    AuthenticationRoutingModule
   ]
 })
 export class AuthenticationModule { }
