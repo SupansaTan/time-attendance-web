@@ -1,0 +1,32 @@
+@import '../../../scss/variable';
+
+a.nav-link {
+  font-size: 1.1rem;
+  color: white;
+}
+
+/* dropdown user */
+.dropdown-menu, .dropdown-item {
+  color: white;
+  background-color: $blue;
+}
+
+.dropdown-menu {
+  min-width: 12rem;
+}
+
+.dropdown-item {
+  i-feather {
+    top: 0;
+    right: 10px;
+    transform: translateY(25%);
+  }
+
+  &:hover {
+    color: $dark-blue;
+
+    i-feather {
+      stroke: $dark-blue;
+    }
+  }
+}

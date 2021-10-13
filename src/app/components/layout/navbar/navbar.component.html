@@ -1,22 +1,28 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="nav-left col-2 d-flex align-items-center position-relative">
+      <a class="navbar-brand mx-auto" href="#">Logo</a>
+      <a href="#" role="button" class="position-absolute top-25 end-0">
+        <i-feather name="menu" class="feather-20"></i-feather>
+      </a>
+    </div>
+
+    <div class="nav-right col-auto">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link align-self-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ username }}
+            <i-feather name="user" class="ms-1 feather-18"></i-feather>
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item align-self-center position-relative" href="#">
+                Logout
+                <i-feather name="log-out" class="feather-18 position-absolute"></i-feather>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

@@ -2,6 +2,7 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import './app/scss/variable';
+@import './app/scss/base';
 
 * {
   color: white;
@@ -10,4 +11,8 @@
 
 body.background-grd-dark {
   background: $bg-grd-dark;
+}
+
+a {
+  text-decoration: none !important;
 }
