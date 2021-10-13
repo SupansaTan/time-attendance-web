@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import './app/scss/variable';
+@import './app/scss/base';
+
+* {
+  color: white;
+  font-family: $font-stack;
+}
+
+body.background-grd-dark {
+  background: $bg-grd-dark;
+}
+
+a {
+  text-decoration: none !important;
+}
