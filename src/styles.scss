@@ -1,11 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import './app/scss/variable';
 
 * {
-  font-family: 'Poppins','Mitr', sans-serif;
+  color: white;
+  font-family: $font-stack;
 }
 
 body.background-grd-dark {
-  background: linear-gradient(to right, #101b33 0%, #1f3054 100%);
+  background: $bg-grd-dark;
 }
