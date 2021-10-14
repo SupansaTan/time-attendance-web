@@ -1,1 +1,48 @@
-<p>navigation-bar works!</p>
+<nav class="navbar d-block position-relative w-100 ">
+  <div class="navbar-wrapper">
+    <div class="navbar-content">
+
+      <ul class="nav w-100">
+        <li class="py-1 mx-4">
+          <label class="heading">Navigations</label>
+        </li>
+
+        <div *ngFor="let item of menus" class="w-100">
+
+          <div *ngIf="item.type == 'item'">
+            <li class="nav-item py-2 me-2">
+              <a [href]="item.url" class="nav-link">
+                <span class="mx-3">
+                  <i [class]="item.icon"></i>
+                </span>
+                <span class="title">{{ item.title }}</span>
+              </a>
+            </li>
+          </div>
+
+          <div *ngIf="item.type == 'collapse'">
+            <a role="button" [ngClass]="((menuCollapsed? 'active ':'') + 'nav-link py-2 me-2 position-relative menu-collapse')" (click)="menuCollapsed = !menuCollapsed">
+              <span class="mx-3">
+                <i [class]="item.icon"></i>
+              </span>
+              <span class="title">{{ item.title }}</span>
+              <i [ngClass]="('bi ps-3 position-absolute ' + (menuCollapsed? 'bi-chevron-down':'bi-chevron-right'))"></i>
+            </a>
+
+            <ul *ngIf="item.children && menuCollapsed" class="ps-0 py-3 item-children">
+              <div *ngFor="let child of item.children">
+                <li class="nav-link">
+                  <i class="bi bi-chevron-right ps-3"></i>
+                  <a [href]="child.url" class="ms-1">
+                    {{ child.title }}
+                  </a>
+                </li>
+              </div>
+            </ul>
+          </div>
+
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>

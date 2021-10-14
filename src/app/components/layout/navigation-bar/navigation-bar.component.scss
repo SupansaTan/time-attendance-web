@@ -1,0 +1,50 @@
+@import '../../../scss/variable';
+@import '../../../scss/base';
+
+.navbar {
+  z-index: 1028;
+  box-shadow: 0 2px 10px -1px rgb(69 90 100 / 30%);
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  border-radius: 0 6px 0 0;
+  top: 0;
+  background: $dark-blue;
+  color: $light-blue;
+
+  a, span, i {
+    color: $light-blue;
+  }
+}
+
+.nav-item:hover, .nav-link:hover {
+  a, span, i {
+    color: white;
+  }
+}
+
+.heading {
+  color: $blue;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.item-children {
+  font-size: 14px;
+}
+
+i.bi-chevron-right {
+  top: 25%;
+  right: 30px;
+  font-size: 12px;
+}
+
+.menu-collapse {
+  &.active {
+    border-radius: 6px;
+    background-color: $blue;
+
+    a, span, i {
+      color: white;
+    }
+  }
+}
