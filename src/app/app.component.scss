@@ -2,3 +2,13 @@
 .col-2 {
   width: 230px;
 }
+
+.row > * {
+  padding: 0;
+}
+
+.content-wrapper {
+  margin-top: 50px;
+  min-height: calc(100vh - 50px);
+  background-color: #ecf0f5;
+}

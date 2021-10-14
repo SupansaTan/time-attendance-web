@@ -3,7 +3,7 @@ export interface MenuItems {
   title: string;
   type: string;
   icon: string;
-  url?: string;
+  url: string;
   children?: Array<ChildrenItem>
 }
 

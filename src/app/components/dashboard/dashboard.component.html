@@ -1,3 +1,7 @@
-<div *ngFor="let employee of employees">
-  <p>{{ employee.employee_id + ") " + employee.first_name + " " + employee.last_name }}</p>
-</div>
+<main>
+  <div class="card rounded-3 border-0 shadow-lg">
+    <div *ngFor="let employee of employees" class="px-2 mt-2">
+      <p>{{ employee.employee_id + ") " + employee.first_name + " " + employee.last_name }}</p>
+    </div>
+  </div>
+</main>

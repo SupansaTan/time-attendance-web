@@ -1,1 +1,32 @@
-<p>breadcrumb works!</p>
+<div class="row breadcrumb-wrapper mt-3 mx-3">
+  <div class="col-12">
+    <h5>{{ menu.title }}</h5>
+  </div>
+
+  <div class="col">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/dashboard">
+          <i class="bi bi-house-door"></i>
+        </a>
+      </li>
+
+      <li class="breadcrumb-item">
+        <a [href]="menu.url">
+          <i [ngClass]="(menu.icon + ' me-2')"></i>
+          {{ menu.title }}
+        </a>
+      </li>
+
+      <div *ngIf="path.length > 2">
+        <div *ngFor="let item of menuChild">
+          <li class="breadcrumb-item">
+            <a [href]="item.url">
+              {{ item.title }}
+            </a>
+          </li>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>

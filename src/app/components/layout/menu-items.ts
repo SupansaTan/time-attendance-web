@@ -11,6 +11,7 @@ export default {
       id: 'assign-plan',
       title: 'Assign Plan',
       type: 'collapse',
+      url: '/assign-plan',
       icon: 'bi bi-pen',
       children: [
         {
