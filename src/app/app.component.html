@@ -1,4 +1,17 @@
-<div class="main">
-  <app-layout></app-layout>
-  <router-outlet></router-outlet>
+<div class="main h-100">
+  <app-navbar></app-navbar>
+
+  <div class="row h-100 w-100 mx-0">
+    <div class="col-2 px-0">
+      <app-navigation-bar></app-navigation-bar>
+    </div>
+
+    <div class="col">
+      <app-breadcrumb></app-breadcrumb>
+
+      <div class="content-wrapper row mx-0">
+        <router-outlet class="w-auto"></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>

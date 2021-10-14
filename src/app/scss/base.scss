@@ -15,3 +15,18 @@
     height: 20px !important;
   }
 }
+
+/* responsive */
+$breakpoints: (
+  mobile : 0px,
+  tablet : 426px,
+  desktop: 992px
+);
+
+@mixin media($keys...){
+  @each $key in $keys {
+    @media (min-width: map-get($breakpoints, $key)){
+      @content
+    }
+  }
+}

@@ -5,8 +5,14 @@
 @import './app/scss/base';
 
 * {
-  color: white;
   font-family: $font-stack;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 body.background-grd-dark {
@@ -15,4 +21,8 @@ body.background-grd-dark {
 
 a {
   text-decoration: none !important;
+}
+
+main {
+  margin-top: -40px;
 }

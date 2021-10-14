@@ -1,18 +1,126 @@
 @import '../../../scss/variable';
+@import '../../../scss/base';
 
 a.nav-link {
   font-size: 1.1rem;
   color: white;
 }
 
+.more-toggler {
+  @include media(mobile) {
+    display: block;
+  }
+
+  @include media(desktop) {
+    display: none;
+  }
+}
+
+/* left navbar width */
+.col-2 {
+  @include media(mobile) {
+    width: 100%;
+  }
+
+  @include media(desktop) {
+    width: 230px;
+  }
+}
+
+/* right navbar */
+.nav-right {
+  @include media(mobile) {
+    z-index: 2000;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+
+  @include media(desktop) {
+    border: 0;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  a.nav-link {
+    @include media(mobile) {
+      color: $light-black;
+    }
+
+    @include media(desktop) {
+      color: white;
+    }
+  }
+
+  i-feather.user {
+    @include media(mobile) {
+      stroke: $light-black;
+    }
+
+    @include media(desktop) {
+      stroke: white;
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+  }
+}
+
+/* menu toggler */
+.menu-toggle {
+  width: 37px;
+  height: 50px;
+  padding: 0 10px;
+
+  @include media(mobile) {
+    left: 0;
+  }
+
+  @include media(desktop) {
+    left: 80%;
+  }
+
+  span {
+    height: 2px;
+    background-color: $light-white;
+    transition: 0.3s cubic-bezier(0.97, 0.75, 0.61, 1.84);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      height: 2px;
+      top: -6px;
+      width: 40%;
+      background-color: $light-white;
+      transition: 0.3s cubic-bezier(0.97, 0.75, 0.61, 1.84);
+    }
+
+    &:after {
+      top: 6px;
+      width: 70%;
+    }
+  }
+
+  &:hover {
+    span {
+      background-color: white;
+
+      &:before, &:after {
+        width: 100%;
+        background-color: white;
+      }
+    }
+  }
+}
+
 /* dropdown user */
 .dropdown-menu, .dropdown-item {
   color: white;
   background-color: $blue;
-}
-
-.dropdown-menu {
-  min-width: 12rem;
 }
 
 .dropdown-item {
