@@ -1,4 +1,8 @@
-<main>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size ="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
+
+<main *ngIf="hideSpinner">
   <div class="card rounded-3 border-0 shadow-lg">
     <div *ngFor="let employee of employees" class="px-2 mt-2">
       <p>{{ employee.employee_id + ") " + employee.first_name + " " + employee.last_name }}</p>
