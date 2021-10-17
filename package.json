@@ -32,14 +32,21 @@
     "@angular-devkit/build-angular": "~12.1.0",
     "@angular/cli": "~12.1.0",
     "@angular/compiler-cli": "~12.1.0",
+    "@briebug/cypress-schematic": "^5.0.1",
+    "@types/chai": "^4.2.22",
+    "@types/cucumber": "^7.0.0",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "chai": "^4.3.4",
+    "cucumber": "^7.0.0-rc.0",
+    "cypress": "latest",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "protractor-cucumber-framework": "^8.2.6",
     "typescript": "~4.3.2"
   }
 }
