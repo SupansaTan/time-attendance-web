@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AssignPlanComponent } from './components/assign-plan/assign-plan.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,10 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./components/authentication/authentication.module').then(m => m.AuthenticationModule)
+  },
+  {
+    path: 'assign-plan',
+    component: AssignPlanComponent,
   },
   {
     path: '',

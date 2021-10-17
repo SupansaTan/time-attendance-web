@@ -9,11 +9,10 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavigationBarComponent } from './components/layout/navigation-bar/navigation-bar.component';
 import { BreadcrumbComponent } from './components/layout/breadcrumb/breadcrumb.component';
 import { NavbarComponent } from './components/layout/navbar/navbar.component';
-import { AssignShiftComponent } from './components/assign-shift/assign-shift.component';
-import { AssignOTComponent } from './components/assign-ot/assign-ot.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IconsModule } from './icons/icons.module';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AssignPlanComponent } from './components/assign-plan/assign-plan.component';
 
 @NgModule({
   declarations: [
@@ -22,8 +21,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     NavigationBarComponent,
     NavbarComponent,
     BreadcrumbComponent,
-    AssignShiftComponent,
-    AssignOTComponent
+    AssignPlanComponent
   ],
   imports: [
     BrowserModule,

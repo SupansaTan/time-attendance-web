@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssignOTComponent } from './assign-ot.component';
+import { AssignPlanComponent } from './assign-plan.component';
 
-describe('AssignOTComponent', () => {
-  let component: AssignOTComponent;
-  let fixture: ComponentFixture<AssignOTComponent>;
+describe('AssignPlanComponent', () => {
+  let component: AssignPlanComponent;
+  let fixture: ComponentFixture<AssignPlanComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AssignOTComponent ]
+      declarations: [ AssignPlanComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssignOTComponent);
+    fixture = TestBed.createComponent(AssignPlanComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
