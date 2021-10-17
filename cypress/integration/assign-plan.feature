@@ -20,7 +20,7 @@ Feature: Department Head Assign Plan
     And I should see "ภูสิทธิ บาดตาสาว", "นฤมล มนูญศักดิ์" and "ไกรยุทธ์ อัศวรัช"
 
   
-  Scenario : Department Head can select assign shift mode
+  Scenario: Department Head can select assign shift mode
     Given I visit on the Assign Plan
     When I click on "Shift" Mode
     And I can see "Assign Shift" Mode
@@ -48,7 +48,7 @@ Feature: Department Head Assign Plan
     Then it will show employee Monthly type
 
 
-  Scenario : Department Head can select assign ot mode
+  Scenario: Department Head can select assign ot mode
     Given I visit on the Assign Plan
     When I click on "OT " Mode
     And I can see "Assign OT" Mode
@@ -76,7 +76,7 @@ Feature: Department Head Assign Plan
     Then it will show employee Monthly type
 
 
-  Scenario : Department Head can select assign shift and ot mode
+  Scenario: Department Head can select assign shift and ot mode
     Given I visit on the Assign Plan
     When I click on "Shift" and "OT " Mode
     And I can see "Assign Shift"and"Assign OT" Mode
