@@ -18,3 +18,11 @@ Feature: Employee Dashboard
     And I press "Login"
     Then I should be on the dashboard page
     And I should see "Shift", "OT" and "Break Time"
+
+  Scenario: see Shift and OT actual
+    Given I visit on the login page
+    When I fill in "email" with "employee@email.com"
+    And I fill in "password" with "1234"
+    And I press "Login"
+    Then I should be on the dashboard page
+    And I should see "Start time", "End time" and "OT"
