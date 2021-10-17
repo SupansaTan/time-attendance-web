@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { AssignShiftComponent } from './components/assign-shift/assign-shift.com
 import { AssignOTComponent } from './components/assign-ot/assign-ot.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IconsModule } from './icons/icons.module';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { IconsModule } from './icons/icons.module';
     HttpClientModule,
     AppRoutingModule,
     IconsModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
