@@ -16,6 +16,72 @@
   }
 }
 
+.fa {
+  &-clock {
+    font-size: 1.3rem;
+  }
+}
+
+/* border radius size */
+.rounded {
+  &-25 {
+    border-radius: 25px;
+  }
+
+  &-50 {
+    border-radius: 50px;
+  }
+}
+
+/* chart */
+.chart-wrapper {
+  width: 55%;
+  justify-content: space-around;
+}
+
+.circular-chart {
+  display: block;
+  margin: 10px auto;
+  max-width: 80%;
+  max-height: 250px;
+
+  &.green .circle {
+    stroke: #4CC790;
+  }
+}
+
+.circle-bg {
+  fill: none;
+  stroke: white;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+}
+
+.percentage {
+  fill: black;
+  font-size: .6rem;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.total-employee {
+  fill: #666666;
+  font-size: .25rem;
+  font-weight: 500;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+
 /* responsive */
 $breakpoints: (
   mobile : 0px,
