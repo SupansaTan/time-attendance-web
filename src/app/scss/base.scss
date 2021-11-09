@@ -17,7 +17,7 @@
 }
 
 .fa {
-  &-clock {
+  &-clock, &-calendar {
     font-size: 1.3rem;
   }
 }
@@ -25,12 +25,18 @@
 /* border radius size */
 .rounded {
   &-25 {
-    border-radius: 25px;
+    border-radius: 25px !important;
   }
 
   &-50 {
-    border-radius: 50px;
+    border-radius: 50px !important;
   }
+}
+
+/* table */
+thead {
+  font-weight: 400;
+  background-color: #3a538a;
 }
 
 /* chart */
@@ -50,17 +56,17 @@
   }
 }
 
-.circle-bg {
-  fill: none;
-  stroke: white;
-  stroke-width: 3.8;
-}
-
 .circle {
   fill: none;
   stroke-width: 2.8;
   stroke-linecap: round;
   animation: progress 1s ease-out forwards;
+
+  &-bg {
+    fill: none;
+    stroke: white;
+    stroke-width: 3.8;
+  }
 }
 
 .percentage {

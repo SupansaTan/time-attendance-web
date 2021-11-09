@@ -1,0 +1,40 @@
+@import '../../../scss/variable';
+
+.heading {
+  color: #1f3054;
+  font-weight: 600;
+}
+
+.name {
+  font-weight: 400;
+}
+
+.detail-wrapper {
+  font-size: 1.2rem;
+
+  .date-wrapper {
+    font-size: 1.3rem;
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.bg-blue {
+  background-color: #3a538a;
+}
+
+.text-blue {
+  color: #3a538a;
+}
+
+.ot-wrapper {
+  .hours {
+    width: fit-content;
+  }
+}
+
+.circle-bg {
+  stroke: #eee;
+}

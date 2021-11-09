@@ -5,11 +5,13 @@ import { DashboardComponent } from './dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { DashboardManagerComponent } from './dashboard-manager/dashboard-manager.component';
+import { DepartmentDetailComponent } from './department-detail/department-detail.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    DashboardManagerComponent
+    DashboardManagerComponent,
+    DepartmentDetailComponent
   ],
   imports: [
     CommonModule,
