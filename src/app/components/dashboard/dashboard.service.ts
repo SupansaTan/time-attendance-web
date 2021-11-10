@@ -11,7 +11,11 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  GetEmployees(): Observable<Array<EmployeeModel>> {
+  getPercentage(actual: number, total: number) {
+    return actual * 100 / total
+  }
+
+  getEmployees(): Observable<Array<EmployeeModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/employees`
     return this.http.get<Array<EmployeeModel>>(url)
   }

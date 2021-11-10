@@ -4,16 +4,26 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { DashboardManagerComponent } from './dashboard-manager/dashboard-manager.component';
+import { DepartmentDetailComponent } from './department-detail/department-detail.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    DashboardManagerComponent,
+    DepartmentDetailComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     DashboardRoutingModule,
     NgxSpinnerModule,
+    NgbModule,
+    FormsModule,
+    NgSelectModule
   ]
 })
 export class DashboardModule { }

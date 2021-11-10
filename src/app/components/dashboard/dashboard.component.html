@@ -3,11 +3,5 @@
 </ngx-spinner>
 
 <main *ngIf="hideSpinner">
-  <div class="card rounded-3 border-0 shadow-lg">
-    <h3 class="m-3">Employees</h3>
-
-    <div *ngFor="let employee of employees" class="px-2 mt-2 mx-3">
-      <p>{{ employee.employee_id + ") " + employee.first_name + " " + employee.last_name }}</p>
-    </div>
-  </div>
+  <app-dashboard-manager *ngIf="role=='manager'"></app-dashboard-manager>
 </main>

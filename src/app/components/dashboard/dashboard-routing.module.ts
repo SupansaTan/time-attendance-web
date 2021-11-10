@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
+import { DepartmentDetailComponent } from './department-detail/department-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent
+  },
+  {
+    path: ':depId',
+    component: DepartmentDetailComponent
   },
   {
     path: '',

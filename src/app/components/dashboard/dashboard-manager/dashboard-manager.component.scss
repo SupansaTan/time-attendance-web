@@ -1,0 +1,27 @@
+@import '../../../scss/variable';
+
+.heading {
+  color: #1f3054;
+  font-weight: 600;
+}
+
+.card.department {
+  color: black;
+  background-color: #f4f4f4;
+
+  &.grey {
+    background-color: #e5e5e5;
+  }
+}
+
+.ot-wrapper {
+  .hours {
+    width: fit-content;
+  }
+}
+
+/* chart */
+.chart-wrapper {
+  right: 0;
+  bottom: 5px;
+}
