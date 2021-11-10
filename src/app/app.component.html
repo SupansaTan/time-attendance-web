@@ -1,4 +1,4 @@
-<div class="main h-100">
+<div *ngIf="path != 'auth'" class="main h-100">
   <app-navbar></app-navbar>
 
   <div class="row h-100 w-100 mx-0">
@@ -14,4 +14,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="path == 'auth'">
+  <router-outlet></router-outlet>
 </div>
