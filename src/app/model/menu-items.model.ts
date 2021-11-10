@@ -8,7 +8,7 @@ export interface MenuItems {
 }
 
 export interface ChildrenItem {
-  id: string;
+  id?: string;
   title: string;
   type?: string;
   url?: string;

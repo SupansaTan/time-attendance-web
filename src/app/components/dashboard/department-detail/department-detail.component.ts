@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service'
 import { NgOption } from "@ng-select/ng-select";
+import { DepartmentService } from 'src/app/service/department.service';
+import { EmployeeService } from 'src/app/service/employee.service';
 
 @Component({
   selector: 'app-department-detail',
@@ -8,6 +10,7 @@ import { NgOption } from "@ng-select/ng-select";
   styleUrls: ['./department-detail.component.scss']
 })
 export class DepartmentDetailComponent implements OnInit {
+  departmentId: number
   date: Date | string;
   department: any;
   employees: Array<any>;
@@ -15,15 +18,16 @@ export class DepartmentDetailComponent implements OnInit {
   pageSize: any;
   table_option: NgOption[]
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private departmentService: DepartmentService,
+    private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.page = 1
-    this.pageSize = 10
-    this.table_option =  [
+    this.pageSize = 10  // row of each page table
+    this.table_option = [
       { value: 2 },
       { value: 5 },
-      { value: 10 },
+      { value: 10 }
     ];
     this.date = new Date();
     this.date = this.date.toLocaleDateString('th-TH', {
@@ -32,39 +36,9 @@ export class DepartmentDetailComponent implements OnInit {
       day: 'numeric',
     })
 
-    /* mock department info & time record */
-    this.department = {
-      id: 1,
-      name: 'งานเชือดไก่',
-      start_time: '05:00',
-      end_time: '13:00',
-      ot_plan: 2.5,
-      actual_emp: 24,
-      total_emp: 30
-    }
-
-    this.employees = [
-      {
-        name: 'สมชาย สายฟ้าฟาด',
-        start: '04:30',
-        end: null
-      },
-      {
-        name: 'ภูวดล พาสกุล',
-        start: '04:30',
-        end: null
-      },
-      {
-        name: 'มัลลิกา ธาดาวรวงศ์',
-        start: '04:30',
-        end: null
-      },
-      {
-        name: 'โสธร ชนะสมบัติ',
-        start: null,
-        end: null
-      }
-    ]
+    this.departmentId = Number(location.pathname.split("/")[2])
+    this.department = this.departmentService.getDepartment(this.departmentId)
+    this.employees = this.employeeService.getEmployees()
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
