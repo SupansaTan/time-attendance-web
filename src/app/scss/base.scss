@@ -35,8 +35,95 @@
 
 /* table */
 thead {
-  font-weight: 400;
   background-color: #3a538a;
+}
+
+tbody {
+  tr {
+    &.green {
+      color: #42aa4c;
+    }
+
+    &.grey {
+      color: #8e8e8e;
+    }
+
+    &:nth-child(2n+1) {
+      background-color: #f3f9ff;
+    }
+  }
+}
+
+th {
+  font-weight: 500;
+}
+
+.ng-select {
+  background-color: #ababab;
+
+  &.col-1 {
+    width: 6%;
+  }
+
+  .ng-select-container {
+    min-height: 30px;
+    max-height: fit-content;
+
+    .ng-arrow-wrapper {
+      align-items: center;
+      align-self: normal !important;
+      bottom: 1px !important;
+
+      .ng-arrow {
+        color: white;
+      }
+    }
+  }
+
+  .ng-value-container {
+    color: white;
+    font-weight: 600;
+    align-self: center;
+    justify-content: center;
+    border-top: 0 !important;
+    padding: 0 !important;
+  }
+
+  ng-dropdown-panel {
+    margin-top: 20px;
+  }
+
+  .ng-select-container:after {
+    border-bottom: 0;
+  }
+}
+
+ngb-pagination {
+  ul.pagination {
+    margin-bottom: 0;
+  }
+
+  .page-link {
+    margin: 0 10px;
+    border: 0;
+    padding: .4rem 1rem;
+    border-radius: 50%;
+  }
+
+  .page-item {
+    &.disabled {
+      .page-link {
+        border-radius: 50%;
+        color: #0d6efd;
+      }
+    }
+
+    &:first-child, &:last-child {
+      .page-link {
+        border-radius: 50%;
+      }
+    }
+  }
 }
 
 /* chart */

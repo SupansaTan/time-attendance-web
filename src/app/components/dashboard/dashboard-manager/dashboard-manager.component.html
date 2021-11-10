@@ -4,7 +4,7 @@
   <div class="row row-cols-lg-5 mx-3 mt-2 mb-3 g-3">
     <div *ngFor="let department of departments" class="col position-relative">
 
-      <a href="#" [ngClass]="('p-3 card department rounded-25 border-0' + (department.actual_emp>0 ? '':' grey'))">
+      <a [href]="'/dashboard/' + department.id" [ngClass]="('p-3 card department rounded-25 border-0' + (department.actual_emp>0 ? '':' grey'))">
         <h3>{{ department.name }}</h3>
 
         <div class="my-2">

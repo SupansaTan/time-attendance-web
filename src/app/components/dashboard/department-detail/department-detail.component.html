@@ -1,7 +1,7 @@
 <main>
   <div class="card rounded-25 border-0 shadow-lg">
     <div class="mt-4 mx-4">
-      <h3 class="mb-0 heading d-inline">Departments</h3>
+      <h3 class="mb-0 heading d-inline">Department</h3>
       <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
     </div>
 
@@ -50,19 +50,36 @@
     <h3 class="mt-4 mx-4 heading">Time Record</h3>
 
     <div class="table-responsive mx-4">
-      <table class="table">
+      <table class="table table-hover table-borderless">
         <thead class="text-white">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Start Time</th>
+            <th scope="col" class="text-center">End Time</th>
           </tr>
         </thead>
         <tbody>
-
+          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="employee.start? 'green':'grey'">
+            <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
+            <th class="text-center">{{ employee.name }}</th>
+            <th class="text-center">{{ employee.start? employee.start : '-' }}</th>
+            <th class="text-center">{{ employee.end? employee.end : '-' }}</th>
+          </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="row mx-4 my-2 align-items-center">
+      <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
+        name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
+      </ng-select>
+      <p class="d-flex align-items-center col-auto m-0">
+        {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
+      </p>
+      <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
+        [collectionSize]="employees.length">
+      </ngb-pagination>
     </div>
   </div>
 </main>
