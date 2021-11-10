@@ -18,15 +18,11 @@
         </a>
       </li>
 
-      <div *ngIf="path.length > 2">
-        <div *ngFor="let item of menuChild">
-          <li class="breadcrumb-item">
-            <a [href]="item.url">
-              {{ item.title }}
-            </a>
-          </li>
-        </div>
-      </div>
+      <li *ngFor="let item of menuChild" class="breadcrumb-item">
+        <a [href]="item.url">
+          {{ item.title }}
+        </a>
+      </li>
     </ul>
   </div>
 </div>

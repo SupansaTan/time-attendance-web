@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { EmployeeModel } from '../../model/employee.model'
+import { Departments } from '../../mock-department'
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,10 @@ import { EmployeeModel } from '../../model/employee.model'
 export class DashboardService {
 
   constructor(private http: HttpClient) { }
+
+  getDepartmentName(id: number) {
+    return Departments.find(department => department.id == id)?.name
+  }
 
   getPercentage(actual: number, total: number) {
     return actual * 100 / total
