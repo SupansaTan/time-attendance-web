@@ -1,20 +1,15 @@
 <main>
-
   <div class="card rounded-25 border-0 shadow-lg">
     <h3 class="mx-4 mt-3 mb-0 heading">Departments</h3>
 
-    <div class="row row-cols-lg-5 mx-3 mt-2 mb-3 g-3">
-      <div *ngFor="let department of departments" class="col position-relative">
+    <div class="row row-cols-lg-4 mx-3 mt-2 mb-3 g-3">
+      <div *ngFor="let department of departments" class="col">
 
-        <a [href]="'/assign-plan/' + department.id" >
-          <h3>{{ department.name }}</h3>
+        <a [href]="'/assign-plan/' + department.id" class="card border-0 rounded-25 bg-grey text-black">
+          <h3 class="mb-0 py-2 text-center">{{ department.name }}</h3>
         </a>
       </div>
     </div>
+
   </div>
-  
 </main>
-
-
-
-
