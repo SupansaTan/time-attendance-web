@@ -3,6 +3,10 @@ export class EmployeeModel {
   name_title: string;
   first_name: string;
   last_name: string;
+  department:any;
   hire_date: string;
   employee_type: string;
+  role: string;
+  email: string;
+  password: string;
 }
