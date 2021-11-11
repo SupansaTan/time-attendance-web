@@ -25,7 +25,7 @@ export class ShiftService {
     return this.http.put(url , val)
   } 
 
-  getDepartment(): Observable<Array<DepartmentModel>> {
+  getDepartments(): Observable<Array<DepartmentModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/departments`
     return this.http.get<Array<DepartmentModel>>(url)
   }

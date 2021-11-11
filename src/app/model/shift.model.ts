@@ -1,4 +1,5 @@
 export class PlanShiftModel {
+    id:number;
     date: string;
     dep_code: string;
     emp: number;
@@ -8,6 +9,7 @@ export class PlanShiftModel {
 }
 
 export class ShiftCodeModel {
+    id:number;
     code: string;
     start_time: string;
     end_time: string;
