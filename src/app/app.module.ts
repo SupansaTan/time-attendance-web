@@ -12,7 +12,6 @@ import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IconsModule } from './icons/icons.module';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { AssignPlanComponent } from './components/assign-plan/assign-plan.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavigationBarComponent,
     NavbarComponent,
     BreadcrumbComponent,
-    AssignPlanComponent
   ],
   imports: [
     BrowserModule,
