@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AssignPlanComponent } from './components/assign-plan/assign-plan.component';
 
 const routes: Routes = [
   {
@@ -13,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'assign-plan',
-    component: AssignPlanComponent,
+    loadChildren: () => import('./components/assign-plan/shift.module').then(m => m.ShiftModule)
   },
   {
     path: '',

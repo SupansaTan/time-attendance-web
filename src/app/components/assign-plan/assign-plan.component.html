@@ -1,5 +1,20 @@
 <main>
-  <div class="card rounded-3 border-0 shadow-lg">
-    <p class="m-3">assign-plan works!</p>
+
+  <div class="card rounded-25 border-0 shadow-lg">
+    <h3 class="mx-4 mt-3 mb-0 heading">Departments</h3>
+
+    <div class="row row-cols-lg-5 mx-3 mt-2 mb-3 g-3">
+      <div *ngFor="let department of departments" class="col position-relative">
+
+        <a [href]="'/assign-plan/' + department.id" >
+          <h3>{{ department.name }}</h3>
+        </a>
+      </div>
+    </div>
   </div>
+  
 </main>
+
+
+
+
