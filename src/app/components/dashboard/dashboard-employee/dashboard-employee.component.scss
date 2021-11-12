@@ -1,0 +1,26 @@
+@import '../../../scss/variable';
+
+.heading {
+  color: #1f3054;
+  font-weight: 600;
+}
+
+.bg-grey {
+  background-color: #f4f4f4;
+}
+
+.text {
+  &-blue {
+    color: $blue;
+  }
+
+  &-green {
+    color: #42aa4c;
+  }
+}
+
+.date-wrapper {
+  width: fit-content;
+  border-radius: 15px 0;
+  background-color: #1f3054;
+}

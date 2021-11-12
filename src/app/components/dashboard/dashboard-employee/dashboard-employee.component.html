@@ -1,0 +1,66 @@
+<div class="card rounded-25 border-0 shadow-lg py-2">
+
+  <h3 class="mx-4 mt-3 mb-0 heading">Employee Informations</h3>
+  <div class="row row-cols-3 rounded-15 bg-grey mx-4 my-2">
+    <div class="col my-3 d-flex align-items-center">
+      <i-feather name="user" class="ms-2 user"></i-feather>
+      <h5 class="mb-0 mx-2 d-inline">{{ employee.name }}</h5>
+    </div>
+    <div class="col my-3">
+      <h5 class="mb-0 d-inline">Department</h5>
+      <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white text-blue px-3">{{ employee.department }}</h5>
+    </div>
+    <div class="col my-3">
+      <h5 class="mb-0 d-inline">Employee Type</h5>
+      <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white text-blue px-3">{{ employee.type }}</h5>
+    </div>
+  </div>
+
+  <h3 class="mx-4 mt-3 mb-0 heading">Shift/OT Plan</h3>
+  <div *ngFor="let item of plan" class="mx-4 my-2 bg-grey rounded-15">
+
+    <div class="pt-3 pb-2 date-wrapper">
+      <i class="far fa-calendar ms-3 text-white"></i>
+      <h5 class="mb-0 ms-3 pe-3 d-inline text-white">{{ convertToThaiDate(item.date) }}</h5>
+    </div>
+
+    <div class="row mt-1">
+      <div class="col my-3 align-self-center">
+        <h5 class="mb-0 ms-3 d-inline">Shift</h5>
+        <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white px-3">{{ item.shift_start + ' - ' + item.shift_end }}</h5>
+      </div>
+      <div class="col my-3">
+        <h5 class="mb-0 d-inline">OT</h5>
+        <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white px-3">{{ item.ot + ' hours'}}</h5>
+      </div>
+      <div class="col my-3">
+        <h5 class="mb-0 d-inline">Break Time</h5>
+        <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white px-3">{{ item.break_start + ' - ' + item.break_end }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mx-4 mt-3 mb-0 heading">Shift/OT Actual</h3>
+  <div class="mx-4 my-2 bg-grey rounded-15">
+    <div class="pt-3 pb-2 date-wrapper">
+      <i class="far fa-calendar ms-3 text-white"></i>
+      <h5 class="mb-0 ms-3 pe-3 d-inline text-white">{{ today }}</h5>
+    </div>
+    <div class="row mt-1">
+      <div class="col my-3 d-flex align-items-center">
+        <i-feather name="clock" class="ms-3"></i-feather>
+        <h5 class="mb-0 ms-3 d-inline">Start Time</h5>
+        <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white text-green px-3">{{ employee.start }}</h5>
+      </div>
+      <div class="col my-3">
+        <h5 class="mb-0 d-inline">End Time</h5>
+        <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white text-green px-3">{{ employee.end }}</h5>
+      </div>
+      <div class="col my-3">
+        <h5 class="mb-0 d-inline">OT</h5>
+        <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white text-green px-3">{{ employee.ot + ' hours'}}</h5>
+      </div>
+    </div>
+  </div>
+
+</div>
