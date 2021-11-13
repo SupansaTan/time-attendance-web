@@ -17,7 +17,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.showNavRight = !(this.screenWidth < 992)
-    this.username = 'สมหญิง รักสมชาย'
+    this.socialAuthService.authState.subscribe((socialUser) => {
+      this.username  = socialUser.name;
+    });
   }
 
   @HostListener('window:resize', ['$event'])
