@@ -1,5 +1,5 @@
 <main>
-  <div class="container mx-1 mt-2 mb-3 ">
+
      <div class="row">
        <div class="col">
             <div class="card rounded-25 border-0 shadow-lg">
@@ -37,12 +37,12 @@
  
                  <div class="row my-3 d-flex align-items-center">
                     <i class="fas fa-clock me-2 col-auto"></i>
-                    <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ planshifts[0].start_time + ' - ' + planshifts[0].end_time }}</p>
+                    <p class="px-2 rounded-25 bg-white col-auto mb-0">{{ planshifts[0].start_time + ' - ' + planshifts[0].end_time }}</p>
                  </div>
  
                 <div class="row my-3 ot-wrapper d-flex align-items-center">
                     <p class="fw-bold mb-0 col-auto">OT Plan</p>
-                    <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ planshifts[0].overtime + " hours" }}</p>
+                    <p class="hours rounded-25 bg-white mb-0 px-2 col-auto">{{ planshifts[0].overtime + " hours" }}</p>
                  </div>
                  </div>
               </div>
@@ -54,30 +54,33 @@
           <div class="card rounded-25 border-0 shadow-lg">
             <div class="container mx-1 mt-2 mb-3 ">
               <div class="row">
-              <div class="col">
-                <div class="mt-4 mx-4">
-                <h3 class="mb-0 heading d-inline">Assign</h3>
-             </div>
-            </div>
-             <div class="col">
-                <h5>mode</h5>
-                 <button>Shift</button>
-                 <button>OT</button>
+              <div class="col"><div class="mt-4 mx-4"><h3>Assign</h3></div>
               </div>
-               </div>
- 
-              <div>
-                 <h6>From</h6><p>select date</p>
-                 <h6>To</h6><p>select date</p>
-                 <h6>Shift</h6><p>select start time</p>
-                 <h6>OT</h6><p>text field hours</p>
-             </div>
-                 <button>Submit</button>
+              </div>
+            <div>
+              <div class="container">
+             	 <div class="row no-gutters">
+              		<div class="col-6 col-md-2"><h5>From</h5></div>
+                	<div class="col-6 col-md-3"><input type="date" id="start" name="start_date"></div>
+                 	<div class="col-6 col-md-1"><h5>To</h5></div>
+                 	<div class="col-6 col-md-3"><input type="date" id="last" name="last_date"></div>
+                </div>
+                <div class="row">
+                 	<div class="col-6 col-md-2"><h5>Shift</h5></div>
+                 	<div class="col"><input type="Time" id="time" name="time"></div>
+                </div>
+                <div class="row">
+                 	<div class="col-6 col-md-2"><h5>OT</h5></div>
+                 	<div class="col"><input type="text" name="OT"></div>
+                </div>
+                <p><input type="submit" style="font-size:110%; margin-left:45%; margin-top:1%;" value="Submit"></p>
+              </div>
+            </div>
            </div>
           </div>
          </div>
        </div>
-      </div>
+
  
      <div class="card rounded-25 border-0 shadow-lg mt-3">
        <h3 class="mt-4 mx-4 heading">Plan Shift</h3>
@@ -86,6 +89,7 @@
          <table class="table table-hover table-borderless">
            <thead class="text-white">
              <tr>
+               <th scope="col"><input type="checkbox" id="select-all"></th>
                <th scope="col">#</th>
                <th scope="col" class="text-center">Name</th>
                <th scope="col" class="text-center">Date</th>
@@ -96,6 +100,7 @@
            </thead>
            <tbody>
              <tr *ngFor="let planshift of planshifts | slice: (page-1) * pageSize : page * pageSize">
+               <th scope="col"><input type="checkbox" id="emp_1" name="emp"></th>
                <th scope="row">{{ planshifts.indexOf(planshift)+1 }}</th>
                <th class="text-center">{{planshift.employee[0].first_name + ' ' + planshift.employee[0].last_name }}</th>
                <th class="text-center">{{planshift.date}}</th>
