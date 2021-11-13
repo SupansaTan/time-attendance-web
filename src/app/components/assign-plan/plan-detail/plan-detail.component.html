@@ -1,72 +1,85 @@
 <main>
-    <div class="card rounded-25 border-0 shadow-lg">
-      <div class="mt-4 mx-4">
-        <h3 class="mb-0 heading d-inline">Department</h3>
-        <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue" > {{department[0].name}} </h3>
+ <div class="container mx-1 mt-2 mb-3 ">
+    <div class="row">
+      <div class="col">
+   	      <div class="card rounded-25 border-0 shadow-lg">
+   	          <div class="mt-4 mx-4">
+    	           <h3 class="mb-0 heading d-inline">Department</h3>
+    	           <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue" > {{department[0].name}} </h3>
+   	          </div>
+
+   	      <div class="row mx-3 mt-2 mb-3 g-3">
+    	        <div class="col-2">
+     	           <div class="chart-wrapper w-75">
+     	           <svg viewBox="0 0 36 36" class="circular-chart green">
+       	         <path class="circle-bg"
+        	         d="M18 2.0845
+       	            a 15.9155 15.9155 0 0 1 0 31.831
+        	          a 15.9155 15.9155 0 0 1 0 -31.831"
+       	          />
+       	     <!-- <path *ngIf="department.actual_emp > 0" class="circle"
+        	        [attr.stroke-dasharray]="getPercentage(department.actual_emp, department.total_emp) + ', 100'"
+        	        d="M18 2.0845
+			  a 15.9155 15.9155 0 0 1 0 31.831
+			  a 15.9155 15.9155 0 0 1 0 -31.831"
+     	             />
+    	             <text x="18" y="19.35" class="percentage">{{ getPercentage(department.actual_emp, department.total_emp) + '%' }}</text>
+    	             <text x="10" y="25.35" class="total-employee">{{ department.actual_emp + '/' + department.total_emp + ' คน' }}</text> -->
+      	           </svg>
+     	         </div>
+     	       </div>
+
+      	       <div class="col align-self-center m-0 detail-wrapper">
+      	          <div class="row my-3 d-flex align-items-center date-wrapper">
+       	            <i class="col-auto fas fa-calendar text-blue"></i>
+        	           <p class="col-auto mb-0 px-3 rounded-25 shadow text-white bg-blue">{{ date }}</p>
+       	          </div>
+
+       	       <div class="row my-3 d-flex align-items-center">
+       	          <i class="fas fa-clock me-2 col-auto"></i>
+       	     <!-- <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ department.start_time + ' - ' + department.end_time }}</p> -->
+       	       </div>
+
+        	     <div class="row my-3 ot-wrapper d-flex align-items-center">
+        	        <p class="fw-bold mb-0 col-auto">OT Plan</p>
+        	    <!-- <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ department.ot_plan + " hours" }}</p> -->
+       	       </div>
+       	       </div>
+             </div>
+          </div>
       </div>
-  
-      <div class="row mx-3 mt-2 mb-3 g-3">
-        <div class="col-2">
-          <div class="chart-wrapper w-75">
-            <svg viewBox="0 0 36 36" class="circular-chart green">
-              <path class="circle-bg"
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <!-- <path *ngIf="department.actual_emp > 0" class="circle"
-                [attr.stroke-dasharray]="getPercentage(department.actual_emp, department.total_emp) + ', 100'"
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <text x="18" y="19.35" class="percentage">{{ getPercentage(department.actual_emp, department.total_emp) + '%' }}</text>
-              <text x="10" y="25.35" class="total-employee">{{ department.actual_emp + '/' + department.total_emp + ' คน' }}</text> -->
-            </svg>
-          </div>
-        </div>
-  
-        <div class="col align-self-center m-0 detail-wrapper">
-          <div class="row my-3 d-flex align-items-center date-wrapper">
-            <i class="col-auto fas fa-calendar text-blue"></i>
-            <p class="col-auto mb-0 px-3 rounded-25 shadow text-white bg-blue">{{ date }}</p>
-          </div>
-  
-          <div class="row my-3 d-flex align-items-center">
-            <i class="fas fa-clock me-2 col-auto"></i>
-            <!-- <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ department.start_time + ' - ' + department.end_time }}</p> -->
-          </div>
-  
-          <div class="row my-3 ot-wrapper d-flex align-items-center">
-            <p class="fw-bold mb-0 col-auto">OT Plan</p>
-            <!-- <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ department.ot_plan + " hours" }}</p> -->
-          </div>
-        </div>
-  
+      <div class="col-7">
+     	  <div class="card rounded-25 border-0 shadow-lg">
+     	  	<div class="container mx-1 mt-2 mb-3 ">
+     	  		<div class="row">
+     	  		<div class="col">
+     		   	 <div class="mt-4 mx-4">
+       		    <h3 class="mb-0 heading d-inline">Assign</h3>
+       		 </div>
+       		</div>
+       		 <div class="col">
+        		   <h5>mode</h5>
+       			   <button>Shift</button>
+       			   <button>OT</button>
+      			 </div>
+      		 	 </div>
+
+      			 <div>
+       			   <h6>From</h6><p>select date</p>
+       			   <h6>To</h6><p>select date</p>
+       			   <h6>Shift</h6><p>select start time</p>
+       			   <h6>OT</h6><p>text field hours</p>
+      			</div>
+      				  <button>Submit</button>
+      		</div>
+    	   </div>
+    	  </div>
       </div>
     </div>
 
-    <div class="card rounded-25 border-0 shadow-lg">
-      <div class="mt-4 mx-4">
-        <h3 class="mb-0 heading d-inline">Assign</h3>
-      </div>  
-      <div>
-        <h5>mode</h5>
-        <button>Shift</button>
-        <button>OT</button>
-      </div> 
-      <div>
-        <h6>From</h6><p>select date</p>
-        <h6>To</h6><p>select date</p>
-        <h6>Shift</h6><p>select start time</p>
-        <h6>OT</h6><p>text field hours</p>
-      </div>
-      <button>Submit</button>
-    </div>
-  
     <div class="card rounded-25 border-0 shadow-lg mt-3">
       <h3 class="mt-4 mx-4 heading">Plan Shift</h3>
-  
+
       <div class="table-responsive mx-4">
         <table class="table table-hover table-borderless">
           <thead class="text-white">
@@ -91,7 +104,7 @@
           </tbody>
         </table>
       </div>
-  
+
       <div class="row mx-4 my-2 align-items-center">
         <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
           name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
@@ -105,3 +118,4 @@
       </div>
     </div>
   </main>
+
