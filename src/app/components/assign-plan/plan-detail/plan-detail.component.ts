@@ -49,17 +49,17 @@ export class PlanDetailComponent implements OnInit {
     this.shiftService.getDepartment(this.departmentId).subscribe((response) => {
       this.department = response})
 
+    this.shiftService.getDepPlanShift(this.departmentId).subscribe((response) => {
+      this.planshifts = response})
+
     this.shift_bt = false
     this.ot_bt = false
 
-    this.shiftService.getEmployee(this.departmentId).subscribe((response) => {
-      this.employees = response})
+    // this.shiftService.getEmployee(this.departmentId).subscribe((response) => {
+    //   this.employees = response})
 
-    this.shiftService.getPlanShift().subscribe((response) => {
-      this.planshifts = response})
-
-    this.shiftService.getShiftCode().subscribe((response) => {
-      this.shiftcode = response})
+    // this.shiftService.getShiftCode().subscribe((response) => {
+    //   this.shiftcode = response})
 
   }
 
@@ -67,7 +67,12 @@ export class PlanDetailComponent implements OnInit {
     return this.shiftService.getPercentage(actual_emp, total_emp)
   }
 
-  toggle_shift(){}
+  toggle_shift(){
+    // when click on Shift Button => this.shift_bt = True
+    // 
+  }
 
-  toggle_ot(){}
+  toggle_ot(){
+    // when click on OT Button => this.ot_bt = True
+  }
 }

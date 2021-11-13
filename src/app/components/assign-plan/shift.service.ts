@@ -55,8 +55,8 @@ export class ShiftService {
     return this.http.get<Array<TimeRecordModel>>(url)
   }
 
-  getPlanShift(): Observable<Array<PlanShiftModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/planshift`
+  getDepPlanShift(val:any): Observable<Array<PlanShiftModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/`+val
     return this.http.get<Array<PlanShiftModel>>(url)
   }
 

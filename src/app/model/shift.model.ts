@@ -1,8 +1,8 @@
 export class PlanShiftModel {
     id:number;
     date: string;
-    dep_code: string;
-    emp: any;
+    department: any;
+    employee: any;
     start_time: string;
     end_time: string;
     overtime: number;
