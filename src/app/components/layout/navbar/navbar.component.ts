@@ -1,4 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +12,9 @@ export class NavbarComponent implements OnInit {
   showNavRight: boolean;
   public screenWidth: any;
 
-  constructor() { }
+  constructor(private router: Router,
+    private socialAuthService: SocialAuthService) {
+}
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
@@ -23,4 +27,5 @@ export class NavbarComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.showNavRight = !(this.screenWidth < 992)
   }
+  
 }
