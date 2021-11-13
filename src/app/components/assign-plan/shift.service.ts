@@ -15,8 +15,13 @@ export class ShiftService {
 
   constructor(private http:HttpClient) { }
 
-  getEmployees(): Observable<Array<EmployeeModel>> {
+  getallEmployees(): Observable<Array<EmployeeModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/employees`
+    return this.http.get<Array<EmployeeModel>>(url)
+  }
+
+  getEmployee(val:any): Observable<Array<EmployeeModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/employees/`+ val
     return this.http.get<Array<EmployeeModel>>(url)
   }
 
@@ -25,8 +30,13 @@ export class ShiftService {
     return this.http.put(url , val)
   } 
 
-  getDepartments(): Observable<Array<DepartmentModel>> {
+  getallDepartments(): Observable<Array<DepartmentModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/departments`
+    return this.http.get<Array<DepartmentModel>>(url)
+  }
+
+  getDepartment(val:any): Observable<Array<DepartmentModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/departments/`+ val
     return this.http.get<Array<DepartmentModel>>(url)
   }
   
@@ -58,6 +68,10 @@ export class ShiftService {
   addPlanShift(val:any){
     const url = `${environment.apiTimeAttendanceUrl}/api/planshift`
     return this.http.post(url , val)
+  }
+
+  getPercentage(actual: number, total: number) {
+    return actual * 100 / total
   }
 
 }

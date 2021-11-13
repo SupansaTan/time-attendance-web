@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ShiftService } from '../shift.service';
-
-import { DashboardService } from '../../dashboard/dashboard.service';
+import { EmployeeModel } from 'src/app/model/employee.model';
+import { DepartmentModel } from 'src/app/model/department.model';
+import { ShiftCodeModel, PlanShiftModel } from 'src/app/model/shift.model';
+import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { NgOption } from "@ng-select/ng-select";
-import { DepartmentService } from 'src/app/service/department.service';
-import { EmployeeService } from 'src/app/service/employee.service';
 
 @Component({
   selector: 'app-plan-detail',
@@ -14,14 +14,20 @@ import { EmployeeService } from 'src/app/service/employee.service';
 export class PlanDetailComponent implements OnInit {
   departmentId: number
   date: Date | string;
-  department: any;
-  employees: Array<any>;
+  employees: Array<EmployeeModel> = new Array<EmployeeModel>();
+  department: Array<DepartmentModel> = new Array<DepartmentModel>();
+  shiftcode: Array<ShiftCodeModel> = new Array<ShiftCodeModel>();
+  planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>();
+  timerecord: Array<TimeRecordModel> = new Array<TimeRecordModel>();
   page: any;
   pageSize: any;
-  table_option: NgOption[]
+  table_option: NgOption[];
 
-  constructor(private dashboardService: DashboardService, private departmentService: DepartmentService,
-    private employeeService: EmployeeService) { }
+  start_time_option: NgOption[];
+  shift_bt: boolean;
+  ot_bt: boolean;
+
+  constructor(private shiftService:ShiftService) { }
 
   ngOnInit(): void {
     this.page = 1
@@ -38,12 +44,30 @@ export class PlanDetailComponent implements OnInit {
       day: 'numeric',
     })
 
-    this.departmentId = Number(location.pathname.split("/")[2])
-    this.department = this.departmentService.getDepartment(this.departmentId)
-    this.employees = this.employeeService.getEmployees()
+    this.departmentId = Number(location.pathname.split("/")[2]) 
+    
+    this.shiftService.getDepartment(this.departmentId).subscribe((response) => {
+      this.department = response})
+
+    this.shift_bt = false
+    this.ot_bt = false
+
+    this.shiftService.getEmployee(this.departmentId).subscribe((response) => {
+      this.employees = response})
+
+    this.shiftService.getPlanShift().subscribe((response) => {
+      this.planshifts = response})
+
+    this.shiftService.getShiftCode().subscribe((response) => {
+      this.shiftcode = response})
+
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
-    return this.dashboardService.getPercentage(actual_emp, total_emp)
+    return this.shiftService.getPercentage(actual_emp, total_emp)
   }
+
+  toggle_shift(){}
+
+  toggle_ot(){}
 }

@@ -7,6 +7,9 @@ import { AssignPlanComponent } from './assign-plan.component';
 import { PlanDetailComponent } from './plan-detail/plan-detail.component';
 import { ShiftRoutingModule } from './shift-routing.module';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [  
@@ -18,6 +21,10 @@ import { ShiftRoutingModule } from './shift-routing.module';
     HttpClientModule,
     FormsModule,
     ShiftRoutingModule,
+    NgxSpinnerModule,
+    NgbModule,
+    FormsModule,
+    NgSelectModule,
   ]
 })
 export class ShiftModule { }

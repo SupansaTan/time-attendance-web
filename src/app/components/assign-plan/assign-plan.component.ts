@@ -19,7 +19,7 @@ export class AssignPlanComponent implements OnInit {
   constructor(private shiftService: ShiftService) {}
 
   ngOnInit(): void {
-    this.shiftService.getDepartments().subscribe((response) => {
+    this.shiftService.getallDepartments().subscribe((response) => {
       this.departments = response})
   }
 }
