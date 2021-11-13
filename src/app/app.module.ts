@@ -44,7 +44,7 @@ import { AuthGuardService } from './auth-guard.service';
     RouterModule.forRoot([
       {path: 'auth/login', component: LoginComponent},
       {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]}, // only accessible if authorised
-      {path: '**', component: LoginComponent}
+      {path: 'auth/login', component: LoginComponent}
     ]),
   ],
   providers: [{
