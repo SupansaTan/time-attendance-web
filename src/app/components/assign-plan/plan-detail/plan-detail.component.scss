@@ -1,0 +1,20 @@
+@import '../../../scss/variable';
+
+.heading {
+  color: #1f3054;
+  font-weight: 600;
+}
+
+.bg-blue {
+  background-color: $bg-blue;
+}
+
+.submit-btn {
+  width: fit-content;
+  background-color: #70e17b;
+}
+
+.btn-active {
+  color: white;
+  background-color: $bg-blue;
+}

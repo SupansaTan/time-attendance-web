@@ -44,6 +44,17 @@
   }
 }
 
+/* width */
+.w {
+  &-90 {
+    width: 90% !important;
+  }
+
+  &-80 {
+    width: 80% !important;
+  }
+}
+
 /* table */
 thead {
   background-color: #3a538a;
