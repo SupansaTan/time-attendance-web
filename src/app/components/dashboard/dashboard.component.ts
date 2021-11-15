@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeModel } from 'src/app/model/employee.model';
 import { DashboardService } from './dashboard.service'
 import { NgxSpinnerService } from "ngx-spinner";
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,8 @@ export class DashboardComponent implements OnInit {
   role: string;
   employees: Array<EmployeeModel> = new Array<EmployeeModel>()
 
-  constructor(private dashboardService: DashboardService, private spinner: NgxSpinnerService) { }
+  constructor(private dashboardService: DashboardService, private spinner: NgxSpinnerService,
+    private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     // this.spinner.show()
@@ -25,7 +27,7 @@ export class DashboardComponent implements OnInit {
     //     this.spinner.hide();
     //   }, 1000);
     // })
-    this.role = 'manager'
+    this.role = this.authService.getUserRole()
     this.hideSpinner = true;
   }
 }
