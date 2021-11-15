@@ -2,7 +2,7 @@
   <div class="card rounded-25 border-0 shadow-lg">
     <div class="mt-4 mx-4">
       <h3 class="mb-0 heading d-inline">Department</h3>
-      <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
+      <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ planshifts[0].department[0].name }}</h3>
     </div>
 
     <div class="row mx-3 mt-2 mb-3 g-3">
@@ -14,14 +14,14 @@
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
-            <path *ngIf="department.actual_emp > 0" class="circle"
-              [attr.stroke-dasharray]="getPercentage(department.actual_emp, department.total_emp) + ', 100'"
+            <path *ngIf="planshifts[0].department[0].active_employee > 0" class="circle"
+              [attr.stroke-dasharray]="getPercentage(planshifts[0].department[0].active_employee, planshifts[0].department[0].total_employee) + ', 100'"
               d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
-            <text x="18" y="19.35" class="percentage">{{ getPercentage(department.actual_emp, department.total_emp) + '%' }}</text>
-            <text x="10" y="25.35" class="total-employee">{{ department.actual_emp + '/' + department.total_emp + ' คน' }}</text>
+            <text x="18" y="19.35" class="percentage">{{ getPercentage(planshifts[0].department[0].active_employee, planshifts[0].department[0].total_employee) + '%' }}</text>
+            <text x="10" y="25.35" class="total-employee">{{ planshifts[0].department[0].active_employee + '/' + planshifts[0].department[0].total_employee + ' คน' }}</text>
           </svg>
         </div>
       </div>
@@ -34,12 +34,12 @@
 
         <div class="row my-3 d-flex align-items-center">
           <i class="fas fa-clock me-2 col-auto"></i>
-          <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ department.start_time + ' - ' + department.end_time }}</p>
+          <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ planshifts[0].start_time + ' - ' + planshifts[0].end_time }}</p>
         </div>
 
         <div class="row my-3 ot-wrapper d-flex align-items-center">
           <p class="fw-bold mb-0 col-auto">OT Plan</p>
-          <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ department.ot_plan + " hours" }}</p>
+          <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ planshifts[0].overtime + " hours" }}</p>
         </div>
       </div>
 
@@ -47,7 +47,7 @@
   </div>
 
   <div class="card rounded-25 border-0 shadow-lg mt-3">
-    <h3 class="mt-4 mx-4 heading">Time Record</h3>
+    <h3 class="mt-4 mx-4 heading" *ngIf="let record of timerecords">{{record}}</h3>
 
     <div class="table-responsive mx-4">
       <table class="table table-hover table-borderless">
@@ -60,11 +60,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="employee.start? 'green':'grey'">
-            <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
-            <th class="text-center">{{ employee.name }}</th>
-            <th class="text-center">{{ employee.start? employee.start : '-' }}</th>
-            <th class="text-center">{{ employee.end? employee.end : '-' }}</th>
+          <tr *ngFor="let timerecord of timerecords | slice: (page-1) * pageSize : page * pageSize" [class]="timerecord.status? 'green':'grey'">
+            <th scope="row">{{ timerecords.indexOf(timerecord)+1 }}</th>
+            <th class="text-center">{{ timerecord.employee[0].first_name + ' ' + timerecord.employee[0].last_name }}</th>
+            <th class="text-center">{{ timerecord.status? timerecord.status : '-' }}</th>
+            <th class="text-center">{{ timerecord.status? timerecord.status : '-' }}</th>
           </tr>
         </tbody>
       </table>
@@ -75,10 +75,10 @@
         name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
       </ng-select>
       <p class="d-flex align-items-center col-auto m-0">
-        {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
+        {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>timerecords.length? timerecords.length:pageSize*page) +' of '+ timerecords.length +' results'}}
       </p>
       <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
-        [collectionSize]="employees.length">
+        [collectionSize]="timerecords.length">
       </ngb-pagination>
     </div>
   </div>
