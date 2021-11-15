@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,10 @@ import { BrowserModule } from '@angular/platform-browser';
   imports: [
     HttpClientModule,
     CommonModule,
-    AuthenticationRoutingModule
+    AuthenticationRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+
   ]
 })
 export class AuthenticationModule { }
