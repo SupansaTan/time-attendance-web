@@ -56,23 +56,25 @@
               </div>
               </div>
             <div>
+            <form [formGroup]="assign_form" (ngSubmit)="onSubmit()"> 
               <div class="container">
              	 <div class="row no-gutters">
               		<div class="col-6 col-md-2"><h5>From</h5></div>
-                	<div class="col-6 col-md-3"><input type="date" id="start" name="start_date"></div>
+                	<div class="col-6 col-md-3"><input type="date" id="start" formControlName="start_date"></div>
                  	<div class="col-6 col-md-1"><h5>To</h5></div>
-                 	<div class="col-6 col-md-3"><input type="date" id="last" name="last_date"></div>
+                 	<div class="col-6 col-md-3"><input type="date" id="last" formControlName="end_date"></div>
                 </div>
                 <div class="row">
                  	<div class="col-6 col-md-2"><h5>Shift</h5></div>
-                 	<div class="col"><input type="Time" id="time" name="time"></div>
+                 	<div class="col"><input type="Time" id="time" formControlName="shift"></div>
                 </div>
                 <div class="row">
                  	<div class="col-6 col-md-2"><h5>OT</h5></div>
-                 	<div class="col"><input type="text" name="OT"></div>
+                 	<div class="col"><input type="text" formControlName="ot"></div>
                 </div>
-                <p><input type="submit" style="font-size:110%; margin-left:45%; margin-top:1%;" value="Submit"></p>
+                <p><input type="submit" (click)="onSubmit()" style="font-size:110%; margin-left:45%; margin-top:1%;" value="Submit"></p>
               </div>
+             </form>
             </div>
            </div>
           </div>

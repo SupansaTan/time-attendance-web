@@ -5,6 +5,7 @@ import { DepartmentModel } from 'src/app/model/department.model';
 import { ShiftCodeModel, PlanShiftModel } from 'src/app/model/shift.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { NgOption } from "@ng-select/ng-select";
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-plan-detail',
@@ -26,7 +27,14 @@ export class PlanDetailComponent implements OnInit {
   start_time_option: NgOption[];
   shift_bt: boolean;
   ot_bt: boolean;
-
+  
+  assign_form = new FormGroup({
+    start_date: new FormControl(''),
+    end_date_date: new FormControl(''),
+    shift: new FormControl(''),
+    ot: new FormControl('')
+  });
+  
   constructor(private shiftService:ShiftService) { }
 
   ngOnInit(): void {
@@ -83,4 +91,8 @@ export class PlanDetailComponent implements OnInit {
       this.ot_bt = false
     }
   }
+  onSubmit() 
+  {
+  console.warn(this.assign_form.value);
+  } 
 }

@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IconsModule } from './icons/icons.module';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     IconsModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   providers: [],
