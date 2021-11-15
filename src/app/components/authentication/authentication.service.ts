@@ -10,4 +10,8 @@ export class AuthenticationService {
   getUserRole() {
     return 'manager'
   }
+
+  getUserid(){
+    return 5
+  }
 }

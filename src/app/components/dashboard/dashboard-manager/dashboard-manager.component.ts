@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service'
-import { DepartmentService } from 'src/app/service/department.service';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 import { DepartmentModel } from 'src/app/model/department.model';
 import { PlanShiftModel } from 'src/app/model/shift.model';
 import { EmployeeModel } from 'src/app/model/employee.model';
+
 
 @Component({
   selector: 'app-dashboard-manager',
@@ -16,10 +17,10 @@ export class DashboardManagerComponent implements OnInit {
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.employee_id = 7
+    this.employee_id = this.authService.getUserid()
 
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.manager_info = response

@@ -5,6 +5,7 @@ import { EmployeeModel } from 'src/app/model/employee.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { ShiftService } from './shift.service';
 
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-assign-plan',
@@ -16,10 +17,10 @@ export class AssignPlanComponent implements OnInit {
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
 
-  constructor(private shiftService: ShiftService) {}
+  constructor(private shiftService: ShiftService, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.employee_id = 7
+    this.employee_id = this.authService.getUserid()
 
     this.shiftService.getManagerInfo(this.employee_id).subscribe((response) => {
       this.manager_info = response
