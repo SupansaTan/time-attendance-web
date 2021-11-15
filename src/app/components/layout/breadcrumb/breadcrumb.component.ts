@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChildrenItem, MenuItems } from 'src/app/model/menu-items.model';
 import { DepartmentService } from '../../../service/department.service'
 import navigation from '../menu-items';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -9,26 +10,33 @@ import navigation from '../menu-items';
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements OnInit {
-  path: Array<string>
+  current_path: Array<string>
   menu: MenuItems | any
   menuChild: Array<ChildrenItem> | any = []
 
-  constructor(private departmentService: DepartmentService) { }
+  constructor(private departmentService: DepartmentService, private router: Router) {}
 
   ngOnInit(): void {
-    this.path = location.pathname.split("/")
-    this.menu = navigation.items.find((item) => item.url == '/' + this.path[1])
+    this.router.events.subscribe(event => {
 
-    // department detail path
-    if(this.path.length > 2) {
-      if(this.path[1] == 'dashboard' || 'assign-plan') {
-        this.menuChild.push(
-          {
-            url: location.pathname,
-            title: this.departmentService.getDepartmentName(Number(this.path[2]))
-          }
-        )
+      if (event instanceof NavigationStart){
+        location.pathname == '/'? this.current_path = '/dashboard'.split('/') : this.current_path = event.url.split("/"); // config current path
+        this.menu = navigation.items.find((item) => item.url == '/' + this.current_path[1])
+
+        // department detail path
+        this.current_path.length > 2 ? this.addMenuChild() : false
       }
+    })
+  }
+
+  addMenuChild() {
+    if(this.current_path[1] == 'dashboard' || 'assign-plan') {
+      this.menuChild.push(
+        {
+          url: location.pathname,
+          title: this.departmentService.getDepartmentName(Number(this.current_path[2]))
+        }
+      )
     }
   }
 
