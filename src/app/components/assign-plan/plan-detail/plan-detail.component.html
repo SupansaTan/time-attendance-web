@@ -70,9 +70,14 @@
                 </div>
                 <div class="row">
                  	<div class="col-6 col-md-2"><h5>OT</h5></div>
-                 	<div class="col"><input type="text" formControlName="ot"></div>
+                 	<div class="col"><input type="decimal" formControlName="ot"></div>
                 </div>
                 <p><input type="submit" (click)="onSubmit()" style="font-size:110%; margin-left:45%; margin-top:1%;" value="Submit"></p>
+                <div *ngIf="ot.invalid && (ot.dirty || ot.touched)" class="alert alert-danger">
+            <div *ngIf="ot.errors?.required">
+            Name is required.
+          </div>
+        </div>
               </div>
              </form>
             </div>

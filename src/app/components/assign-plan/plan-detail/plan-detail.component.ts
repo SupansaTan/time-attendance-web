@@ -28,16 +28,21 @@ export class PlanDetailComponent implements OnInit {
   shift_bt: boolean;
   ot_bt: boolean;
   
-  assign_form = new FormGroup({
+    assign_form = new FormGroup({
     start_date: new FormControl(''),
-    end_date_date: new FormControl(''),
+    end_date: new FormControl(''),
     shift: new FormControl(''),
     ot: new FormControl('')
   });
-  
   constructor(private shiftService:ShiftService) { }
 
   ngOnInit(): void {
+    this.assign_form = new FormGroup({
+    start_date: new FormControl('',[Validators.required]),
+    end_date: new FormControl('',[Validators.required]),
+    shift: new FormControl('',[Validators.required]),
+    ot: new FormControl('',[Validators.required])
+  });
     this.page = 1
     this.pageSize = 10  // row of each page table
     this.table_option = [
@@ -94,5 +99,17 @@ export class PlanDetailComponent implements OnInit {
   onSubmit() 
   {
   console.warn(this.assign_form.value);
-  } 
+  }
+  get start_date() {
+    return this.assign_form.get('ot')!.value
+  }
+  get end_date() {
+    return this.assign_form.get('ot')!.value
+  }
+  get shift() {
+    return this.assign_form.get('ot')!.value
+  }
+  get ot() {
+    return this.assign_form.get('ot')!.value
+  }
 }
