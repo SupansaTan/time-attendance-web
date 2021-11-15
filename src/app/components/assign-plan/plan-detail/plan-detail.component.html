@@ -1,5 +1,4 @@
 <main>
-
      <div class="row">
        <div class="col">
             <div class="card rounded-25 border-0 shadow-lg">
@@ -17,14 +16,14 @@
                       a 15.9155 15.9155 0 0 1 0 31.831
                      a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
-               <!-- <path *ngIf="department.actual_emp > 0" class="circle"
-                   [attr.stroke-dasharray]="getPercentage(department.actual_emp, department.total_emp) + ', 100'"
+               <path *ngIf="department[0].active_employee > 0" class="circle"
+                   [attr.stroke-dasharray]="getPercentage(department[0].active_employee, department[0].total_employee) + ', 100'"
                    d="M18 2.0845
-         a 15.9155 15.9155 0 0 1 0 31.831
-         a 15.9155 15.9155 0 0 1 0 -31.831"
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
                      />
-                    <text x="18" y="19.35" class="percentage">{{ getPercentage(department.actual_emp, department.total_emp) + '%' }}</text>
-                    <text x="10" y="25.35" class="total-employee">{{ department.actual_emp + '/' + department.total_emp + ' คน' }}</text> -->
+                    <text x="18" y="19.35" class="percentage">{{ getPercentage(department[0].active_employee, department[0].total_employee) + '%' }}</text>
+                    <text x="10" y="25.35" class="total-employee">{{ department[0].active_employee + '/' + department[0].total_employee + ' คน' }}</text>
                     </svg>
                  </div>
                </div>
@@ -48,7 +47,6 @@
               </div>
            </div>
          </div>
-       <!-- </div> -->
 
        <div class="col-7">
           <div class="card rounded-25 border-0 shadow-lg">
@@ -104,7 +102,7 @@
                <th scope="row">{{ planshifts.indexOf(planshift)+1 }}</th>
                <th class="text-center">{{planshift.employee[0].first_name + ' ' + planshift.employee[0].last_name }}</th>
                <th class="text-center">{{planshift.date}}</th>
-               <th class="text-center">{{planshift.start_time}}</th>
+               <th class="text-center">{{planshift.start_time + '-' + planshift.end_time}}</th>
                <th class="text-center">{{planshift.overtime}}</th>
                <th class="text-center">{{planshift.employee[0].employee_type}}</th>
              </tr>

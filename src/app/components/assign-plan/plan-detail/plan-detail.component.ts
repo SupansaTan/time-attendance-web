@@ -55,11 +55,8 @@ export class PlanDetailComponent implements OnInit {
     this.shift_bt = false
     this.ot_bt = false
 
-    // this.shiftService.getEmployee(this.departmentId).subscribe((response) => {
-    //   this.employees = response})
-
-    // this.shiftService.getShiftCode().subscribe((response) => {
-    //   this.shiftcode = response})
+    this.shiftService.getShiftCode().subscribe((response) => {
+      this.shiftcode = response})
 
   }
 
@@ -68,11 +65,22 @@ export class PlanDetailComponent implements OnInit {
   }
 
   toggle_shift(){
-    // when click on Shift Button => this.shift_bt = True
-    // 
+    // toggle true/false on this.shift_bt
+    if (this.shift_bt == false){
+      this.shift_bt = true
+    }
+    else{
+      this.shift_bt = false
+    }
   }
 
   toggle_ot(){
-    // when click on OT Button => this.ot_bt = True
+    // toggle true/false on this.ot_bt
+    if (this.ot_bt == false){
+      this.ot_bt = true
+    }
+    else{
+      this.ot_bt = false
+    }
   }
 }
