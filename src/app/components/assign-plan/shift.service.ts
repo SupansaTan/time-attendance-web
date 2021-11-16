@@ -45,21 +45,14 @@ export class ShiftService {
 
   // val = {data}
   addPlanshift(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/`
-    return this.http.post(url , val)
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/new`
+    return this.http.post(url, val)
   } 
 
-  // val = {data}
-  editPlanshift(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/`
-    return this.http.put(url , val)
-  } 
 
   getPercentage(actual: number, total: number) {
     return Math.round(actual * 100 / total)
   }
-
-  //-------------------------------------------------
 
   // get time record by date 
   getTimerecordByDepartment(dep_id:any): Observable<Array<TimeRecordModel>>{
