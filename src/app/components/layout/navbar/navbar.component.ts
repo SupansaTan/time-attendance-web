@@ -27,7 +27,9 @@ export class NavbarComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.showNavRight = !(this.screenWidth < 992)
   }
-  logout(): void {
-    this.socialAuthService.signOut().then(() => this.router.navigate(['/auth/login']));
+
+   logout(): void {
+    console.log("Exit")
+    this.router.navigate(['/auth/login']);
   }
 }

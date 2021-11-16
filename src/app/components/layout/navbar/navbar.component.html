@@ -1,37 +1,37 @@
 <nav class="navbar navbar-expand-lg">
-  <div class="container-fluid d-flex flex-sm-column flex-lg-row">
+    <div class="container-fluid d-flex flex-sm-column flex-lg-row">
 
-    <div class="nav-left col-2 d-flex align-items-center justify-content-center position-relative">
-      <a class="navbar-brand" href="#">
-        <img src="../../../../assets/image/logo.png" alt="logo" height="30">
-      </a>
-      <a role="button" class="position-absolute top-50 menu-toggle">
-        <span class="d-block position-relative w-100 rounded"></span>
-      </a>
-      <a role="button" class="more-toggler position-absolute top-25 end-0" (click)="showNavRight = !showNavRight">
-        <i-feather name="more-vertical"></i-feather>
-      </a>
+        <div class="nav-left col-2 d-flex align-items-center justify-content-center position-relative">
+            <a class="navbar-brand" href="#">
+                <img src="../../../../assets/image/logo.png" alt="logo" height="30">
+            </a>
+            <a role="button" class="position-absolute top-50 menu-toggle">
+                <span class="d-block position-relative w-100 rounded"></span>
+            </a>
+            <a role="button" class="more-toggler position-absolute top-25 end-0" (click)="showNavRight = !showNavRight">
+                <i-feather name="more-vertical"></i-feather>
+            </a>
+        </div>
+
+        <div *ngIf="showNavRight" class="nav-right col-12 col-lg-auto d-flex justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link align-self-center me-2 me-lg-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ username }}
+                  <i-feather name="user" class="ms-1 feather-18 user"></i-feather>
+                </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a href="http://localhost:4200/auth/login" class="dropdown-item align-self-center position-relative" (click)="logout()">
+                      Logout 
+                      <i-feather name="log-out" class="feather-18 position-absolute"></i-feather>
+                    </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
     </div>
-
-    <div *ngIf="showNavRight" class="nav-right col-12 col-lg-auto d-flex justify-content-end">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link align-self-center me-2 me-lg-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{ username }}
-            <i-feather name="user" class="ms-1 feather-18 user"></i-feather>
-          </a>
-
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li>
-              <a class="dropdown-item align-self-center position-relative" (click)="logout()">
-                Logout 
-                <i-feather name="log-out" class="feather-18 position-absolute"></i-feather>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-  </div>
 </nav>
