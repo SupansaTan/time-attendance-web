@@ -15,12 +15,6 @@ export class ShiftService {
 
   constructor(private http:HttpClient) { }
 
-  // get all department
-  getallDepartments(): Observable<Array<DepartmentModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/departments`
-    return this.http.get<Array<DepartmentModel>>(url)
-  }
-
   // get department by department id
   getDepartment(val:any): Observable<Array<DepartmentModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/departments/`+ val
@@ -36,6 +30,11 @@ export class ShiftService {
   // get plan by department id
   getDepPlanShift(dep_id:any): Observable<Array<PlanShiftModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/planshift/department/`+ dep_id
+    return this.http.get<Array<PlanShiftModel>>(url)
+  }
+
+  getTodayDepPlanShift(dep_id:any): Observable<Array<PlanShiftModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/department/today/` + dep_id
     return this.http.get<Array<PlanShiftModel>>(url)
   }
 

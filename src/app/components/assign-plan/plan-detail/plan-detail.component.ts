@@ -16,7 +16,7 @@ export class PlanDetailComponent implements OnInit {
   departmentId: number
   date: Date | string;
   employees: Array<EmployeeModel> = new Array<EmployeeModel>();
-  department: Array<DepartmentModel> = new Array<DepartmentModel>();
+  department: DepartmentModel = new DepartmentModel();
   shiftcode: Array<ShiftCodeModel> = new Array<ShiftCodeModel>();
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>();
   timerecord: Array<TimeRecordModel> = new Array<TimeRecordModel>();
@@ -60,9 +60,9 @@ export class PlanDetailComponent implements OnInit {
     this.departmentId = Number(location.pathname.split("/")[2]) 
     
     this.shiftService.getDepartment(this.departmentId).subscribe((response) => {
-      this.department = response})
+      this.department = response[0]})
 
-    this.shiftService.getDepPlanShift(this.departmentId).subscribe((response) => {
+    this.shiftService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       this.planshifts = response})
 
     this.shift_bt = false
@@ -96,6 +96,7 @@ export class PlanDetailComponent implements OnInit {
       this.ot_bt = false
     }
   }
+
   onSubmit() 
   {
   console.warn(this.assign_form.value);
