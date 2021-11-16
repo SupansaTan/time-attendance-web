@@ -30,12 +30,10 @@ export class LoginComponent implements OnInit  {
     
     if(this.email == "Admin" && this.password == "1234")
     {
-      console.log("welcome")
       alert("Welcome to Time-attendance")
       this.router.navigate(['dashboard']);
     }
     else{
-      console.log("User Unauthorized")
       alert("Please check your Details")
     }
   }
