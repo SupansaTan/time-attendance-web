@@ -92,79 +92,81 @@
     </div>
   </div>
 
-  <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
-    <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
-    <p class="text-white bg-blue py-1 px-2 rounded-3 d-flex justify-content-start mb-0">
-      <i class="col-auto fas fa-calendar me-2"></i>
-      {{ '12/09/2564 - 13/09/2564' }}
-    </p>
-    <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
-    <p class="mb-0 ms-auto">{{ 'Total: ' + '30 employees' }}</p>
-  </div>
-
-  <div class="card rounded-25 border-0 shadow-lg mt-2">
-    <div class="row my-3 mx-4 filter-group">
-      <div class="col position-relative input-group input-group-sm px-0">
-        <i-feather name="search" class="position-absolute feather-20"></i-feather>
-        <input class="form-control border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [formControl]="filter"/>
-      </div>
-      <div class="col-2 row">
-        <p class="mb-0 col-auto align-self-center">Shift</p>
-        <ng-select [(ngModel)]="filter_select.shift" [clearable]=false class="pb-0 rounded-3 filter-group col">
-          <ng-option *ngFor="let item of shift_option" [value]="item.value">{{ item.value }}</ng-option>
-        </ng-select>
-      </div>
-      <div class="col-2 row">
-        <p class="mb-0 col-auto align-self-center">OT Plan</p>
-        <ng-select [(ngModel)]="filter_select.ot" [clearable]=false class="pb-0 rounded-3 filter-group col">
-          <ng-option *ngFor="let item of ot_option" [value]="item.value">{{ item.value }}</ng-option>
-        </ng-select>
-      </div>
-      <div class="col-2 row">
-        <p class="mb-0 col-auto align-self-center">Type</p>
-        <ng-select [(ngModel)]="filter_select.type" [clearable]=false class="pb-0 rounded-3 filter-group col">
-          <ng-option *ngFor="let item of type_option" [value]="item.value">{{ item.value }}</ng-option>
-        </ng-select>
-      </div>
-    </div>
-
-    <div class="table-responsive mx-4">
-      <table class="table table-hover table-borderless">
-        <thead class="text-white">
-          <tr>
-            <th><input type="checkbox" class="form-check-input" [(ngModel)]="isAllChecked" (change)="setAllSelected()"></th>
-            <th scope="col">#</th>
-            <th scope="col" class="text-center">Name</th>
-            <th scope="col" class="text-center">Date</th>
-            <th scope="col" class="text-center">Shift</th>
-            <th scope="col" class="text-center">OT Plan</th>
-            <th scope="col" class="text-center">Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="employee.start? 'green':'grey'">
-            <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="updateEmployeeSelected()"></th>
-            <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
-            <th class="text-center">{{ employee.name }}</th>
-            <th class="text-center">{{ date }}</th>
-            <th class="text-center">{{ employee.shift }}</th>
-            <th class="text-center">{{ employee.ot }}</th>
-            <th class="text-center">{{ employee.type }}</th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="row mx-4 my-2 align-items-center">
-      <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
-        name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
-      </ng-select>
-      <p class="d-flex align-items-center col-auto m-0">
-        {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
+  <div *ngIf="dateRange.controls['start'].value && dateRange.controls['end'].value">
+    <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
+      <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
+      <p class="text-white bg-blue py-1 px-2 rounded-3 d-flex justify-content-start mb-0">
+        <i class="col-auto fas fa-calendar me-2"></i>
+        {{ localeDateFormat(dateRange.controls['start'].value) + ' - ' + localeDateFormat(dateRange.controls['end'].value) }}
       </p>
-      <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
-        [collectionSize]="employees.length">
-      </ngb-pagination>
+      <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
+      <p class="mb-0 ms-auto">{{ 'Total: ' + '30 employees' }}</p>
+    </div>
+
+    <div class="card rounded-25 border-0 shadow-lg mt-2">
+      <div class="row my-3 mx-4 filter-group">
+        <div class="col position-relative input-group input-group-sm px-0">
+          <i-feather name="search" class="position-absolute feather-20"></i-feather>
+          <input class="form-control border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [formControl]="filter"/>
+        </div>
+        <div class="col-2 row">
+          <p class="mb-0 col-auto align-self-center">Shift</p>
+          <ng-select [(ngModel)]="filter_select.shift" [clearable]=false class="pb-0 rounded-3 filter-group col">
+            <ng-option *ngFor="let item of shift_option" [value]="item.value">{{ item.value }}</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-2 row">
+          <p class="mb-0 col-auto align-self-center">OT Plan</p>
+          <ng-select [(ngModel)]="filter_select.ot" [clearable]=false class="pb-0 rounded-3 filter-group col">
+            <ng-option *ngFor="let item of ot_option" [value]="item.value">{{ item.value }}</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-2 row">
+          <p class="mb-0 col-auto align-self-center">Type</p>
+          <ng-select [(ngModel)]="filter_select.type" [clearable]=false class="pb-0 rounded-3 filter-group col">
+            <ng-option *ngFor="let item of type_option" [value]="item.value">{{ item.value }}</ng-option>
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="table-responsive mx-4">
+        <table class="table table-hover table-borderless">
+          <thead class="text-white">
+            <tr>
+              <th><input type="checkbox" class="form-check-input" [(ngModel)]="isAllChecked" (change)="setAllSelected()"></th>
+              <th scope="col">#</th>
+              <th scope="col" class="text-center">Name</th>
+              <th scope="col" class="text-center">Date</th>
+              <th scope="col" class="text-center">Shift</th>
+              <th scope="col" class="text-center">OT Plan</th>
+              <th scope="col" class="text-center">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="employee.start? 'green':'grey'">
+              <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="updateEmployeeSelected()"></th>
+              <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
+              <th class="text-center">{{ employee.name }}</th>
+              <th class="text-center">{{ date }}</th>
+              <th class="text-center">{{ employee.shift }}</th>
+              <th class="text-center">{{ employee.ot }}</th>
+              <th class="text-center">{{ employee.type }}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row mx-4 my-2 align-items-center">
+        <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
+          name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
+        </ng-select>
+        <p class="d-flex align-items-center col-auto m-0">
+          {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
+        </p>
+        <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
+          [collectionSize]="employees.length">
+        </ngb-pagination>
+      </div>
     </div>
   </div>
 </main>

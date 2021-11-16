@@ -200,8 +200,10 @@ ngb-pagination {
 /* responsive */
 $breakpoints: (
   mobile : 0px,
-  tablet : 426px,
-  desktop: 992px
+  tablet : 768px,
+  desktop: 992px,
+  large-desktop: 1200px,
+  larger-desktop: 1400px
 );
 
 @mixin media($keys...){

@@ -104,4 +104,11 @@ export class PlanDetailComponent implements OnInit {
     this.countSelected = this.employees.filter((employee) => employee.checked == true).length
   }
 
+  localeDateFormat(date: Date) {
+    return date.toLocaleDateString('th-TH', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    })
+  }
 }
