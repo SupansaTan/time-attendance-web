@@ -28,13 +28,31 @@ export class LoginComponent implements OnInit  {
 
   LoginUser(){
     
+    //login for manager
     if(this.email == "admin@gmail.com" && this.password == "1234")
     {
-      alert("Welcome to Time-attendance")
+      alert("Welcome Manager to Time-attendance")
       this.router.navigate(['dashboard']);
     }
-    else{
-      alert("Please check your Details")
+    //login for employee
+    else if(this.email == "xxxx@gmail.com" && this.password == "1234")
+    {
+      alert("Welcome Employee to Time-attendance")
+      this.router.navigate(['/dashboard/dashboard-employee']);
     }
+
+    else if(this.email == " " || this.password == " ")
+    {
+      alert("incorrect username or password")
+      this.router.navigate(['/auth/login']);
+    }
+
+    else
+    {
+      alert("incorrect username or password")
+      this.router.navigate(['/auth/login']);
+    }
+
+
   }
 }
