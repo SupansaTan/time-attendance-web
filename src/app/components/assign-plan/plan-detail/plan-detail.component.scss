@@ -1,39 +1,78 @@
+@import '../../../scss/variable';
 
 .heading {
-    color: #1f3054;
+  color: #1f3054;
+  font-weight: 600;
+}
+
+.bg-blue {
+  background-color: $bg-blue;
+}
+
+.submit-btn {
+  width: fit-content;
+  background-color: #70e17b;
+}
+
+.btn-active {
+  color: white;
+  background-color: #4680ff;
+}
+
+/* assign group */
+ngx-material-timepicker-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.bg-grey {
+  background-color: #E9ECEF;
+}
+
+/* heading over table */
+.heading-wrapper {
+  p {
     font-weight: 600;
+    width: fit-content;
   }
-  
-  .name {
-    font-weight: 400;
+}
+
+.filter-group {
+  p {
+    width: fit-content;
   }
-  
-  .detail-wrapper {
-    font-size: 1.2rem;
-  
-    .date-wrapper {
-      font-size: 1.3rem;
-  
-      i {
-        font-size: 1.5rem;
+
+  i-feather {
+    stroke: #d0d0d0;
+    z-index: 1000;
+    top: 50%;
+    transform: translateY(-60%);
+  }
+
+  &.ng-select {
+    background-color: #d1d1d1;
+
+    .ng-select-container {
+      .ng-arrow-wrapper {
+        .ng-arrow {
+          color: black !important;
+        }
+      }
+    }
+
+    .ng-value-container {
+      color: black;
+      justify-content: left;
+    }
+
+    .ng-value-container {
+      color: black;
+
+      .ng-input > input {
+        padding-left: 20px;
       }
     }
   }
-  
-  .bg-blue {
-    background-color: #3a538a;
-  }
-  
-  .text-blue {
-    color: #3a538a;
-  }
-  
-  .ot-wrapper {
-    .hours {
-      width: fit-content;
-    }
-  }
-  
-  .circle-bg {
-    stroke: #eee;
-  }
+}

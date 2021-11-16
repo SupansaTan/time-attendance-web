@@ -1,7 +1,7 @@
 <div class="card rounded-25 border-0 shadow-lg">
   <h3 class="mx-4 mt-3 mb-0 heading">Department</h3>
 
-  <div class="row row-cols-lg-5 mx-3 mt-2 mb-3 g-3">
+  <div class="row row-cols-lg-4 mx-3 mt-2 mb-3 g-3">
     <div *ngFor="let planshift of planshifts" class="col position-relative">
 
       <a [href]="'/dashboard/' + planshift.department[0].id" [ngClass]="('p-3 card department rounded-25 border-0' + (planshift.department[0].active_employee>0 ? '':' grey'))">
@@ -9,12 +9,8 @@
 
         <div class="my-2">
           <i class="fas fa-clock d-inline me-2"></i>
+          <p class="d-inline me-2">Shift</p>
           <p class="d-inline px-2 rounded-25 shadow bg-white">{{ planshift.start_time + ' - ' + planshift.end_time }}</p>
-        </div>
-
-        <div class="ot-wrapper mb-5 mt-2">
-          <p class="fw-bold mb-1">OT Plan</p>
-          <p class="hours rounded-25 shadow bg-white px-2">{{ planshift.overtime + " hours" }}</p>
         </div>
 
         <div class="chart-wrapper position-absolute">
