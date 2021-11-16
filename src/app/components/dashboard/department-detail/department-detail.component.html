@@ -34,12 +34,12 @@
 
         <div class="row my-3 d-flex align-items-center">
           <i class="fas fa-clock me-2 col-auto"></i>
-          <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ planshifts[0].start_time + ' - ' + planshifts[0].end_time }}</p>
+          <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ today_planshifts[0].start_time + ' - ' + today_planshifts[0].end_time }}</p>
         </div>
 
         <div class="row my-3 ot-wrapper d-flex align-items-center">
           <p class="fw-bold mb-0 col-auto">OT Plan</p>
-          <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ planshifts[0].overtime + " hours" }}</p>
+          <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ today_planshifts[0].overtime + " hours" }}</p>
         </div>
       </div>
 

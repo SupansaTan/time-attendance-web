@@ -51,10 +51,6 @@ export class DepartmentDetailComponent implements OnInit {
       this.department = response[0]
     });
 
-    this.dashboardService.getDepPlanShift(this.departmentId).subscribe((response) => {
-      this.planshifts = response
-    });
-
     this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       this.today_planshifts = response
     });
@@ -71,6 +67,8 @@ export class DepartmentDetailComponent implements OnInit {
   }
   
   findTimeRecord(emp_id:any){
+    this.in_record = new TimeRecordModel()
+    this.out_record = new TimeRecordModel()
     let in_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "In")[0]
     let out_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "Out")[0]
     if (in_){
