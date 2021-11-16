@@ -38,11 +38,6 @@
               <i class="fas fa-clock me-2 col-auto"></i>
               <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ department.start_time + ' - ' + department.end_time }}</p>
             </div>
-
-            <div class="row my-3 ot-wrapper d-flex align-items-center">
-              <p class="fw-bold mb-0 col-auto">OT Plan</p>
-              <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ department.ot_plan + " hours" }}</p>
-            </div>
           </div>
         </div>
       </div>
@@ -55,7 +50,7 @@
           <div class="assign-top align-items-center row">
             <h3 class="mb-0 heading d-flex justify-content-start col">Assign</h3>
             <div class="d-flex justify-content-end col">
-              <h4 class="mb-0">Mode</h4>
+              <h5 class="mb-0">Select Mode</h5>
               <button [ngClass]="{'btn-active': shiftBtnActive}" class="border-0 rounded-15 mx-2 px-3" (click)="setAssignMode('shift')">Shift</button>
               <button [ngClass]="{'btn-active': otBtnActive}" class="border-0 rounded-15 me-2 px-3" (click)="setAssignMode('ot')">OT</button>
             </div>
@@ -65,7 +60,7 @@
             <div class="row">
               <mat-form-field appearance="legacy">
                 <mat-label>Choose Date Range</mat-label>
-                <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRange">
+                <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRange" [min]="today">
                   <input matStartDate formControlName="start" placeholder="Start Date">
                   <input matEndDate formControlName="end" placeholder="End Date">
                 </mat-date-range-input>
@@ -75,16 +70,28 @@
             </div>
 
             <div class="row my-2">
-              <p class="col-auto">Shift</p>
-              <div class="col time-picker">
-                <input class="border-0 border-bottom" [ngxTimepicker]="toggleTimepicker" [format]="24" readonly>
-                <ngx-material-timepicker-toggle [for]="toggleTimepicker" class="position-absolute"></ngx-material-timepicker-toggle>
-                <ngx-material-timepicker #toggleTimepicker timepickerClass=""></ngx-material-timepicker>
+              <div *ngIf="shiftBtnActive" class="col row align-self-center">
+                <p class="col-auto mb-0">Start Shift</p>
+                <div class="col time-picker position-relative">
+                  <input class="border-0 border-bottom w-100 form-control form-control-sm shadow-none"
+                    [ngxTimepicker]="toggleTimepicker" [format]="24" name="startShift" readonly required>
+                  <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                </div>
+              </div>
+
+              <div *ngIf="otBtnActive" class="col row">
+                <p class="col-auto align-self-center mb-0">OT Plan</p>
+                <div class="col">
+                  <input type="number" name="ot" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
+                    [(ngModel)]="ot_plan" required>
+                </div>
               </div>
             </div>
 
-            <div class="row">
-              <input type="submit" class="rounded-3 border-0 py-1 px-5 submit-btn mx-auto" placeholder="Submit">
+            <div class="row my-3">
+              <input type="submit" class="rounded-3 border-0 py-1 px-5 submit-btn mx-auto" placeholder="Submit"
+                [disabled]="mode.length==0 || dateRange.controls['end'].value==undefined">
             </div>
           </form>
         </div>

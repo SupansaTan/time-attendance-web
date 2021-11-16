@@ -16,7 +16,19 @@
 
 .btn-active {
   color: white;
-  background-color: $bg-blue;
+  background-color: #4680ff;
+}
+
+/* assign group */
+ngx-material-timepicker-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.bg-grey {
+  background-color: #E9ECEF;
 }
 
 /* heading over table */

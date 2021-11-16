@@ -15,6 +15,7 @@ import { NgOption } from "@ng-select/ng-select";
 })
 export class PlanDetailComponent implements OnInit {
   departmentId: number
+  today: Date
   date: Date | string;
   department: any;
   employees: Array<any>;
@@ -25,7 +26,7 @@ export class PlanDetailComponent implements OnInit {
   isAllChecked: boolean = false
   countSelected: number = 0
 
-  mode: Array<string>
+  mode: Array<string> = []
   otBtnActive: boolean
   shiftBtnActive: boolean
 
@@ -33,6 +34,7 @@ export class PlanDetailComponent implements OnInit {
     start: new FormControl(),
     end: new FormControl()
   });
+  ot_plan: number = 0
 
   filter: FormControl = new FormControl('');
 
@@ -64,8 +66,8 @@ export class PlanDetailComponent implements OnInit {
       { value: 5 },
       { value: 10 }
     ];
-    this.date = new Date();
-    this.date = this.date.toLocaleDateString('th-TH', {
+    this.today = new Date();
+    this.date = this.today.toLocaleDateString('th-TH', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -111,4 +113,6 @@ export class PlanDetailComponent implements OnInit {
       day: 'numeric',
     })
   }
+
+
 }
