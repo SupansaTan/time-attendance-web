@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit  {
 
   LoginUser(){
     
-    if(this.email == "Admin" && this.password == "1234")
+    if(this.email == "admin@gmail.com" && this.password == "1234")
     {
       alert("Welcome to Time-attendance")
       this.router.navigate(['dashboard']);
