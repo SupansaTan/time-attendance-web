@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
   }
 
    logout(): void {
-    console.log("Exit")
+    alert("Logout Time-attendance")
     this.router.navigate(['/auth/login']);
   }
 }
