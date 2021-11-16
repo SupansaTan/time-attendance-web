@@ -101,6 +101,7 @@ export class PlanDetailComponent implements OnInit {
   {
   console.warn(this.assign_form.value);
   }
+  
   get start_date() {
     return this.assign_form.get('ot')!.value
   }

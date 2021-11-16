@@ -63,21 +63,25 @@
                 	<div class="col-6 col-md-3"><input type="date" id="start" formControlName="start_date"></div>
                  	<div class="col-6 col-md-1"><h5>To</h5></div>
                  	<div class="col-6 col-md-3"><input type="date" id="last" formControlName="end_date"></div>
-                </div>
+                 	<div *ngIf="assign_form.controls['start_date'].invalid && (assign_form.controls['start_date'].dirty || assign_form.controls['start_date'].touched)" class="alert alert-danger">
+			<div *ngIf="assign_form.controls['start_date'].errors?.required">Start Date is required.</div></div>
+			<div *ngIf="assign_form.controls['end_date'].invalid && (assign_form.controls['end_date'].dirty || assign_form.controls['end_date'].touched)" class="alert alert-danger">
+			<div *ngIf="assign_form.controls['end_date'].errors?.required">End Date is required.</div></div>
+              	 </div>
                 <div class="row">
                  	<div class="col-6 col-md-2"><h5>Shift</h5></div>
                  	<div class="col"><input type="Time" id="time" formControlName="shift"></div>
-                </div>
+                 	<div *ngIf="assign_form.controls['shift'].invalid && (assign_form.controls['shift'].dirty || assign_form.controls['shift'].touched)" class="alert alert-danger">
+			<div *ngIf="assign_form.controls['shift'].errors?.required">Shift is required.</div></div>
+               </div>
                 <div class="row">
                  	<div class="col-6 col-md-2"><h5>OT</h5></div>
-                 	<div class="col"><input type="decimal" formControlName="ot"></div>
-                </div>
-                <p><input type="submit" (click)="onSubmit()" style="font-size:110%; margin-left:45%; margin-top:1%;" value="Submit"></p>
-                <div *ngIf="ot.invalid && (ot.dirty || ot.touched)" class="alert alert-danger">
-            <div *ngIf="ot.errors?.required">
-            Name is required.
-          </div>
-        </div>
+                 	<div class="col"><input type="number" min="1" formControlName="ot"></div>
+                 	<div *ngIf="assign_form.controls['ot'].invalid && (assign_form.controls['ot'].dirty || assign_form.controls['ot'].touched)" class="alert alert-danger">
+			<div *ngIf="assign_form.controls['ot'].errors?.required">OT is required.</div></div>
+		</div>
+                <p><input type="submit" [disabled]="assign_form.pristine || assign_form.invalid" (click)="onSubmit()" style="font-size:110%; margin-left:45%; margin-top:1%;" value="Submit"></p>
+	
               </div>
              </form>
             </div>
