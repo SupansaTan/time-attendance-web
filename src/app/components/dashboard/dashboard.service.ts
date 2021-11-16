@@ -9,7 +9,6 @@ import { PlanShiftModel } from 'src/app/model/shift.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { ShiftCodeModel } from 'src/app/model/shift.model';
 
-import { Departments } from '../../mock-department'
 
 
 @Injectable({
@@ -19,8 +18,9 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getDepartmentName(id: number) {
-    return Departments.find(department => department.id == id)?.name
+  getDepartmentInfo(id: number) {
+    const url = `${environment.apiTimeAttendanceUrl}/api/departments/` + id
+    return this.http.get<Array<DepartmentModel>>(url)
   }
 
   getPercentage(actual: number, total: number) {
@@ -44,9 +44,19 @@ export class DashboardService {
     return this.http.get<Array<PlanShiftModel>>(url)
   }
 
+  getTodayDepPlanShift(dep_id:any): Observable<Array<PlanShiftModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/department/today/` + dep_id
+    return this.http.get<Array<PlanShiftModel>>(url)
+  }
+
   // get all plan of an employee
   getEmpPlanShift(dep_id:any): Observable<Array<PlanShiftModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/` + dep_id
+    return this.http.get<Array<PlanShiftModel>>(url)
+  }
+
+  getTodayEmpPlanShift(emp_id:any): Observable<Array<PlanShiftModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/today/` + emp_id
     return this.http.get<Array<PlanShiftModel>>(url)
   }
 
