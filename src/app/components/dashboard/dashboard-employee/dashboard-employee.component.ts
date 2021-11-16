@@ -26,6 +26,7 @@ export class DashboardEmployeeComponent implements OnInit {
   date_in:any = '-'
   date_out:any = '-'
   actual_ot: number = 0
+  department_id:number
 
   constructor(private dashboardService: DashboardService, private authService: AuthenticationService) { }
 
@@ -42,6 +43,7 @@ export class DashboardEmployeeComponent implements OnInit {
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.employee = response[0]
       this.department = this.employee.department[0]
+      this.department_id = this.employee.department[0].id
     })
 
     this.dashboardService.getEmpPlanShift(this.employee_id).subscribe((response) => {
@@ -75,6 +77,29 @@ export class DashboardEmployeeComponent implements OnInit {
 
   }
 
+  start_work(){
+    var val = { department: [this.department_id],
+                employee: [this.employee_id],
+                status: "In",
+              }
+    console.log(val)
+    this.dashboardService.add_timerecord(val).subscribe(res=>{
+    alert(res.toString());
+    });
+  }
+
+  end_work(){
+    var val = { 
+                "department": [this.department_id],
+                "employee": [this.employee_id],
+                "status": "Out",
+              }
+    console.log(val)
+    this.dashboardService.add_timerecord(val).subscribe(res=>{
+    alert(res.toString());
+    });
+  }
+
   convertToThaiDate(d: string) {
     let date = parseInt(d.substring(8,10))
     let month = parseInt(d.substring(5,7))
@@ -91,8 +116,6 @@ export class DashboardEmployeeComponent implements OnInit {
 
   getBreaktime(start:any){
     let shiftcode = this.shiftcodes.find(element => element.start_time == start)
-    console.log(start,shiftcode);
-    
     return shiftcode?.start_break + '-' + shiftcode?.end_break
   }
 
@@ -105,14 +128,12 @@ export class DashboardEmployeeComponent implements OnInit {
     
   }
 
-
   calculateOT(dateFuture:any, dateNow:any) {
     let diffInMilliSeconds = Math.abs(dateFuture - dateNow) / 1000;
 
     // calculate days
     const days = Math.floor(diffInMilliSeconds / 86400);
     diffInMilliSeconds -= days * 86400;
-    // console.log('calculated days', days);
 
     // calculate hours
     const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
@@ -121,11 +142,7 @@ export class DashboardEmployeeComponent implements OnInit {
     // calculate minutes
     const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
     diffInMilliSeconds -= minutes * 60;
-    // console.log('minutes', minutes);
-
-    console.log(dateNow, dateFuture);
     
-
     return hours;
   }
   

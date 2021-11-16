@@ -15,6 +15,10 @@
       <h5 class="mb-0 mx-2 d-inline rounded-25 bg-white text-blue px-3">{{ employee.employee_type }}</h5>
     </div>
   </div>
+  <div >
+    <button (click)="start_work()">Start Work</button>
+    <button (click)="end_work()">Get Off Work</button>
+  </div>
 
   <h3 class="mx-4 mt-3 mb-0 heading">Shift/OT Plan</h3>
   <div *ngFor="let plan of planshifts" class="mx-4 my-2 bg-grey rounded-15">

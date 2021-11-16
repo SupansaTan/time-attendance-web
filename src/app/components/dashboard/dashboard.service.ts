@@ -75,4 +75,9 @@ export class DashboardService {
     return this.http.get<Array<ShiftCodeModel>>(url)
   }
 
+  add_timerecord(val:any){
+    const url = `${environment.apiTimeAttendanceUrl}/api/timerecord/new`
+    return this.http.post(url,val)
+  }
+
 }
