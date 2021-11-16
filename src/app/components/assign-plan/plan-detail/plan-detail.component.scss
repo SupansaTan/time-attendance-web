@@ -18,3 +18,11 @@
   color: white;
   background-color: $bg-blue;
 }
+
+/* heading over table */
+.heading-wrapper {
+  p {
+    font-weight: 600;
+    width: fit-content;
+  }
+}
