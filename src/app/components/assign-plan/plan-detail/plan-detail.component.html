@@ -104,22 +104,25 @@
 
   <div class="card rounded-25 border-0 shadow-lg mt-2">
     <div class="row my-3 mx-4 filter-group">
-      <input class="form-control col border-0 border-bottom" type="text" [formControl]="filter"/>
-      <div class="col-2">
-        <p>Shift</p>
-        <ng-select [(ngModel)]="filter_select.shift" [clearable]=false class="pb-0">
+      <div class="col position-relative input-group input-group-sm px-0">
+        <i-feather name="search" class="position-absolute feather-20"></i-feather>
+        <input class="form-control border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [formControl]="filter"/>
+      </div>
+      <div class="col-2 row">
+        <p class="mb-0 col-auto align-self-center">Shift</p>
+        <ng-select [(ngModel)]="filter_select.shift" [clearable]=false class="pb-0 rounded-3 filter-group col">
           <ng-option *ngFor="let item of shift_option" [value]="item.value">{{ item.value }}</ng-option>
         </ng-select>
       </div>
-      <div class="col-2">
-        <p>OT Plan</p>
-        <ng-select [(ngModel)]="filter_select.ot" [clearable]=false class="pb-0">
+      <div class="col-2 row">
+        <p class="mb-0 col-auto align-self-center">OT Plan</p>
+        <ng-select [(ngModel)]="filter_select.ot" [clearable]=false class="pb-0 rounded-3 filter-group col">
           <ng-option *ngFor="let item of ot_option" [value]="item.value">{{ item.value }}</ng-option>
         </ng-select>
       </div>
-      <div class="col-2">
-        <p>Type</p>
-        <ng-select [(ngModel)]="filter_select.type" [clearable]=false class="pb-0">
+      <div class="col-2 row">
+        <p class="mb-0 col-auto align-self-center">Type</p>
+        <ng-select [(ngModel)]="filter_select.type" [clearable]=false class="pb-0 rounded-3 filter-group col">
           <ng-option *ngFor="let item of type_option" [value]="item.value">{{ item.value }}</ng-option>
         </ng-select>
       </div>

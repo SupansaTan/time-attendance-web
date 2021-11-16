@@ -26,3 +26,41 @@
     width: fit-content;
   }
 }
+
+.filter-group {
+  p {
+    width: fit-content;
+  }
+
+  i-feather {
+    stroke: #d0d0d0;
+    z-index: 1000;
+    top: 50%;
+    transform: translateY(-60%);
+  }
+
+  &.ng-select {
+    background-color: #d1d1d1;
+
+    .ng-select-container {
+      .ng-arrow-wrapper {
+        .ng-arrow {
+          color: black !important;
+        }
+      }
+    }
+
+    .ng-value-container {
+      color: black;
+      justify-content: left;
+    }
+
+    .ng-value-container {
+      color: black;
+
+      .ng-input > input {
+        padding-left: 20px;
+      }
+    }
+  }
+}

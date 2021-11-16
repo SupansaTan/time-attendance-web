@@ -14,7 +14,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AssignPlanComponent } from './assign-plan.component';
 import { PlanDetailComponent } from './plan-detail/plan-detail.component';
 import { ShiftRoutingModule } from './shift-routing.module';
-
+import { IconsModule } from 'src/app/icons/icons.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { ShiftRoutingModule } from './shift-routing.module';
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    NgxMaterialTimepickerModule.setLocale('th-TH')
+    NgxMaterialTimepickerModule.setLocale('th-TH'),
+    IconsModule
   ]
 })
 export class ShiftModule { }
