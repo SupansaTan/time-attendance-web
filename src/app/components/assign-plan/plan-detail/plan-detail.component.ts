@@ -23,6 +23,7 @@ export class PlanDetailComponent implements OnInit {
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>();
   timerecord: Array<TimeRecordModel> = new Array<TimeRecordModel>();
   emp_plan: PlanShiftModel = new PlanShiftModel()
+  emp_select: Array<{id: number}>  // employees selected by checkbox
 
   page: any;
   pageSize: any;
@@ -102,7 +103,6 @@ export class PlanDetailComponent implements OnInit {
     this.planshifts.map((planshift) => planshift.checked = false)
     this.shiftService.getDepEmployee(this.departmentId).subscribe((response) => {
       this.employees = response})
-
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
@@ -162,12 +162,19 @@ export class PlanDetailComponent implements OnInit {
   }
 
   setAllSelected() {
-    this.planshifts.map((planshift) => planshift.checked = this.isAllChecked)
+    this.employees.map((employee) => employee.checked = this.isAllChecked)
     this.updateEmployeeSelected()
   }
 
   updateEmployeeSelected() {
-    this.countSelected = this.planshifts.filter((planshift) => planshift.checked == true).length
+    this.countSelected = this.employees.filter((employee) => employee.checked == true).length
+  }
+
+  getEmployeeSelected() {
+    let emp_checked = this.employees.filter((employee) => employee.checked == true)
+    emp_checked.map((emp) => {
+      this.emp_select.push({id: emp.id})
+    })
   }
 
   localeDateFormat(date: Date) {
@@ -178,8 +185,9 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
-  convertDateFormat(date: Date) {
+  convertDateFormat(date_input: string) {
     // convert to `YYYY-MM-DD`
+    let date = new Date(date_input)
     return date.toISOString().split('T')[0]
   }
 

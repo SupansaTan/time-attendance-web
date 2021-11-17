@@ -74,7 +74,6 @@ export class DashboardEmployeeComponent implements OnInit {
       }
     })
     
-
   }
 
   start_work(){
@@ -82,10 +81,17 @@ export class DashboardEmployeeComponent implements OnInit {
                 employee: [this.employee_id],
                 status: "In",
               }
-    console.log(val)
+    var dep_data = {
+                    "dep_code": this.department.dep_code,
+                    "active_employee": this.department.active_employee + 1,
+                    "total_employee": this.department.total_employee,
+                    }
     this.dashboardService.add_timerecord(val).subscribe(res=>{
-    alert(res.toString());
-    });
+      alert(res.toString());
+    })
+    this.dashboardService.increase_active_emp(dep_data).subscribe(res=>{
+      alert(res.toString());
+    })
   }
 
   end_work(){
@@ -94,10 +100,17 @@ export class DashboardEmployeeComponent implements OnInit {
                 "employee": [this.employee_id],
                 "status": "Out",
               }
-    console.log(val)
+    var dep_data = {
+                    "dep_code": this.department.dep_code,
+                    "active_employee": this.department.active_employee - 1,
+                    "total_employee": this.department.total_employee,
+                  }
     this.dashboardService.add_timerecord(val).subscribe(res=>{
-    alert(res.toString());
-    });
+      alert(res.toString());
+    })
+    this.dashboardService.decrease_active_emp(dep_data).subscribe(res=>{
+      alert(res.toString());
+    })
   }
 
   convertToThaiDate(d: string) {

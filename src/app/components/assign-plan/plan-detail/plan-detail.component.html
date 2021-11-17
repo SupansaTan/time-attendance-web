@@ -152,7 +152,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findPlanshift(employee.id).date? 'green':'grey'">
-              <th><input type="checkbox" class="form-check-input" [(ngModel)]="emp_plan.checked" (change)="updateEmployeeSelected()"></th>
+              <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="updateEmployeeSelected()"></th>
               <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
               <th class="text-center">{{ employee.first_name + ' ' + employee.last_name }}</th>
               <th class="text-center">{{ emp_plan.date? emp_plan.date : '-'}}</th>

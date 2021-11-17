@@ -80,4 +80,14 @@ export class DashboardService {
     return this.http.post(url,val)
   }
 
+  increase_active_emp(val:any){
+    const url = `${environment.apiTimeAttendanceUrl}/api/departments/action`
+    return this.http.put(url,val)
+  }
+
+  decrease_active_emp(val:any){
+    const url = `${environment.apiTimeAttendanceUrl}/api/departments/action`
+    return this.http.put(url,val)
+  }
+
 }
