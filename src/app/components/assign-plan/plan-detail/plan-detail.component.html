@@ -58,25 +58,17 @@
 
           <form [formGroup]="assign_form" (ngSubmit)="onSubmit()" class="mx-2 h-100 mt-3">
             <div class="row">
-              <mat-form-field appearance="legacy">
-                <mat-label>Choose Date Range</mat-label>
-                <mat-date-range-input [rangePicker]="picker" [formGroup]="assign_form" [min]="today">
-                  <input matStartDate formControlName="start_date" placeholder="Start Date">
-                  <input matEndDate formControlName="end_date" placeholder="End Date">
-                </mat-date-range-input>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-              </mat-form-field>
+              <div class="col-6 col-md-2"><h5>From</h5></div>
+                	<div class="col-6 col-md-3"><input type="date" id="start" formControlName="start_date"></div>
+                 	<div class="col-6 col-md-1"><h5>To</h5></div>
+                 	<div class="col-6 col-md-3"><input type="date" id="last" formControlName="end_date"></div>
             </div>
 
             <div class="row my-2">
               <div *ngIf="shiftBtnActive" class="col row align-self-center">
                 <p class="col-auto mb-0">Start Shift</p>
                 <div class="col time-picker position-relative">
-                  <input class="border-0 border-bottom w-100 form-control form-control-sm shadow-none"
-                    [ngxTimepicker]="toggleTimepicker" [format]="24" formControlName="shift" readonly required>
-                  <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
-                  <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                  <div class="col"><input type="Time" step="1" id="time" formControlName="shift"></div>
                 </div>
               </div>
 
@@ -105,7 +97,7 @@
       <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
       <p class="text-white bg-blue py-1 px-2 rounded-3 d-flex justify-content-start mb-0">
         <i class="col-auto fas fa-calendar me-2"></i>
-        {{ localeDateFormat(assign_form.controls['start_date'].value) + ' - ' + localeDateFormat(assign_form.controls['end_date'].value) }}
+        {{ (assign_form.controls['start_date'].value) + ' - ' + (assign_form.controls['end_date'].value) }}
       </p>
       <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
       <p class="mb-0 ms-auto">{{ 'Total: ' + department.total_employee +' employees' }}</p>
