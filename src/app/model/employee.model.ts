@@ -9,4 +9,5 @@ export class EmployeeModel {
   role: string;
   email: string;
   password: string;
+  checked?: boolean;
 }
