@@ -4,6 +4,8 @@ import { PlanShiftModel,ShiftCodeModel } from 'src/app/model/shift.model';
 import { EmployeeModel } from 'src/app/model/employee.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { ShiftService } from './shift.service';
+
+import { AuthenticationService } from '../authentication/authentication.service';
 import { DepartmentService } from '../../service/department.service';
 
 @Component({
@@ -12,17 +14,23 @@ import { DepartmentService } from '../../service/department.service';
   styleUrls: ['./assign-plan.component.scss']
 })
 export class AssignPlanComponent implements OnInit {
+  employee_id: number;
+  planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
+  manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
 
-  employees: Array<EmployeeModel> = new Array<EmployeeModel>()
-  departments: Array<DepartmentModel> = new Array<DepartmentModel>()
-
-  constructor(private shiftService: ShiftService, private departmentService: DepartmentService) {}
+  constructor(private shiftService: ShiftService, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.departments = this.departmentService.getDepartments() // mock for test ui
+    this.employee_id = this.authService.getUserid()
 
-    this.shiftService.getDepartments().subscribe((response) => {
-      this.departments = response
-    })
+    this.shiftService.getManagerInfo(this.employee_id).subscribe((response) => {
+      this.manager_info = response
+      this.manager_info[0].department.forEach( (element:any) =>{
+        let department_id = (element.id)
+        this.shiftService.getDepPlanShift(department_id).subscribe((response) => {
+          this.planshifts.push(response[0])
+        });
+      });
+    });
   }
 }

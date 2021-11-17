@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service'
 import { NgOption } from "@ng-select/ng-select";
-import { DepartmentService } from 'src/app/service/department.service';
-import { EmployeeService } from 'src/app/service/employee.service';
+
+import { PlanShiftModel } from 'src/app/model/shift.model';
+import { EmployeeModel } from 'src/app/model/employee.model';
+import { TimeRecordModel } from 'src/app/model/timerecord.model';
+import { DepartmentModel } from 'src/app/model/department.model';
 
 @Component({
   selector: 'app-department-detail',
@@ -12,15 +15,21 @@ import { EmployeeService } from 'src/app/service/employee.service';
 export class DepartmentDetailComponent implements OnInit {
   departmentId: number
   date: Date | string;
-  department: any;
-  employees: Array<any>;
   page: any;
   pageSize: any;
   table_option: NgOption[]
 
-  constructor(private dashboardService: DashboardService, private departmentService: DepartmentService,
-    private employeeService: EmployeeService) { }
+  planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
+  today_planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
+  manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
+  today_timerecords: Array<TimeRecordModel> = new Array<TimeRecordModel>()
+  department: DepartmentModel = new DepartmentModel()
 
+  in_record: TimeRecordModel = new TimeRecordModel()
+  out_record: TimeRecordModel = new TimeRecordModel()
+
+  constructor(private dashboardService: DashboardService) { }
+  
   ngOnInit(): void {
     this.page = 1
     this.pageSize = 10  // row of each page table
@@ -37,11 +46,39 @@ export class DepartmentDetailComponent implements OnInit {
     })
 
     this.departmentId = Number(location.pathname.split("/")[2])
-    this.department = this.departmentService.getDepartment(this.departmentId)
-    this.employees = this.employeeService.getEmployees()
+
+    this.dashboardService.getDepartmentInfo(this.departmentId).subscribe((response) => {
+      this.department = response[0]
+    });
+
+    this.dashboardService.getDepPlanShift(this.departmentId).subscribe((response) => {
+      this.planshifts = response
+    });
+
+    this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
+      this.today_planshifts = response
+    });
+
+    this.dashboardService.getTodayDepTimerecord(this.departmentId).subscribe((response) => {
+      this.today_timerecords = response
+    });
+
+
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
     return this.dashboardService.getPercentage(actual_emp, total_emp)
+  }
+  
+  findTimeRecord(emp_id:any){
+    let in_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "In")[0]
+    let out_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "Out")[0]
+    if (in_){
+      this.in_record = in_
+    }
+    if (out_){
+      this.out_record = out_
+    }
+    return this.in_record
   }
 }

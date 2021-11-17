@@ -15,49 +15,67 @@ export class ShiftService {
 
   constructor(private http:HttpClient) { }
 
-  getEmployees(): Observable<Array<EmployeeModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/employees`
-    return this.http.get<Array<EmployeeModel>>(url)
-  }
-
-  editEmployee(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/employees`
-    return this.http.put(url , val)
-  } 
-
-  getDepartments(): Observable<Array<DepartmentModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/departments`
+  // get department by department id
+  getDepartment(val:any): Observable<Array<DepartmentModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/departments/`+ val
     return this.http.get<Array<DepartmentModel>>(url)
   }
-  
-  editDepartment(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/departments`
-    return this.http.put(url , val)
-  } 
 
+  // get all shift
   getShiftCode(): Observable<Array<ShiftCodeModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/shiftcode`
     return this.http.get<Array<ShiftCodeModel>>(url)
   }
 
-  getTimeRecord(): Observable<Array<TimeRecordModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/timerecord`
-    return this.http.get<Array<TimeRecordModel>>(url)
-  }
-
-  getPlanShift(): Observable<Array<PlanShiftModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/planshift`
+  // get plan by department id
+  getDepPlanShift(dep_id:any): Observable<Array<PlanShiftModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/department/`+ dep_id
     return this.http.get<Array<PlanShiftModel>>(url)
   }
 
-  editPlanShift(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/departments`
-    return this.http.put(url , val)
+  getTodayDepPlanShift(dep_id:any): Observable<Array<PlanShiftModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/department/today/` + dep_id
+    return this.http.get<Array<PlanShiftModel>>(url)
   }
 
-  addPlanShift(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/planshift`
-    return this.http.post(url , val)
+  getManagerInfo(id:number): Observable<Array<EmployeeModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/employees/` + id
+    return this.http.get<Array<EmployeeModel>>(url)
   }
+
+  // val = {data}
+  addPlanshift(val:any){
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/new`
+    return this.http.post(url, val)
+  } 
+
+
+  getPercentage(actual: number, total: number) {
+    return Math.round(actual * 100 / total)
+  }
+
+  // get time record by date 
+  getTimerecordByDepartment(dep_id:any): Observable<Array<TimeRecordModel>>{
+    const url = `${environment.apiTimeAttendanceUrl}/api/timerecord/department/`+ dep_id
+    return this.http.get<Array<TimeRecordModel>>(url)
+  }
+
+  getTimerecordByEmp(emp_id:any): Observable<Array<TimeRecordModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/timerecord/employee/`+ emp_id
+    return this.http.get<Array<TimeRecordModel>>(url)
+  }
+
+  // get plan by department id
+  getEmpPlanShift(val:any): Observable<Array<PlanShiftModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/`+ val
+    return this.http.get<Array<PlanShiftModel>>(url)
+  }
+
+  // get employee by employee id
+  getEmployee(id:any): Observable<Array<EmployeeModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/dashboard/`+ id
+    return this.http.get<Array<EmployeeModel>>(url)
+  }
+
 
 }

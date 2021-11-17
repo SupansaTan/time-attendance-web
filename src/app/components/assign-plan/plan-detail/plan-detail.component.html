@@ -1,7 +1,7 @@
 <main>
   <div class="row row-cols-2 gx-lg-3">
     <div class="col-12 col-lg-6 col-xxl-5">
-      <div class="card rounded-25 border-0 shadow-lg ">
+      <div class="card rounded-25 border-0 shadow-lg">
         <div class="mt-4 mx-4">
           <h3 class="mb-0 heading d-inline">Department</h3>
           <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
@@ -16,14 +16,14 @@
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <path *ngIf="department.actual_emp > 0" class="circle"
-                  [attr.stroke-dasharray]="getPercentage(department.actual_emp, department.total_emp) + ', 100'"
+                <path *ngIf="department.active_employee > 0" class="circle"
+                  [attr.stroke-dasharray]="getPercentage(department.active_employee, department.total_employee) + ', 100'"
                   d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="19.35" class="percentage">{{ getPercentage(department.actual_emp, department.total_emp) + '%' }}</text>
-                <text x="10" y="25.35" class="total-employee">{{ department.actual_emp + '/' + department.total_emp + ' คน' }}</text>
+                <text x="18" y="19.35" class="percentage" *ngIf="department.active_employee">{{ getPercentage(department.active_employee, department.total_employee) + '%' }}</text>
+                <text x="10" y="25.35" class="total-employee" *ngIf="department.active_employee">{{ department.active_employee + '/' + department.total_employee + ' คน' }}</text>
               </svg>
             </div>
           </div>
@@ -36,7 +36,7 @@
 
             <div class="row my-3 d-flex align-items-center">
               <i class="fas fa-clock me-2 col-auto"></i>
-              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ department.start_time + ' - ' + department.end_time }}</p>
+              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ planshifts[0].start_time + ' - ' + planshifts[0].end_time }}</p>
             </div>
           </div>
         </div>
@@ -56,13 +56,13 @@
             </div>
           </div>
 
-          <form action="" method="post" class="mx-2 h-100 mt-3">
+          <form [formGroup]="assign_form" (ngSubmit)="onSubmit()" class="mx-2 h-100 mt-3">
             <div class="row">
               <mat-form-field appearance="legacy">
                 <mat-label>Choose Date Range</mat-label>
-                <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRange" [min]="today">
-                  <input matStartDate formControlName="start" placeholder="Start Date">
-                  <input matEndDate formControlName="end" placeholder="End Date">
+                <mat-date-range-input [rangePicker]="picker" [formGroup]="assign_form" [min]="today">
+                  <input matStartDate formControlName="start_date" placeholder="Start Date">
+                  <input matEndDate formControlName="end_date" placeholder="End Date">
                 </mat-date-range-input>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
@@ -74,7 +74,7 @@
                 <p class="col-auto mb-0">Start Shift</p>
                 <div class="col time-picker position-relative">
                   <input class="border-0 border-bottom w-100 form-control form-control-sm shadow-none"
-                    [ngxTimepicker]="toggleTimepicker" [format]="24" name="startShift" readonly required>
+                    [ngxTimepicker]="toggleTimepicker" [format]="24" formControlName="shift" readonly required>
                   <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
                   <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
                 </div>
@@ -83,7 +83,7 @@
               <div *ngIf="otBtnActive" class="col row">
                 <p class="col-auto align-self-center mb-0">OT Plan</p>
                 <div class="col">
-                  <input type="number" name="ot" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
+                  <input type="number" formControlName="ot" min="0.5" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
                     [(ngModel)]="ot_plan" required>
                 </div>
               </div>
@@ -91,7 +91,8 @@
 
             <div class="row my-3">
               <input type="submit" class="rounded-3 border-0 py-1 px-5 submit-btn mx-auto" placeholder="Submit"
-                [disabled]="mode.length==0 || dateRange.controls['end'].value==undefined">
+                [disabled]="mode.length==0 || assign_form.controls['end_date'].value==undefined || assign_form.pristine || assign_form.invalid"
+                (click)="onSubmit()">
             </div>
           </form>
         </div>
@@ -99,15 +100,15 @@
     </div>
   </div>
 
-  <div *ngIf="dateRange.controls['start'].value && dateRange.controls['end'].value">
+  <div *ngIf="assign_form.controls['start_date'].value && assign_form.controls['end_date'].value">
     <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
       <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
       <p class="text-white bg-blue py-1 px-2 rounded-3 d-flex justify-content-start mb-0">
         <i class="col-auto fas fa-calendar me-2"></i>
-        {{ localeDateFormat(dateRange.controls['start'].value) + ' - ' + localeDateFormat(dateRange.controls['end'].value) }}
+        {{ localeDateFormat(assign_form.controls['start_date'].value) + ' - ' + localeDateFormat(assign_form.controls['end_date'].value) }}
       </p>
       <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
-      <p class="mb-0 ms-auto">{{ 'Total: ' + '30 employees' }}</p>
+      <p class="mb-0 ms-auto">{{ 'Total: ' + department.total_employee +' employees' }}</p>
     </div>
 
     <div class="card rounded-25 border-0 shadow-lg mt-2">
@@ -150,14 +151,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="employee.start? 'green':'grey'">
-              <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="updateEmployeeSelected()"></th>
-              <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
-              <th class="text-center">{{ employee.name }}</th>
-              <th class="text-center">{{ date }}</th>
-              <th class="text-center">{{ employee.shift }}</th>
-              <th class="text-center">{{ employee.ot }}</th>
-              <th class="text-center">{{ employee.type }}</th>
+            <tr *ngFor="let planshift of planshifts | slice: (page-1) * pageSize : page * pageSize" [class]="planshift.start_time? 'green':'grey'">
+              <th><input type="checkbox" class="form-check-input" [(ngModel)]="planshift.checked" (change)="updateEmployeeSelected()"></th>
+              <th scope="row">{{ planshifts.indexOf(planshift)+1 }}</th>
+              <th class="text-center">{{ planshift.employee[0].first_name + ' ' + planshift.employee[0].last_name }}</th>
+              <th class="text-center">{{ planshift.date }}</th>
+              <th class="text-center">{{ planshift.start_time + '-' + planshift.end_time }}</th>
+              <th class="text-center">{{ planshift.overtime }}</th>
+              <th class="text-center">{{ planshift.employee[0].employee_type }}</th>
             </tr>
           </tbody>
         </table>
