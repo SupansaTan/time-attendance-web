@@ -1,4 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { SocialAuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-navbar',
@@ -10,17 +12,24 @@ export class NavbarComponent implements OnInit {
   showNavRight: boolean;
   public screenWidth: any;
 
-  constructor() { }
+  constructor(private router: Router, private socialAuthService: SocialAuthService) { }
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.showNavRight = !(this.screenWidth < 992)
-    this.username = 'สมหญิง รักสมชาย'
+    this.socialAuthService.authState.subscribe((socialUser) => {
+      this.username  = socialUser.name;
+    });
   }
 
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
     this.showNavRight = !(this.screenWidth < 992)
+  }
+
+   logout(): void {
+    alert("Logout Time-attendance")
+    this.router.navigate(['/auth/login']);
   }
 }
