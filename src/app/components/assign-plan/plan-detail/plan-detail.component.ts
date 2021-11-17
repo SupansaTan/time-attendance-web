@@ -178,4 +178,9 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
+  convertDateFormat(date: Date) {
+    // convert to `YYYY-MM-DD`
+    return date.toISOString().split('T')[0]
+  }
+
 }
