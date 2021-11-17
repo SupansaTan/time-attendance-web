@@ -1,5 +1,5 @@
 <main>
-  <div *ngIf="department.name" class="row row-cols-2 gx-lg-3">
+  <div class="row row-cols-2 gx-lg-3">
     <div class="col-12 col-lg-6 col-xxl-5">
       <div class="card rounded-25 border-0 shadow-lg">
         <div class="mt-4 mx-4">
@@ -108,7 +108,7 @@
         {{ localeDateFormat(assign_form.controls['start_date'].value) + ' - ' + localeDateFormat(assign_form.controls['end_date'].value) }}
       </p>
       <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
-      <p class="mb-0 ms-auto">{{ 'Total: ' + employees.length +' employees' }}</p>
+      <p class="mb-0 ms-auto">{{ 'Total: ' + department.total_employee +' employees' }}</p>
     </div>
 
     <div class="card rounded-25 border-0 shadow-lg mt-2">

@@ -17,7 +17,7 @@ export class PlanDetailComponent implements OnInit {
   today: Date
   date: Date | string;
   employees: Array<EmployeeModel> = new Array<EmployeeModel>();
-  department: DepartmentModel = new DepartmentModel();
+  department: DepartmentModel = <DepartmentModel>{};
   shiftcode: Array<ShiftCodeModel> = new Array<ShiftCodeModel>();
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>();
   timerecord: Array<TimeRecordModel> = new Array<TimeRecordModel>();
