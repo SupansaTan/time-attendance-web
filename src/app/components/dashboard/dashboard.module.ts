@@ -9,12 +9,15 @@ import { DepartmentDetailComponent } from './department-detail/department-detail
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DashboardEmployeeComponent } from './dashboard-employee/dashboard-employee.component';
+import { IconsModule } from '../../icons/icons.module';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     DashboardManagerComponent,
-    DepartmentDetailComponent
+    DepartmentDetailComponent,
+    DashboardEmployeeComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgxSpinnerModule,
     NgbModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    IconsModule,
   ]
 })
 export class DashboardModule { }

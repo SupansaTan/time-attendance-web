@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmRegisterComponent } from './confirm-register.component';
+import { DashboardEmployeeComponent } from './dashboard-employee.component';
 
-describe('ConfirmRegisterComponent', () => {
-  let component: ConfirmRegisterComponent;
-  let fixture: ComponentFixture<ConfirmRegisterComponent>;
+describe('DashboardEmployeeComponent', () => {
+  let component: DashboardEmployeeComponent;
+  let fixture: ComponentFixture<DashboardEmployeeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmRegisterComponent ]
+      declarations: [ DashboardEmployeeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfirmRegisterComponent);
+    fixture = TestBed.createComponent(DashboardEmployeeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

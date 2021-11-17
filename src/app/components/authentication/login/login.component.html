@@ -17,33 +17,25 @@
                                 <div class="google-icon-wrapper">
                                     <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
                                 </div>
-                                <p class="btn-text"><b>Sign in with google</b></p>
+                                <p class="btn-text"><b (click)="loginWithGoogle()">Sign in with google</b> </p>
                             </div>
 
                         </div>
                         <form>
                             <div class="form-group">
-                                <input type="text" id="" name="name" required>
+                                <input type="email" style='text-transform:lowercase' name="email" [(ngModel)]="email" required>
                                 <label>Email</label>
                             </div>
 
                             <div class="form-group">
-                                <input type="password" id="" name="password" required>
+                                <input type="password" name="password" [(ngModel)]="password" required>
                                 <label>Password</label>
                             </div>
 
-                            <div class="forgotpassword">
-                                <a href="http://localhost:4200/auth/reset">Forgot your password?</a>
-                            </div>
-
                             <div class="myform-button">
-                                <button class="myform-btn">Login</button>
-
+                                <button type="submit" class="myform-btn" (click)="LoginUser()">Login</button>
                             </div>
 
-                            <div class="noaccount">
-                                <a href="http://localhost:4200/auth/register">Don't have account ? Register</a>
-                            </div>
                         </form>
                     </div>
 

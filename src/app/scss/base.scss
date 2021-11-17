@@ -24,6 +24,10 @@
 
 /* border radius size */
 .rounded {
+  &-15 {
+    border-radius: 15px !important;
+  }
+
   &-25 {
     border-radius: 25px !important;
   }
