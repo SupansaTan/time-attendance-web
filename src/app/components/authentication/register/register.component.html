@@ -1,0 +1,77 @@
+<section class="myform">
+    <h2>Register</h2>
+    <div class=' btn-google '>
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+        <div class="google-btn">
+            <div class="google-icon-wrapper">
+                <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+            </div>
+            <p class="btn-text"><b>Sign up with google</b></p>
+        </div>
+
+    </div>
+
+
+    <body>
+
+        <!-- form body -->
+        <div class="form-body ">
+            <!-- email and password -->
+            <div class="horizontal-group1 ">
+
+                <div class="form-group left ">
+                    <label for="password " class="label-title ">อีเมล</label>
+                    <input type="text" id="password " class="form-input " placeholder="enter your email " required="required ">
+                </div>
+
+                <div class="form-group right ">
+                    <label for="confirm-password " class="label-title "> รหัสผ่าน</label>
+                    <input type="password" class="form-input " id="confirm-password " placeholder="enter your password  " required="required ">
+                </div>
+
+            </div>
+            <!-- Firstname and Lastname -->
+            <div class="horizontal-group2 ">
+                <div class="form-group left ">
+                    <label for="firstname " class="label-title ">ชื่อ</label>
+                    <input type="text " id="firstname " class="form-input " placeholder="enter your first name " required="required " />
+                </div>
+                <div class="form-group right ">
+                    <label for="lastname " class="label-title ">นามสกุล</label>
+                    <input type="text " id="lastname " class="form-input " placeholder="enter your last name " />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="horizontal-group3">
+
+            <label id="position">ตำแหน่ง</label>
+            <label for="head">
+            <input type="radio" name="position" value="head" id="head"> หัวหน้าแผนก</label>
+            <label for="employ">
+            <input type="radio" name="position" value="employ" id="employ">พนักงาน</label>
+        </div>
+
+
+
+
+        <div class="selectBox" onclick="showCheckboxes()">
+            <label id="section">แผนก</label>
+            <select>
+
+                <option>เลือกแผนก</option>
+                <option>งานเชือดไก่</option>
+                <option>งานถอนขนไก่</option>
+                <option>งานไก่ตกราว</option>
+
+            </select>
+        </div>
+
+
+    </body>
+
+    <form action="http://localhost:4200/auth/login">
+        <input type="submit" value="ยืนยันการลงทะเบียน" id="regis-form-submit">
+    </form>
+</section>
