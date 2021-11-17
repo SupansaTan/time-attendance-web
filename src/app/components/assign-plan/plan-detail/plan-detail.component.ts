@@ -112,9 +112,7 @@ export class PlanDetailComponent implements OnInit {
   findPlanshift(emp_id:any){
     this.emp_plan = new PlanShiftModel()
     let plan = this.planshifts.filter(element => element.employee[0].id == emp_id)[0]
-    if (plan){
-      this.emp_plan = plan
-    }
+    plan? this.emp_plan = plan : false
     return this.emp_plan
   }
   add_planshift(){

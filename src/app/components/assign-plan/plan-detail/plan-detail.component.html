@@ -1,14 +1,14 @@
 <main>
-  <div class="row row-cols-2 gx-lg-3">
+  <div class="row row-cols-2 g-3">
     <div class="col-12 col-lg-6 col-xxl-5">
-      <div class="card rounded-25 border-0 shadow-lg">
+      <div class="card rounded-25 border-0 shadow-lg h-100">
         <div class="mt-4 mx-4">
           <h3 class="mb-0 heading d-inline">Department</h3>
           <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
         </div>
 
-        <div class="row mx-3 mt-2 mb-4 g-3">
-          <div class="col d-flex justify-content-center align-items-center">
+        <div class="row mx-3 mt-2 mb-4 g-3 h-100">
+          <div class="col-5 col-md-4 col-xl-6 d-flex justify-content-center align-items-center px-0 mt-0">
             <div class="chart-wrapper w-80">
               <svg viewBox="0 0 36 36" class="circular-chart green">
                 <path class="circle-bg"
@@ -28,7 +28,7 @@
             </div>
           </div>
 
-          <div class="col align-self-center m-0 detail-wrapper">
+          <div class="col-auto col-xl-6 align-self-center m-0 detail-wrapper">
             <div class="row my-3 d-flex align-items-center date-wrapper">
               <i class="col-auto fas fa-calendar text-blue"></i>
               <p class="col-auto mb-0 px-3 rounded-25 shadow text-white bg-blue">{{ date }}</p>
@@ -43,13 +43,13 @@
       </div>
     </div>
 
-    <div class="col-12 col-lg-6 col-xxl-7">
+    <div class="col-12 col-lg-6 col-xxl-7 assign-wrapper">
       <div class="card rounded-25 border-0 shadow-lg h-100">
         <div class="mt-4 mx-4 align-items-center">
 
-          <div class="assign-top align-items-center row">
-            <h3 class="mb-0 heading d-flex justify-content-start col">Assign</h3>
-            <div class="d-flex justify-content-end col">
+          <div class="assign-top align-items-center row gy-2">
+            <h3 class="mb-0 heading d-flex justify-content-start col-12 col-xl-auto">Assign</h3>
+            <div class="d-flex justify-content-start justify-content-xl-end col-12 col-xl mt-3 mt-xl-0 mx-2 mx-xl-0">
               <h5 class="mb-0">Select Mode</h5>
               <button [ngClass]="{'btn-active': shiftBtnActive}" class="border-0 rounded-15 mx-2 px-3" (click)="setAssignMode('shift')">Shift</button>
               <button [ngClass]="{'btn-active': otBtnActive}" class="border-0 rounded-15 me-2 px-3" (click)="setAssignMode('ot')">OT</button>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="row my-2">
-              <div *ngIf="shiftBtnActive" class="col row align-self-center">
+              <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row align-self-center">
                 <p class="col-auto mb-0">Start Shift</p>
                 <div class="col time-picker position-relative">
                   <input class="border-0 border-bottom w-100 form-control form-control-sm shadow-none"
@@ -80,7 +80,7 @@
                 </div>
               </div>
 
-              <div *ngIf="otBtnActive" class="col row">
+              <div *ngIf="otBtnActive" class="col-12 col-xl-6 row mt-2 mt-xl-0">
                 <p class="col-auto align-self-center mb-0">OT Plan</p>
                 <div class="col">
                   <input type="number" formControlName="ot" min="0.5" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
@@ -113,23 +113,23 @@
 
     <div class="card rounded-25 border-0 shadow-lg mt-2">
       <div class="row my-3 mx-4 filter-group">
-        <div class="col position-relative input-group input-group-sm px-0">
+        <div class="col-12 col-xl-6 position-relative input-group input-group-sm px-0">
           <i-feather name="search" class="position-absolute feather-20"></i-feather>
           <input class="form-control border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [formControl]="filter"/>
         </div>
-        <div class="col-2 row">
+        <div class="col-12 col-md-6 col-xl-2 row my-2 my-xl-0 mt-3 mt-xl-0">
           <p class="mb-0 col-auto align-self-center">Shift</p>
           <ng-select [(ngModel)]="filter_select.shift" [clearable]=false class="pb-0 rounded-3 filter-group col">
             <ng-option *ngFor="let item of shift_option" [value]="item.value">{{ item.value }}</ng-option>
           </ng-select>
         </div>
-        <div class="col-2 row">
+        <div class="col-12 col-md-6 col-xl-2 row mb-2 mt-md-3 mb-xl-0 mt-xl-0">
           <p class="mb-0 col-auto align-self-center">OT Plan</p>
           <ng-select [(ngModel)]="filter_select.ot" [clearable]=false class="pb-0 rounded-3 filter-group col">
             <ng-option *ngFor="let item of ot_option" [value]="item.value">{{ item.value }}</ng-option>
           </ng-select>
         </div>
-        <div class="col-2 row">
+        <div class="col-12 col-md-6 col-xl-2 row mb-2 mb-xl-0">
           <p class="mb-0 col-auto align-self-center">Type</p>
           <ng-select [(ngModel)]="filter_select.type" [clearable]=false class="pb-0 rounded-3 filter-group col">
             <ng-option *ngFor="let item of type_option" [value]="item.value">{{ item.value }}</ng-option>
@@ -165,7 +165,7 @@
       </div>
 
       <div class="row mx-4 my-2 align-items-center">
-        <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
+        <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-2 col-xl-1 rounded-50 pb-0"
           name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
         </ng-select>
         <p class="d-flex align-items-center col-auto m-0">
