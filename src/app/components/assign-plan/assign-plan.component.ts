@@ -6,6 +6,7 @@ import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { ShiftService } from './shift.service';
 
 import { AuthenticationService } from '../authentication/authentication.service';
+import { DepartmentService } from '../../service/department.service';
 
 @Component({
   selector: 'app-assign-plan',

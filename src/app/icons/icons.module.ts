@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FeatherModule } from 'angular-feather';
-import { Menu, User, LogIn, LogOut, MoreVertical, Clock } from 'angular-feather/icons';
+import { Menu, User, LogIn, LogOut, MoreVertical, Clock, Search } from 'angular-feather/icons';
 
 const icons = {
   Menu,
@@ -10,7 +10,8 @@ const icons = {
   LogIn,
   LogOut,
   MoreVertical,
-  Clock
+  Clock,
+  Search
 };
 
 @NgModule({
