@@ -7,6 +7,7 @@ import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { NgOption } from "@ng-select/ng-select";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
+
 @Component({
   selector: 'app-plan-detail',
   templateUrl: './plan-detail.component.html',
@@ -21,8 +22,8 @@ export class PlanDetailComponent implements OnInit {
   shiftcode: Array<ShiftCodeModel> = new Array<ShiftCodeModel>();
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>();
   timerecord: Array<TimeRecordModel> = new Array<TimeRecordModel>();
+  emp_plan: PlanShiftModel = new PlanShiftModel()
 
-  /* table group */
   page: any;
   pageSize: any;
   table_option: NgOption[]
@@ -99,12 +100,23 @@ export class PlanDetailComponent implements OnInit {
 
     /* add checked property for checkbox */
     this.planshifts.map((planshift) => planshift.checked = false)
+    this.shiftService.getDepEmployee(this.departmentId).subscribe((response) => {
+      this.employees = response})
+
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
     return this.shiftService.getPercentage(actual_emp, total_emp)
   }
 
+  findPlanshift(emp_id:any){
+    this.emp_plan = new PlanShiftModel()
+    let plan = this.planshifts.filter(element => element.employee[0].id == emp_id)[0]
+    if (plan){
+      this.emp_plan = plan
+    }
+    return this.emp_plan
+  }
   add_planshift(){
     var val = {
       "department": [this.departmentId],

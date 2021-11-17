@@ -8,10 +8,10 @@ export class AuthenticationService {
   constructor() { }
 
   getUserRole() {
-    return 'employee'
+    return 'manager'
   }
 
   getUserid(){
-    return 2
+    return 7
   }
 }

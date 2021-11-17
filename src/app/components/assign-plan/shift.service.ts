@@ -77,5 +77,11 @@ export class ShiftService {
     return this.http.get<Array<EmployeeModel>>(url)
   }
 
+  // get all employee of department
+  getDepEmployee(dep_id:any): Observable<Array<EmployeeModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/employees/department/` + dep_id
+    return this.http.get<Array<EmployeeModel>>(url)
+  }
+
 
 }

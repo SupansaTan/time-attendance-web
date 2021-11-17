@@ -151,14 +151,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let planshift of planshifts | slice: (page-1) * pageSize : page * pageSize" [class]="planshift.start_time? 'green':'grey'">
-              <th><input type="checkbox" class="form-check-input" [(ngModel)]="planshift.checked" (change)="updateEmployeeSelected()"></th>
-              <th scope="row">{{ planshifts.indexOf(planshift)+1 }}</th>
-              <th class="text-center">{{ planshift.employee[0].first_name + ' ' + planshift.employee[0].last_name }}</th>
-              <th class="text-center">{{ planshift.date }}</th>
-              <th class="text-center">{{ planshift.start_time + '-' + planshift.end_time }}</th>
-              <th class="text-center">{{ planshift.overtime }}</th>
-              <th class="text-center">{{ planshift.employee[0].employee_type }}</th>
+            <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findPlanshift(employee.id).date? 'green':'grey'">
+              <th><input type="checkbox" class="form-check-input" [(ngModel)]="emp_plan.checked" (change)="updateEmployeeSelected()"></th>
+              <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
+              <th class="text-center">{{ employee.first_name + ' ' + employee.last_name }}</th>
+              <th class="text-center">{{ emp_plan.date? emp_plan.date : '-'}}</th>
+              <th class="text-center">{{ emp_plan.date? (emp_plan.start_time + '-' + emp_plan.end_time): '-' }}</th>
+              <th class="text-center">{{ emp_plan.date? emp_plan.overtime : '-' }}</th>
+              <th class="text-center">{{ employee.employee_type }}</th>
             </tr>
           </tbody>
         </table>
