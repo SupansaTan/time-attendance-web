@@ -29,7 +29,7 @@ export class DepartmentDetailComponent implements OnInit {
   out_record: TimeRecordModel = new TimeRecordModel()
 
   constructor(private dashboardService: DashboardService) { }
-  
+
   ngOnInit(): void {
     this.page = 1
     this.pageSize = 10  // row of each page table
@@ -44,8 +44,8 @@ export class DepartmentDetailComponent implements OnInit {
       month: 'long',
       day: 'numeric',
     })
-    this.today_plan_exist = false
 
+    /* get data */
     this.departmentId = Number(location.pathname.split("/")[2])
 
     this.dashboardService.getDepartmentInfo(this.departmentId).subscribe((response) => {
@@ -71,18 +71,15 @@ export class DepartmentDetailComponent implements OnInit {
   getPercentage(actual_emp: number, total_emp: number) {
     return this.dashboardService.getPercentage(actual_emp, total_emp)
   }
-  
+
   findTimeRecord(emp_id:any){
     this.in_record = new TimeRecordModel()
     this.out_record = new TimeRecordModel()
     let in_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "In")[0]
     let out_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "Out")[0]
-    if (in_){
-      this.in_record = in_
-    }
-    if (out_){
-      this.out_record = out_
-    }
+
+    in_? this.in_record = in_ : false
+    out_? this.out_record = out_: false
     return this.in_record
   }
 }

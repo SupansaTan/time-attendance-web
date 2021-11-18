@@ -1,13 +1,16 @@
 <main>
-  <div class="card rounded-25 border-0 shadow-lg">
-    <div class="mt-4 mx-4">
-      <h3 class="mb-0 heading d-inline">Department</h3>
-      <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
+  <!-- department info card -->
+  <div class="card rounded-25 border-0 shadow-lg department-info-wrapper">
+    <!-- heading -->
+    <div class="mt-4 mx-4 row gy-2">
+      <h3 class="mb-0 heading col-auto">Department</h3>
+      <h3 class="name px-3 rounded-25 shadow text-white bg-blue col-auto">{{ department.name }}</h3>
     </div>
 
-    <div class="row mx-3 mt-2 mb-3 g-3">
-      <div class="col-2">
-        <div class="chart-wrapper w-90">
+    <div class="row mx-3 mb-3 g-1">
+      <!-- chart -->
+      <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+        <div class="chart-wrapper w-90 mx-auto">
           <svg viewBox="0 0 36 36" class="circular-chart green">
             <path class="circle-bg"
               d="M18 2.0845
@@ -26,25 +29,30 @@
         </div>
       </div>
 
-      <div class="col align-self-center m-0 detail-wrapper">
+      <!-- date & plan shift -->
+      <div class="col-12 col-md-auto align-self-center m-0 detail-wrapper mx-2 mx-md-0">
         <div class="row my-3 d-flex align-items-center date-wrapper">
           <i class="col-auto fas fa-calendar text-blue"></i>
           <p class="col-auto mb-0 px-3 rounded-25 shadow text-white bg-blue">{{ date }}</p>
         </div>
 
         <div class="row my-3 d-flex align-items-center">
-          <i class="fas fa-clock me-2 col-auto"></i>
-          <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ today_plan_exist? (today_planshifts[0].start_time + ' - ' + today_planshifts[0].end_time) : 'No Plan Today' }}</p>
+          <p class="col-auto mb-0">
+            <i class="fas fa-clock"></i>
+            Shift Plan
+          </p>
+          <p class="px-3 rounded-25 shadow bg-white col-auto mb-0">{{ today_plan_exist? (today_planshifts[0].start_time.slice(0,5) + ' - ' + today_planshifts[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
         </div>
-
       </div>
 
     </div>
   </div>
 
+  <!-- time record table card -->
   <div class="card rounded-25 border-0 shadow-lg mt-3">
     <h3 class="mt-4 mx-4 heading">Time Record</h3>
 
+    <!-- table -->
     <div class="table-responsive mx-4">
       <table class="table table-hover table-borderless">
         <thead class="text-white">
@@ -55,7 +63,7 @@
             <th scope="col" class="text-center">End Time</th>
           </tr>
         </thead>
-        <tbody *ngIf="today_plan_exist">
+        <tbody *ngIf="today_planshifts.length > 0">
           <tr  *ngFor="let plan of today_planshifts | slice: (page-1) * pageSize : page * pageSize" [class]="findTimeRecord(plan.employee[0].id).status? 'green':'grey'">
             <th scope="row">{{ today_planshifts.indexOf(plan)+1 }}</th>
             <th class="text-center">{{ plan.employee[0].first_name + ' ' + plan.employee[0].last_name }}</th>
@@ -63,17 +71,23 @@
             <th class="text-center">{{ out_record.status? out_record.time.slice(0,8) : '-' }}</th>
           </tr>
         </tbody>
+        <tbody *ngIf="today_planshifts.length === 0">
+          <tr>
+            <th colspan="4" class="text-center">No data</th>
+          </tr>
+        </tbody>
       </table>
     </div>
 
-    <div class="row mx-4 my-2 align-items-center">
-      <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
+    <!-- table option -->
+    <div class="row my-2 mx-4 align-items-center">
+      <ng-select *ngIf="today_planshifts.length > 0" [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
         name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
       </ng-select>
-      <p class="d-flex align-items-center col-auto m-0">
+      <p class="d-flex align-items-center col-auto m-0" [ngClass]="{ 'px-0': (today_planshifts.length === 0)}">
         {{ 'Showing '+ (today_plan_exist? pageSize*(page-1)+1 : 0) +' to '+ (pageSize*page>today_planshifts.length? today_planshifts.length:pageSize*page) +' of '+ today_planshifts.length +' results'}}
       </p>
-      <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
+      <ngb-pagination *ngIf="today_planshifts.length > 0" class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
         [collectionSize]="today_planshifts.length">
       </ngb-pagination>
     </div>
