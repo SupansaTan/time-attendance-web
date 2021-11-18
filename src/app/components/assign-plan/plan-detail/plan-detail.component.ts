@@ -118,18 +118,20 @@ export class PlanDetailComponent implements OnInit {
   add_planshift(){
     var val = {
       "department": [this.departmentId],
-      "employee_list": ["list_of_empID"],
-      "overtime": 0,
-      "start_date": "str_date_start",
-      "end_date": "str_date_end",
-      "start_time": "str_start_time"
+      "employee_list": [1],
+      "overtime": [this.ot],
+      "start_date": [this.start_date],
+      "end_date": [this.end_date],
+      "start_time": [this.shift]
     }
     this.shiftService.addPlanshift(val).subscribe(res=>{
       console.log(res.toString());
     })
   }
 
-  onSubmit(){
+  onSubmit()
+  {
+    this.add_planshift();
     console.warn(this.assign_form.value);
   }
 
