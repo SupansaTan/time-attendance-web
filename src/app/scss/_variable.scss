@@ -14,3 +14,20 @@ $bg-grd-dark: linear-gradient(to right, #101b33 0%, #1f3054 100%);
 $bg-grey: #f4f4f4;
 $bg-darkgrey: #e5e5e5;
 $bg-blue: #3a538a;
+
+/* responsive */
+$breakpoints: (
+  mobile : 0px,
+  tablet : 768px,
+  desktop: 992px,
+  large-desktop: 1200px,
+  larger-desktop: 1400px
+);
+
+@mixin media($keys...){
+  @each $key in $keys {
+    @media (min-width: map-get($breakpoints, $key)){
+      @content
+    }
+  }
+}
