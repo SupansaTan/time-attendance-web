@@ -1,4 +1,5 @@
 @import '../../../scss/variable';
+@import '../../../scss/base';
 
 .heading {
   color: #1f3054;
@@ -7,7 +8,7 @@
 
 .card.department {
   color: black;
-  min-height: 240px;
+  min-height: 230px;
   background-color: $bg-grey;
 
   &.grey {
@@ -15,8 +16,8 @@
   }
 }
 
-.ot-wrapper {
-  .hours {
+.shift-wrapper {
+  p.rounded-25 {
     width: fit-content;
   }
 }
@@ -24,5 +25,5 @@
 /* chart */
 .chart-wrapper {
   right: 0;
-  bottom: 5px;
+  bottom: .25rem;
 }

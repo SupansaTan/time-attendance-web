@@ -24,12 +24,14 @@ export class DashboardManagerComponent implements OnInit {
 
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.manager_info = response
+
       this.manager_info[0].department.forEach( (element:any) =>{
         let department_id = (element.id)
+
         this.dashboardService.getDepPlanShift(department_id).subscribe((response) => {
           this.planshifts.push(response[0])
-        });
-      });
+        })
+      })
     });
 
 
