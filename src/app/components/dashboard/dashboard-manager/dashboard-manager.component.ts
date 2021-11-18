@@ -26,6 +26,7 @@ export class DashboardManagerComponent implements OnInit {
 
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.manager_info = response
+
       this.manager_info[0].department.forEach( (element:any) =>{
         this.departments.push(element)
         this.dashboardService.getTodayDepPlanShift(element.id).subscribe((res) => {
@@ -33,7 +34,6 @@ export class DashboardManagerComponent implements OnInit {
         })
       })
     })
-
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
