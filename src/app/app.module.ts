@@ -12,8 +12,8 @@ import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IconsModule } from './icons/icons.module';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { AssignPlanComponent } from './components/assign-plan/assign-plan.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
@@ -30,7 +30,6 @@ import { AuthGuardService } from './auth-guard.service';
     NavigationBarComponent,
     NavbarComponent,
     BreadcrumbComponent,
-    AssignPlanComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +45,8 @@ import { AuthGuardService } from './auth-guard.service';
       {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]}, // only accessible if authorised
       {path: 'auth/login', component: LoginComponent}
     ]),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',

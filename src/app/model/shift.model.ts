@@ -1,13 +1,16 @@
 export class PlanShiftModel {
+    id:number;
     date: string;
-    dep_code: string;
-    emp: number;
+    department: any;
+    employee: any;
     start_time: string;
     end_time: string;
     overtime: number;
+    checked?: boolean;
 }
 
 export class ShiftCodeModel {
+    id:number;
     code: string;
     start_time: string;
     end_time: string;

@@ -1,5 +1,5 @@
 export class EmployeeModel {
-  employee_id: number;
+  id: number;
   name_title: string;
   first_name: string;
   last_name: string;
@@ -9,4 +9,5 @@ export class EmployeeModel {
   role: string;
   email: string;
   password: string;
+  checked?: boolean;
 }

@@ -7,10 +7,11 @@
 
 .card.department {
   color: black;
-  background-color: #f4f4f4;
+  min-height: 240px;
+  background-color: $bg-grey;
 
   &.grey {
-    background-color: #e5e5e5;
+    background-color: $bg-darkgrey;
   }
 }
 

@@ -1,6 +1,8 @@
 export class TimeRecordModel {
-    emp: number;
+    id: number;
     date: string;
     time: string;
+    department:any;
+    employee: any;
     status: string;
 }

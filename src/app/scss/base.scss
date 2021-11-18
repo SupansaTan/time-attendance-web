@@ -37,6 +37,24 @@
   }
 }
 
+/* text */
+.text {
+  &-black {
+    color: black;
+  }
+}
+
+/* width */
+.w {
+  &-90 {
+    width: 90% !important;
+  }
+
+  &-80 {
+    width: 80% !important;
+  }
+}
+
 /* table */
 thead {
   background-color: #3a538a;
@@ -182,8 +200,10 @@ ngb-pagination {
 /* responsive */
 $breakpoints: (
   mobile : 0px,
-  tablet : 426px,
-  desktop: 992px
+  tablet : 768px,
+  desktop: 992px,
+  large-desktop: 1200px,
+  larger-desktop: 1400px
 );
 
 @mixin media($keys...){

@@ -28,7 +28,7 @@ export const Departments = [
   },
   {
     id: 4,
-    name: 'งานเชือดไก่',
+    name: 'งานจัดเก็บ',
     start_time: '05:00',
     end_time: '13:00',
     ot_plan: 2.5,
@@ -37,7 +37,7 @@ export const Departments = [
   },
   {
     id: 5,
-    name: 'งานถอนขนไก่',
+    name: 'งานจ่ายสินค้าแช่แข็ง',
     start_time: '05:00',
     end_time: '13:00',
     ot_plan: 2.5,
