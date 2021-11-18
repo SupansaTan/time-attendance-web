@@ -36,7 +36,7 @@
 
             <div class="row my-3 d-flex align-items-center">
               <i class="fas fa-clock me-2 col-auto"></i>
-              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ planshifts[0].start_time + ' - ' + planshifts[0].end_time }}</p>
+              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ (planshifts.length>0)? (planshifts[0].start_time + ' - ' + planshifts[0].end_time) : 'No Plan Today' }}</p>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
               <div *ngIf="otBtnActive" class="col row">
                 <p class="col-auto align-self-center mb-0">OT Plan</p>
                 <div class="col">
-                  <input type="number" formControlName="ot" min="0.5" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
+                  <input type="number" formControlName="ot" min="0" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
                     [(ngModel)]="ot_plan" required>
                 </div>
               </div>

@@ -90,11 +90,13 @@ export class PlanDetailComponent implements OnInit {
     this.departmentId = Number(location.pathname.split("/")[2])
 
     /* get data */
-    this.shiftService.getDepartment(this.departmentId).subscribe((response) => {
+    this.shiftService.getDepartmentInfo(this.departmentId).subscribe((response) => {
       this.department = response[0]})
 
     this.shiftService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
-      this.planshifts = response})
+      if (response[0]) {
+        this.planshifts = response}
+    })
 
     this.shiftService.getShiftCode().subscribe((response) => {
       this.shiftcode = response})
@@ -117,17 +119,18 @@ export class PlanDetailComponent implements OnInit {
     }
     return this.emp_plan
   }
+  
   add_planshift(){
     var val = {
       "department": [this.departmentId],
       "employee_list": [1],
-      "overtime": [this.ot],
-      "start_date": [this.start_date],
-      "end_date": [this.end_date],
-      "start_time": [this.shift]
+      "overtime": this.ot,
+      "start_date": this.start_date,
+      "end_date": this.end_date,
+      "start_time": this.shift
     }
     this.shiftService.addPlanshift(val).subscribe(res=>{
-      console.log(res.toString());
+      alert(res.toString());
     })
   }
 
@@ -138,13 +141,13 @@ export class PlanDetailComponent implements OnInit {
   }
 
   get start_date() {
-    return this.assign_form.get('ot')!.value
+    return this.assign_form.get('start_date')!.value
   }
   get end_date() {
-    return this.assign_form.get('ot')!.value
+    return this.assign_form.get('end_date')!.value
   }
   get shift() {
-    return this.assign_form.get('ot')!.value
+    return this.assign_form.get('shift')!.value
   }
   get ot() {
     return this.assign_form.get('ot')!.value

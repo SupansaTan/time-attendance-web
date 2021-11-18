@@ -3,10 +3,10 @@
     <h3 class="mx-4 mt-3 mb-0 heading">Departments</h3>
 
     <div class="row row-cols-lg-3 mx-3 mt-2 mb-3 g-3">
-      <div *ngFor="let planshift of planshifts" class="col">
+      <div *ngFor="let department of departments" class="col">
 
-        <a [href]="'/assign-plan/' + planshift.department[0].id" class="card border-0 rounded-25 bg-grey text-black">
-          <h3 class="mb-0 py-2 text-center">{{ planshift.department[0].name }}</h3>
+        <a [href]="'/assign-plan/' + department.id" class="card border-0 rounded-25 bg-grey text-black">
+          <h3 class="mb-0 py-2 text-center">{{ department.name }}</h3>
         </a>
       </div>
     </div>
