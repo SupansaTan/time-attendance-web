@@ -19,8 +19,8 @@ export class DepartmentDetailComponent implements OnInit {
   pageSize: any;
   table_option: NgOption[]
 
-  planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
   today_planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
+  today_plan_exist: boolean
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
   today_timerecords: Array<TimeRecordModel> = new Array<TimeRecordModel>()
   department: DepartmentModel = new DepartmentModel()
@@ -44,6 +44,7 @@ export class DepartmentDetailComponent implements OnInit {
       month: 'long',
       day: 'numeric',
     })
+    this.today_plan_exist = false
 
     this.departmentId = Number(location.pathname.split("/")[2])
 
@@ -52,15 +53,20 @@ export class DepartmentDetailComponent implements OnInit {
     });
 
     this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
-      this.today_planshifts = response
+      let plan = response
+      if (plan[0]){
+        console.log('found')
+        this.today_planshifts = plan
+        this.today_plan_exist = true
+      }
     });
 
     this.dashboardService.getTodayDepTimerecord(this.departmentId).subscribe((response) => {
       this.today_timerecords = response
     });
 
-
   }
+
 
   getPercentage(actual_emp: number, total_emp: number) {
     return this.dashboardService.getPercentage(actual_emp, total_emp)
