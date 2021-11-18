@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiTimeAttendanceUrl: 'http://localhost:8000'
+  apiTimeAttendanceUrl: 'https://time-attendance-api.herokuapp.com'
 };
