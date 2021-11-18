@@ -4,7 +4,7 @@
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mx-3 mt-2 mb-3 g-3">
     <div *ngFor="let department of departments" class="col position-relative">
 
-      <a [href]="'/dashboard/' + department.id" [ngClass]="('p-3 card department rounded-25 border-0' + (department.active_employee > 0 ? '':' grey'))">
+      <a [href]="'/dashboard/' + department.id" [ngClass]="('p-3 card department rounded-25 border-0' + (getDepPlanShift(department.id).date? '':' grey'))">
         <h3>{{ department.name }}</h3>
 
         <div class="my-2 shift-wrapper">
@@ -20,7 +20,7 @@
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
-            <path *ngIf="department.active_employee > 0" class="circle"
+            <path *ngIf="getDepPlanShift(department.id).date" class="circle"
               [attr.stroke-dasharray]="getPercentage(department.active_employee, department.total_employee) + ', 100'"
               d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831

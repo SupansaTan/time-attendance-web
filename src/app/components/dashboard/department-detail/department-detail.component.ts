@@ -57,7 +57,6 @@ export class DepartmentDetailComponent implements OnInit {
       if (plan[0]){
         console.log('found')
         this.today_planshifts = plan
-        this.today_plan_exist = true
       }
     });
 

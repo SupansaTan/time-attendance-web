@@ -34,7 +34,6 @@ export class DashboardManagerComponent implements OnInit {
         })
       })
     })
-
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
