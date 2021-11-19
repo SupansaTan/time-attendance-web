@@ -24,9 +24,8 @@ export class AssignPlanComponent implements OnInit {
 
     /* get all departments of manager */
     this.managerService.getManagerInfo(this.manager_id).subscribe(
-      (data) => { this.departments = data[0].department },
-      (err) => { this.isNoDepartment = true },
-      () => { this.spinner.hide() }
+      (data: any) => { this.departments = data[0]. department, this.spinner.hide() },
+      (err: any) => { this.isNoDepartment = true, this.spinner.hide() },
     );
   }
 }
