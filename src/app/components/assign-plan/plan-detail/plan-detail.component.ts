@@ -6,7 +6,7 @@ import { ShiftCodeModel, PlanShiftModel } from 'src/app/model/shift.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { NgOption } from "@ng-select/ng-select";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-
+import { shiftOptions, otOptions, typeOptions } from './filter-options';
 
 @Component({
   selector: 'app-plan-detail',
@@ -17,7 +17,8 @@ export class PlanDetailComponent implements OnInit {
   departmentId: number
   today: Date
   date: Date | string;
-  employees: Array<EmployeeModel> = new Array<EmployeeModel>();
+  all_employees: Array<EmployeeModel> = new Array<EmployeeModel>(); // for keep
+  employees: Array<EmployeeModel> = new Array<EmployeeModel>(); // for show
   department: DepartmentModel = <DepartmentModel>{};
   shiftcode: Array<ShiftCodeModel> = new Array<ShiftCodeModel>();
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>();
@@ -44,23 +45,16 @@ export class PlanDetailComponent implements OnInit {
   });
 
   /* filter group over table */
-  filter: FormControl = new FormControl('');
+  name_filter: string;
   filter_select = {
+    date: '',
     shift: 'All',
     ot: 'All',
     type: 'All'
   }
-  shift_option: NgOption[] = [
-    { id: 0, value: 'All'}
-  ]
-  ot_option: NgOption[] = [
-    { id: 0, value: 'All'}
-  ]
-  type_option: NgOption[] = [
-    { id: 0, value: 'All'},
-    { id: 1, value: 'Daily'},
-    { id: 2, value: 'Monthly'}
-  ]
+  shift_option: NgOption[] = shiftOptions
+  ot_option: NgOption[] = otOptions
+  type_option: NgOption[] = typeOptions
 
   constructor(private shiftService:ShiftService) { }
 
@@ -80,31 +74,29 @@ export class PlanDetailComponent implements OnInit {
       { value: 10 }
     ];
     this.today = new Date();
-    this.date = this.today.toLocaleDateString('th-TH', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
+    this.date = this.localeDateFormat(this.today)
 
     this.otBtnActive, this.shiftBtnActive = false
     this.departmentId = Number(location.pathname.split("/")[2])
 
     /* get data */
     this.shiftService.getDepartmentInfo(this.departmentId).subscribe((response) => {
-      this.department = response[0]})
-
+      this.department = response[0]
+    })
     this.shiftService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       if (response[0]) {
-        this.planshifts = response}
+        this.planshifts = response
+      }
     })
-
     this.shiftService.getShiftCode().subscribe((response) => {
-      this.shiftcode = response})
+      this.shiftcode = response
+    })
 
     /* add checked property for checkbox */
     this.planshifts.map((planshift) => planshift.checked = false)
     this.shiftService.getDepEmployee(this.departmentId).subscribe((response) => {
-      this.employees = response})
+      this.employees = this.all_employees = response
+    })
   }
 
   getPercentage(actual_emp: number, total_emp: number) {
@@ -117,7 +109,7 @@ export class PlanDetailComponent implements OnInit {
     plan? this.emp_plan = plan : false
     return this.emp_plan
   }
-  
+
   add_planshift(){
     var val = {
       "department": [this.departmentId],
@@ -132,8 +124,7 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
-  onSubmit()
-  {
+  onSubmit() {
     this.add_planshift();
     console.warn(this.assign_form.value);
   }
@@ -194,4 +185,47 @@ export class PlanDetailComponent implements OnInit {
     return date.toISOString().split('T')[0]
   }
 
+  /* filter group */
+  filterEmployeeType(option: string) {
+    if(option === 'All') {
+      this.employees = this.all_employees
+    }
+    else {
+      this.employees = this.all_employees.filter((emp) =>
+        (emp.employee_type == option.toLowerCase())
+      )
+    }
+  }
+
+  filterEmployeeName(terms: string) {
+    this.name_filter = terms
+
+    if(this.name_filter == '') {
+      this.employees = this.all_employees
+    }
+    else {
+      this.employees = this.all_employees.filter((emp) => (
+        emp.first_name.includes(this.name_filter.toLowerCase()) ||
+        emp.last_name.includes(this.name_filter.toLowerCase())
+      ))
+    }
+  }
+
+  filterOTPlan(option: string) {
+    if(option === 'All') {
+      this.employees = this.all_employees
+    }
+    else {
+
+    }
+  }
+
+  filterShift(option: string) {
+    if(option === 'All') {
+      this.employees = this.all_employees
+    }
+    else {
+
+    }
+  }
 }
