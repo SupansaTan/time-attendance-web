@@ -111,6 +111,7 @@ export class PlanDetailComponent implements OnInit {
   }
 
   addPlanshift(){
+    this.emp_select.length = 0;
     this.getEmployeeSelected()
     var val = {
       "department": [this.departmentId],
@@ -123,6 +124,8 @@ export class PlanDetailComponent implements OnInit {
 
     this.shiftService.addPlanshift(val).subscribe(res=>{
       alert(res.toString());
+      console.warn(this.assign_form.value);
+      console.warn(this.emp_select);
     })
   }
 
