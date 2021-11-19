@@ -16,8 +16,9 @@ export class ShiftService {
   constructor(private http:HttpClient) { }
 
   // get department by department id
-  getDepartment(val:any): Observable<Array<DepartmentModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/departments/`+ val
+
+  getDepartmentInfo(id: number) {
+    const url = `${environment.apiTimeAttendanceUrl}/api/departments/` + id
     return this.http.get<Array<DepartmentModel>>(url)
   }
 
@@ -77,7 +78,7 @@ export class ShiftService {
     return this.http.get<Array<EmployeeModel>>(url)
   }
 
-  // get all employee of department
+  // get all employee of department except manager
   getDepEmployee(dep_id:any): Observable<Array<EmployeeModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/employees/department/` + dep_id
     return this.http.get<Array<EmployeeModel>>(url)

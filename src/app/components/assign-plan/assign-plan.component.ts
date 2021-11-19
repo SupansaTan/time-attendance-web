@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DepartmentModel } from 'src/app/model/department.model';
-import { PlanShiftModel,ShiftCodeModel } from 'src/app/model/shift.model';
-import { EmployeeModel } from 'src/app/model/employee.model';
-import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { ShiftService } from './shift.service';
 
 import { AuthenticationService } from '../authentication/authentication.service';
-import { DepartmentService } from '../../service/department.service';
 
 @Component({
   selector: 'app-assign-plan',
@@ -22,6 +18,7 @@ export class AssignPlanComponent implements OnInit {
   ngOnInit(): void {
     this.manager_id = this.authService.getUserid()
 
+    /* get all departments of manager */
     this.shiftService.getManagerInfo(this.manager_id).subscribe((response) => {
       this.departments = response[0].department
     });
