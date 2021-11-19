@@ -13,9 +13,9 @@ import { environment } from 'src/environments/environment';
 export class AuthenticationService {
   //ประกาศ type ตัวแปรก่อนใช้
   all_employee: Array<EmployeeModel> = new Array<EmployeeModel>() //ประกาศ type
-  user : Object;
-  email : Object;
-  password : Object;
+  user : EmployeeModel = new EmployeeModel();
+  email : string;
+  password : string;
   
   
   //ประกาศเรียกใช้ service ไม่ก็ module 
@@ -23,40 +23,38 @@ export class AuthenticationService {
 
   //ngOnInit ประกาศค่าเริ่มต้นให้กับตัวแปร def init()
   ngOnInit(): void{
-    //----------เรียกใช้ใน component
-    this.getAllEmployee().subscribe((response)=>{
-      this.all_employee = response //ข้อมูลทั้งหมด
-    });
-    }
+    
+  }
 
   getAllEmployee(): Observable<Array<EmployeeModel>> {
-    const url = '${environment.apiTimeAttendanceUrl}/api/employees'
+    const url = `${environment.apiTimeAttendanceUrl}/api/employees`
     return this.http.get<Array<EmployeeModel>>(url)
   }
 
   //emp คือตัวเก็บไว้ใช้ฟิลเตอร์
-  getUser(email: string, password: string){
-    this.user = this.all_employee.filter((emp) => emp.email == email && emp.password == password )
+  getUser(all_employee: Array<any>,email: string, password: string){
+    this.all_employee = all_employee
+    this.user = all_employee.filter((emp) => emp.email == email && emp.password == password )[0]
     return this.user
   }
 
   getEmail(email: string){
-    this.email = this.all_employee.filter((emp) => emp.email == email )
+    this.email = this.all_employee.filter((emp) => emp.email == email )[0].email
     return this.email
   }
 
   getPassword(password: string){
-    this.password = this.all_employee.filter((emp) => emp.password == password )
+    this.password = this.all_employee.filter((emp) => emp.password == password )[0].password
     return this.password
   }
 
   getUserRole(){
-  return 'manager'
+    return this.user.role
   }
 
 
   getUserid(){
-    return 7
+    return this.user.id
   }
 }
 
