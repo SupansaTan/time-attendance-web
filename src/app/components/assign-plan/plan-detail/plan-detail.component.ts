@@ -228,8 +228,10 @@ export class PlanDetailComponent implements OnInit {
   }
 
   getEmployeeSelected() {
+    this.emp_select = []
     let emp_checked = this.employees.filter((employee) => employee.checked == true)
     this.countSelected = emp_checked.length
+
     emp_checked.map((emp) => {
       this.emp_select.push(emp.id)
     })

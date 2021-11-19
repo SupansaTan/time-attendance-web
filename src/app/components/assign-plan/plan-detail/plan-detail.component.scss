@@ -94,6 +94,11 @@ ngx-material-timepicker-toggle {
   }
 }
 
+/* chart */
+.circle-bg {
+  stroke: #e9ecef;
+}
+
 .chart-wrapper {
   @include media(mobile) {
     width: 100% !important;
