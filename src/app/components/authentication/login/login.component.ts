@@ -1,6 +1,7 @@
 import { Component,OnInit} from '@angular/core';
 import {GoogleLoginProvider, SocialAuthService} from 'angularx-social-login';
 import {Router} from '@angular/router';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,13 @@ export class LoginComponent implements OnInit  {
   password: string;
 
   constructor(private router: Router,
-    private socialAuthService: SocialAuthService) {
+    private socialAuthService: SocialAuthService ,
+    private authenService : AuthenticationService ) {
   }
 
+  //oninit
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    
     
   }
   loginWithGoogle(): void {
@@ -35,24 +37,31 @@ export class LoginComponent implements OnInit  {
       this.router.navigate(['dashboard']);
     }
     //login for employee
-    else if(this.email == "xxxx@gmail.com" && this.password == "1234")
+    else if(this.authenService.getUser(this.email, this.password))
     {
+      console.log(this.password)
       alert("Welcome Employee to Time-attendance")
       this.router.navigate(['/dashboard/dashboard-employee']);
     }
 
-    else if(this.email == " " || this.password == " ")
+    else if(this.authenService.getEmail(this.email) == "" || this.authenService.getPassword(this.password) == "")
     {
       alert("incorrect username or password")
       this.router.navigate(['/auth/login']);
     }
+
+    else if(this.authenService.getEmail(this.email) != this.authenService.getEmail(this.email) || this.authenService.getPassword(this.password) !=this.authenService.getPassword(this.password) )
+    {
+      alert("incorrect username or password")
+      this.router.navigate(['/auth/login']);
+    }
+
 
     else
     {
       alert("incorrect username or password")
       this.router.navigate(['/auth/login']);
     }
-
-
   }
+  
 }
