@@ -14,23 +14,16 @@ import { DepartmentService } from '../../service/department.service';
   styleUrls: ['./assign-plan.component.scss']
 })
 export class AssignPlanComponent implements OnInit {
-  employee_id: number;
-  planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
-  manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
+  manager_id: number;
+  departments: Array<DepartmentModel> = new Array<DepartmentModel>();
 
   constructor(private shiftService: ShiftService, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.employee_id = this.authService.getUserid()
+    this.manager_id = this.authService.getUserid()
 
-    this.shiftService.getManagerInfo(this.employee_id).subscribe((response) => {
-      this.manager_info = response
-      this.manager_info[0].department.forEach( (element:any) =>{
-        let department_id = (element.id)
-        this.shiftService.getDepPlanShift(department_id).subscribe((response) => {
-          this.planshifts.push(response[0])
-        });
-      });
+    this.shiftService.getManagerInfo(this.manager_id).subscribe((response) => {
+      this.departments = response[0].department
     });
   }
 }

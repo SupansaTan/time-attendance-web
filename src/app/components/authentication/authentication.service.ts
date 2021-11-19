@@ -8,7 +8,7 @@ export class AuthenticationService {
   constructor() { }
 
   getUserRole() {
-    return 'employee'
+    return 'manager'
   }
 
   getUserid(){
