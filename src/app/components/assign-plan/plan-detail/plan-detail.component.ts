@@ -24,7 +24,7 @@ export class PlanDetailComponent implements OnInit {
   planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>();
   timerecord: Array<TimeRecordModel> = new Array<TimeRecordModel>();
   emp_plan: PlanShiftModel = new PlanShiftModel()
-  emp_select: Array<{id: number}>  // employees selected by checkbox
+  emp_select: Array<number> = []  // employees selected by checkbox
 
   page: any;
   pageSize: any;
@@ -111,14 +111,16 @@ export class PlanDetailComponent implements OnInit {
   }
 
   addPlanshift(){
+    this.getEmployeeSelected()
     var val = {
       "department": [this.departmentId],
-      "employee_list": [1],
+      "employee_list": this.emp_select,
       "overtime": this.assign_form.controls['ot'].value,
       "start_date": this.assign_form.controls['start_date'].value,
       "end_date": this.assign_form.controls['end_date'].value,
       "start_time": this.assign_form.controls['shift'].value
     }
+
     this.shiftService.addPlanshift(val).subscribe(res=>{
       alert(res.toString());
     })
@@ -149,7 +151,7 @@ export class PlanDetailComponent implements OnInit {
   getEmployeeSelected() {
     let emp_checked = this.employees.filter((employee) => employee.checked == true)
     emp_checked.map((emp) => {
-      this.emp_select.push({id: emp.id})
+      this.emp_select.push(emp.id)
     })
   }
 
