@@ -68,7 +68,7 @@
               <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row align-self-center">
                 <p class="col-auto mb-0">Start Shift</p>
                 <div class="col time-picker position-relative">
-                  <div class="col"><input type="Time" step="1" id="time" formControlName="shift"></div>
+                  <div class="col"><input type="Time"  step="1800" id="time" formControlName="shift"></div>
                 </div>
               </div>
 
@@ -92,7 +92,7 @@
     </div>
   </div>
 
-  <div *ngIf="assign_form.controls['start_date'].value && assign_form.controls['end_date'].value">
+ <!-- <div *ngIf="assign_form.controls['start_date'].value && assign_form.controls['end_date'].value"> -->
     <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
       <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
       <p class="text-white bg-blue py-1 px-2 rounded-3 d-flex justify-content-start mb-0">
@@ -101,7 +101,7 @@
       </p>
       <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
       <p class="mb-0 ms-auto">{{ 'Total: ' + department.total_employee +' employees' }}</p>
-    </div>
+    </div> 
 
     <div class="card rounded-25 border-0 shadow-lg mt-2">
       <div class="row my-3 mx-4 filter-group">
@@ -168,5 +168,5 @@
         </ngb-pagination>
       </div>
     </div>
-  </div>
+ <!-- </div> -->
 </main>
