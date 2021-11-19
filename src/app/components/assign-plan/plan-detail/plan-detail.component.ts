@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ShiftService } from '../shift.service';
+import { EmployeeService } from 'src/app/service/employee.service';
+import { DepartmentService } from 'src/app/service/department.service';
 import { EmployeeModel } from 'src/app/model/employee.model';
 import { DepartmentModel } from 'src/app/model/department.model';
 import { ShiftCodeModel, PlanShiftModel } from 'src/app/model/shift.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { NgOption } from "@ng-select/ng-select";
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { shiftOptions, otOptions, typeOptions } from './filter-options';
 
 @Component({
@@ -56,7 +58,8 @@ export class PlanDetailComponent implements OnInit {
   ot_option: NgOption[] = otOptions
   type_option: NgOption[] = typeOptions
 
-  constructor(private shiftService:ShiftService) { }
+  constructor(private shiftService: ShiftService, private employeeService: EmployeeService,
+    private departmentService: DepartmentService) { }
 
   ngOnInit(): void {
     this.assign_form = new FormGroup({
@@ -66,6 +69,25 @@ export class PlanDetailComponent implements OnInit {
       ot: new FormControl('',[Validators.required])
     });
 
+    this.today = new Date();
+    this.date = this.localeDateFormat(this.today)
+
+    this.otBtnActive, this.shiftBtnActive = false
+    this.departmentId = Number(location.pathname.split("/")[2])
+    this.initDepartmentInfo()
+    this.initTable()
+  }
+
+  initDepartmentInfo() {
+    this.departmentService.getDepartmentInfo(this.departmentId).subscribe((response) => {
+      this.department = response[0]
+    })
+    this.shiftService.getShiftCode().subscribe((response) => {
+      this.shiftcode = response
+    })
+  }
+
+  initTable() {
     this.page = 1
     this.pageSize = 10  // row of each page table
     this.table_option = [
@@ -73,29 +95,13 @@ export class PlanDetailComponent implements OnInit {
       { value: 5 },
       { value: 10 }
     ];
-    this.today = new Date();
-    this.date = this.localeDateFormat(this.today)
 
-    this.otBtnActive, this.shiftBtnActive = false
-    this.departmentId = Number(location.pathname.split("/")[2])
-
-    /* get data */
-    this.shiftService.getDepartmentInfo(this.departmentId).subscribe((response) => {
-      this.department = response[0]
-    })
+    // default table is today plan
     this.shiftService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       if (response[0]) {
         this.planshifts = response
       }
-    })
-    this.shiftService.getShiftCode().subscribe((response) => {
-      this.shiftcode = response
-    })
-
-    /* add checked property for checkbox */
-    this.planshifts.map((planshift) => planshift.checked = false)
-    this.shiftService.getDepEmployee(this.departmentId).subscribe((response) => {
-      this.employees = this.all_employees = response
+      this.getEmployees()
     })
   }
 
@@ -103,15 +109,11 @@ export class PlanDetailComponent implements OnInit {
     return this.shiftService.getPercentage(actual_emp, total_emp)
   }
 
-  findPlanshift(emp_id:any){
-    this.emp_plan = new PlanShiftModel()
-    let plan = this.planshifts.filter(element => element.employee[0].id == emp_id)[0]
-    plan? this.emp_plan = plan : false
-    return this.emp_plan
+  findTodayPlanshift(emp_id:any) {
+    return this.planshifts.filter(element => element.employee[0].id == emp_id)[0]
   }
 
   addPlanshift(){
-    this.emp_select.length = 0;
     this.getEmployeeSelected()
     var val = {
       "department": [this.departmentId],
@@ -122,11 +124,18 @@ export class PlanDetailComponent implements OnInit {
       "start_time": this.assign_form.controls['shift'].value
     }
 
-    this.shiftService.addPlanshift(val).subscribe(res=>{
-      alert(res.toString());
-      console.warn(this.assign_form.value);
-      console.warn(this.emp_select);
-    })
+    this.shiftService.addPlanshift(val).subscribe(
+      (res) => {
+        alert(res.toString())
+        this.getEmployees()
+        this.clearAllSelected()
+      },
+      (err) => alert('Can not add assign plan'),
+      () => {
+        console.warn(this.assign_form.value);
+        console.warn(this.emp_select);
+      }
+    )
   }
 
   setAssignMode(selectMode: string) {
@@ -142,8 +151,33 @@ export class PlanDetailComponent implements OnInit {
     }
   }
 
+  /* get employees for table */
+  getEmployees() {
+    this.employeeService.getEmployees(this.departmentId).subscribe((response) => {
+      this.employees = this.all_employees = response
+      this.employees.map((employee) => {
+        employee.checked = false
+
+        let plan = this.findTodayPlanshift(employee.id)
+        if(plan) {
+          employee.start_time = plan.start_time.slice(0,5)
+          employee.end_time = plan.end_time.slice(0,5)
+          employee.overtime = plan.overtime
+        }
+      })
+    })
+  }
+
+  /* select box */
   setAllSelected() {
     this.employees.map((employee) => employee.checked = this.isAllChecked)
+    this.updateEmployeeSelected()
+  }
+
+  clearAllSelected() {
+    this.emp_select = []
+    this.employees.map((employee) => employee.checked = false)
+    this.isAllChecked = false
     this.updateEmployeeSelected()
   }
 
@@ -158,6 +192,7 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
+  /* date format */
   localeDateFormat(date: Date) {
     return date.toLocaleDateString('th-TH', {
       year: 'numeric',

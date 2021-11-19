@@ -66,10 +66,18 @@
           <form [formGroup]="assign_form" (ngSubmit)="addPlanshift()" class="mx-2 h-100 mt-3">
             <!-- select date -->
             <div class="row">
-              <div class="col-auto"><h5>From</h5></div>
-              <div class="col"><input type="date" id="start" formControlName="start_date"></div>
-              <div class="col-auto"><h5>To</h5></div>
-              <div class="col"><input type="date" id="last" formControlName="end_date"></div>
+              <div class="col-auto align-self-center">
+                <h5 class="mb-0">From</h5>
+              </div>
+              <div class="col">
+                <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey" type="date" id="start" formControlName="start_date">
+              </div>
+              <div class="col-auto align-self-center">
+                <h5 class="mb-0">To</h5>
+              </div>
+              <div class="col">
+                <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey" type="date" id="last" formControlName="end_date">
+              </div>
             </div>
 
             <!-- select start shift / ot plan -->
@@ -77,14 +85,14 @@
               <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row align-self-center">
                 <p class="col-auto mb-0">Start Shift</p>
                 <div class="col time-picker position-relative">
-                  <div class="col"><input type="Time"  step="1800" id="time" formControlName="shift"></div>
+                  <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey" type="Time" step="1800" id="time" formControlName="shift">
                 </div>
               </div>
 
               <div *ngIf="otBtnActive" class="col-12 col-xl-6 row mt-2 mt-xl-0">
                 <p class="col-auto align-self-center mb-0">OT Plan</p>
                 <div class="col">
-                  <input type="number" formControlName="ot" min="0" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
+                  <input type="number" formControlName="ot" min="0" class="form-control border-0 rounded-3 w-100 shadow-none bg-grey"
                     [(ngModel)]="ot_plan" required>
                 </div>
               </div>
@@ -156,13 +164,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findPlanshift(employee.id).date? 'green':'grey'">
+          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findTodayPlanshift(employee.id) && findTodayPlanshift(employee.id).date? 'green':'grey'">
             <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="updateEmployeeSelected()"></th>
             <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
             <th class="text-center">{{ employee.first_name + ' ' + employee.last_name }}</th>
-            <th class="text-center">{{ emp_plan.date? emp_plan.date : '-'}}</th>
-            <th class="text-center">{{ emp_plan.date? (emp_plan.start_time + '-' + emp_plan.end_time): '-' }}</th>
-            <th class="text-center">{{ emp_plan.date? emp_plan.overtime : '-' }}</th>
+            <th class="text-center">{{ findTodayPlanshift(employee.id)? date : '-'}}</th>
+            <th class="text-center">{{ employee.start_time? ( employee.start_time + ' - ' + employee.end_time): '-' }}</th>
+            <th class="text-center">{{ employee.overtime? employee.overtime : '-' }}</th>
             <th class="text-center">{{ employee.employee_type }}</th>
           </tr>
         </tbody>

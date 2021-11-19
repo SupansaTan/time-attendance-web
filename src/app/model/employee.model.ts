@@ -10,4 +10,7 @@ export class EmployeeModel {
   email: string;
   password: string;
   checked?: boolean;
+  start_time?: string | undefined;
+  end_time?: string | undefined;
+  overtime?: number | undefined;
 }
