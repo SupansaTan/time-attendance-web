@@ -1,12 +1,16 @@
 <main>
   <div class="row row-cols-2 g-3">
+
+    <!-- department info -->
     <div class="col-12 col-lg-6 col-xxl-5">
       <div class="card rounded-25 border-0 shadow-lg h-100">
+        <!-- heading -->
         <div class="mt-4 mx-4">
           <h3 class="mb-0 heading d-inline">Department</h3>
           <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
         </div>
 
+        <!-- chart -->
         <div class="row mx-3 mt-2 mb-4 g-3 h-100">
           <div class="col-5 col-md-4 col-xl-6 d-flex justify-content-center align-items-center px-0 mt-0">
             <div class="chart-wrapper w-80">
@@ -28,6 +32,7 @@
             </div>
           </div>
 
+          <!-- date &  -->
           <div class="col-auto col-xl-6 align-self-center m-0 detail-wrapper">
             <div class="row my-3 d-flex align-items-center date-wrapper">
               <i class="col-auto fas fa-calendar text-blue"></i>
@@ -43,10 +48,12 @@
       </div>
     </div>
 
+    <!-- assign card -->
     <div class="col-12 col-lg-6 col-xxl-7 assign-wrapper">
       <div class="card rounded-25 border-0 shadow-lg h-100">
         <div class="mt-4 mx-4 align-items-center">
 
+          <!-- heading & select mode -->
           <div class="assign-top align-items-center row gy-2">
             <h3 class="mb-0 heading d-flex justify-content-start col-12 col-xl-auto">Assign</h3>
             <div class="d-flex justify-content-start justify-content-xl-end col-12 col-xl mt-3 mt-xl-0 mx-2 mx-xl-0">
@@ -56,14 +63,16 @@
             </div>
           </div>
 
-          <form [formGroup]="assign_form" (ngSubmit)="onSubmit()" class="mx-2 h-100 mt-3">
+          <form [formGroup]="assign_form" (ngSubmit)="addPlanshift()" class="mx-2 h-100 mt-3">
+            <!-- select date -->
             <div class="row">
-              <div class="col-6 col-md-2"><h5>From</h5></div>
-                	<div class="col-6 col-md-3"><input type="date" id="start" formControlName="start_date"></div>
-                 	<div class="col-6 col-md-1"><h5>To</h5></div>
-                 	<div class="col-6 col-md-3"><input type="date" id="last" formControlName="end_date"></div>
+              <div class="col-auto"><h5>From</h5></div>
+              <div class="col"><input type="date" id="start" formControlName="start_date"></div>
+              <div class="col-auto"><h5>To</h5></div>
+              <div class="col"><input type="date" id="last" formControlName="end_date"></div>
             </div>
 
+            <!-- select start shift / ot plan -->
             <div class="row my-2">
               <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row align-self-center">
                 <p class="col-auto mb-0">Start Shift</p>
@@ -81,10 +90,11 @@
               </div>
             </div>
 
+            <!-- submit button -->
             <div class="row my-3">
               <input type="submit" class="rounded-3 border-0 py-1 px-5 submit-btn mx-auto" placeholder="Submit"
                 [disabled]="mode.length==0 || assign_form.controls['end_date'].value==undefined || assign_form.pristine || assign_form.invalid"
-                (click)="onSubmit()">
+              >
             </div>
           </form>
         </div>
@@ -92,6 +102,7 @@
     </div>
   </div>
 
+  <!--heading over table -->
   <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
     <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
     <p class="text-white bg-blue py-1 px-2 rounded-3 d-flex justify-content-start mb-0">
@@ -103,6 +114,8 @@
   </div>
 
   <div class="card rounded-25 border-0 shadow-lg mt-2">
+
+    <!-- search & filter -->
     <div class="row my-3 mx-4 filter-group">
       <div class="col-12 col-xl-6 position-relative input-group input-group-sm px-0">
         <i-feather name="search" class="position-absolute feather-20"></i-feather>
@@ -128,6 +141,7 @@
       </div>
     </div>
 
+    <!-- employees table -->
     <div class="table-responsive mx-4">
       <table class="table table-hover table-borderless">
         <thead class="text-white">
@@ -155,6 +169,7 @@
       </table>
     </div>
 
+    <!-- option of table -->
     <div class="row mx-4 my-2 align-items-center">
       <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-2 col-xl-1 rounded-50 pb-0"
         name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">

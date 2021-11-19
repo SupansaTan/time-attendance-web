@@ -110,36 +110,18 @@ export class PlanDetailComponent implements OnInit {
     return this.emp_plan
   }
 
-  add_planshift(){
+  addPlanshift(){
     var val = {
       "department": [this.departmentId],
       "employee_list": [1],
-      "overtime": this.ot,
-      "start_date": this.start_date,
-      "end_date": this.end_date,
-      "start_time": this.shift
+      "overtime": this.assign_form.controls['ot'].value,
+      "start_date": this.assign_form.controls['start_date'].value,
+      "end_date": this.assign_form.controls['end_date'].value,
+      "start_time": this.assign_form.controls['shift'].value
     }
     this.shiftService.addPlanshift(val).subscribe(res=>{
       alert(res.toString());
     })
-  }
-
-  onSubmit() {
-    this.add_planshift();
-    console.warn(this.assign_form.value);
-  }
-
-  get start_date() {
-    return this.assign_form.get('start_date')!.value
-  }
-  get end_date() {
-    return this.assign_form.get('end_date')!.value
-  }
-  get shift() {
-    return this.assign_form.get('shift')!.value
-  }
-  get ot() {
-    return this.assign_form.get('ot')!.value
   }
 
   setAssignMode(selectMode: string) {
