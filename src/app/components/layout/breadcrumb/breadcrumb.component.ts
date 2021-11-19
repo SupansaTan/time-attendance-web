@@ -13,6 +13,7 @@ export class BreadcrumbComponent implements OnInit {
   current_path: Array<string>
   menu: MenuItems | any
   menuChild: Array<ChildrenItem> | any = []
+  title: string
 
   constructor(private departmentService: DepartmentService, private router: Router) {}
 
@@ -31,13 +32,18 @@ export class BreadcrumbComponent implements OnInit {
 
   addMenuChild() {
     if(this.current_path[1] == 'dashboard' || 'assign-plan') {
-      this.menuChild.push(
-        {
-          url: location.pathname,
-          title: this.departmentService.getDepartmentName(Number(this.current_path[2]))
+
+      this.departmentService.getDepartmentInfo(Number(this.current_path[2])).subscribe(
+        (data) => {
+          this.menuChild.push(
+            {
+              url: location.pathname,
+              title:  data[0].name
+            }
+          )
         }
       )
+
     }
   }
-
 }
