@@ -196,20 +196,3 @@ ngb-pagination {
     stroke-dasharray: 0 100;
   }
 }
-
-/* responsive */
-$breakpoints: (
-  mobile : 0px,
-  tablet : 768px,
-  desktop: 992px,
-  large-desktop: 1200px,
-  larger-desktop: 1400px
-);
-
-@mixin media($keys...){
-  @each $key in $keys {
-    @media (min-width: map-get($breakpoints, $key)){
-      @content
-    }
-  }
-}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   path: string
 
-  constructor() {
-    this.path = location.pathname.split("/")[1]
+  constructor(private router: Router) {
+
+    this.router.events.subscribe((event) => {
+      if(event instanceof NavigationEnd) {
+        this.path = event.urlAfterRedirects.split("/")[1]
+      }
+    })
   }
 }
