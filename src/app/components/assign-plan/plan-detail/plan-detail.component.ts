@@ -18,7 +18,7 @@ import { shiftOptions, otOptions, typeOptions } from './filter-options';
 export class PlanDetailComponent implements OnInit {
   departmentId: number
   today: Date
-  date: Date | string;
+  date: string;
   all_employees: Array<EmployeeModel> = new Array<EmployeeModel>(); // for keep
   employees: Array<EmployeeModel> = new Array<EmployeeModel>(); // for show
   department: DepartmentModel = <DepartmentModel>{};
@@ -30,7 +30,9 @@ export class PlanDetailComponent implements OnInit {
 
   page: any;
   pageSize: any;
+  date_option: Array<string> = []
   table_option: NgOption[]
+  isToday: boolean = true
   isAllChecked: boolean = false
   countSelected: number = 0
 
@@ -62,18 +64,11 @@ export class PlanDetailComponent implements OnInit {
     private departmentService: DepartmentService) { }
 
   ngOnInit(): void {
-    this.assign_form = new FormGroup({
-      start_date: new FormControl('',[Validators.required]),
-      end_date: new FormControl('',[Validators.required]),
-      shift: new FormControl('',[Validators.required]),
-      ot: new FormControl('',[Validators.required])
-    });
-
     this.today = new Date();
     this.date = this.localeDateFormat(this.today)
 
-    this.otBtnActive, this.shiftBtnActive = false
     this.departmentId = Number(location.pathname.split("/")[2])
+    this.initAssignForm()
     this.initDepartmentInfo()
     this.initTable()
   }
@@ -87,6 +82,18 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
+  initAssignForm() {
+    this.mode = []
+    this.otBtnActive = false
+    this.shiftBtnActive = false
+    this.assign_form = new FormGroup({
+      start_date: new FormControl('',[Validators.required]),
+      end_date: new FormControl('',[Validators.required]),
+      shift: new FormControl('',[Validators.required]),
+      ot: new FormControl('',[Validators.required])
+    });
+  }
+
   initTable() {
     this.page = 1
     this.pageSize = 10  // row of each page table
@@ -97,6 +104,8 @@ export class PlanDetailComponent implements OnInit {
     ];
 
     // default table is today plan
+    this.filter_select.date = this.date
+    this.date_option.push(this.date)
     this.shiftService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       if (response[0]) {
         this.planshifts = response
@@ -105,11 +114,46 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
+  updateTable(date: string) {
+    this.page = 1
+    this.filter_select.date = date
+    this.filter_select.date === this.date? this.isToday = true: this.isToday = false
+    this.shiftService.getDepPlanShift(this.departmentId).subscribe((response) => {
+      if (response[0]) {
+        this.planshifts = response
+        this.planshifts = this.planshifts.filter(plan => plan.date === this.convertDateFormat(date))
+      }
+      this.getEmployees()
+    })
+  }
+
+  setDateSelect(start: string, end?: string) {
+    let currentDateSelect = this.filter_select.date
+    let startDate = new Date(start)
+    this.date_option = []
+
+    if(end) {
+      let endDate = new Date(end)
+      while(startDate <= endDate) {
+        this.date_option.push(this.localeDateFormat(startDate))
+        startDate.setDate(startDate.getDate() + 1)
+      }
+    }
+    else {
+      this.date_option.push(this.localeDateFormat(startDate))
+    }
+
+    this.filter_select.date = this.date_option[0]
+    if(currentDateSelect != this.filter_select.date) {
+      this.updateTable(this.filter_select.date)
+    }
+  }
+
   getPercentage(actual_emp: number, total_emp: number) {
     return this.shiftService.getPercentage(actual_emp, total_emp)
   }
 
-  findTodayPlanshift(emp_id:any) {
+  findEmployeePlan(emp_id: number) {
     return this.planshifts.filter(element => element.employee[0].id == emp_id)[0]
   }
 
@@ -127,7 +171,9 @@ export class PlanDetailComponent implements OnInit {
     this.shiftService.addPlanshift(val).subscribe(
       (res) => {
         alert(res.toString())
-        this.getEmployees()
+        this.filter_select.date = this.date_option[0]
+        this.updateTable(this.date_option[0])
+        this.initAssignForm()
         this.clearAllSelected()
       },
       (err) => alert('Can not add assign plan'),
@@ -156,9 +202,9 @@ export class PlanDetailComponent implements OnInit {
     this.employeeService.getEmployees(this.departmentId).subscribe((response) => {
       this.employees = this.all_employees = response
       this.employees.map((employee) => {
-        employee.checked = false
+        employee.checked = this.emp_select.includes(employee.id)
 
-        let plan = this.findTodayPlanshift(employee.id)
+        let plan = this.findEmployeePlan(employee.id)
         if(plan) {
           employee.start_time = plan.start_time.slice(0,5)
           employee.end_time = plan.end_time.slice(0,5)
@@ -171,22 +217,19 @@ export class PlanDetailComponent implements OnInit {
   /* select box */
   setAllSelected() {
     this.employees.map((employee) => employee.checked = this.isAllChecked)
-    this.updateEmployeeSelected()
+    this.getEmployeeSelected()
   }
 
   clearAllSelected() {
     this.emp_select = []
     this.employees.map((employee) => employee.checked = false)
     this.isAllChecked = false
-    this.updateEmployeeSelected()
-  }
-
-  updateEmployeeSelected() {
-    this.countSelected = this.employees.filter((employee) => employee.checked == true).length
+    this.getEmployeeSelected()
   }
 
   getEmployeeSelected() {
     let emp_checked = this.employees.filter((employee) => employee.checked == true)
+    this.countSelected = emp_checked.length
     emp_checked.map((emp) => {
       this.emp_select.push(emp.id)
     })
@@ -194,17 +237,17 @@ export class PlanDetailComponent implements OnInit {
 
   /* date format */
   localeDateFormat(date: Date) {
-    return date.toLocaleDateString('th-TH', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    })
+    function pad(s: number) { return (s < 10) ? '0' + s : s; }
+    let d = new Date(date)
+    return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
   }
 
   convertDateFormat(date_input: string) {
     // convert to `YYYY-MM-DD`
-    let date = new Date(date_input)
-    return date.toISOString().split('T')[0]
+    const [day, month, year] = date_input.split("/")
+    let date = new Date(Number(year), Number(month) - 1, Number(day))
+    function pad(s: number) { return (s < 10) ? '0' + s : s; }
+    return [date.getFullYear(), pad(date.getMonth()+1), pad(date.getDate())].join('-')
   }
 
   /* filter group */

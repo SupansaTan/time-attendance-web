@@ -40,6 +40,21 @@ ngx-material-timepicker-toggle {
   }
 }
 
+.date-select {
+  &.ng-select ::ng-deep {
+    padding-left: 35px !important;
+
+    .ng-arrow-wrapper .ng-arrow {
+      margin-left: 10px;
+      color: white;
+    }
+  }
+
+  i {
+    left: 10px;
+  }
+}
+
 .filter-group {
   p {
     width: fit-content;
@@ -52,19 +67,20 @@ ngx-material-timepicker-toggle {
     transform: translateY(-60%);
   }
 
-  &.ng-select {
-    background-color: #d1d1d1;
+  &.ng-select ::ng-deep {
+    background-color: #e9ecef;
 
     .ng-select-container {
       .ng-arrow-wrapper {
         .ng-arrow {
-          color: black !important;
+          color: black;
         }
       }
     }
 
     .ng-value-container {
       color: black;
+      font-weight: 400;
       justify-content: left;
     }
 

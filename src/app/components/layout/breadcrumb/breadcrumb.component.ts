@@ -13,7 +13,6 @@ export class BreadcrumbComponent implements OnInit {
   current_path: Array<string>
   menu: MenuItems | any
   menuChild: Array<ChildrenItem> | any = []
-  title: string
 
   constructor(private departmentService: DepartmentService, private router: Router) {}
 
