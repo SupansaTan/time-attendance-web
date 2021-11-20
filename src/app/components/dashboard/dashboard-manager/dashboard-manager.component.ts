@@ -14,6 +14,7 @@ import { EmployeeModel } from 'src/app/model/employee.model';
 })
 export class DashboardManagerComponent implements OnInit {
   employee_id: number;
+  intervalGetData: any;
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
   departments: Array<DepartmentModel> = new Array<DepartmentModel>()
   all_today_planshift: Array<PlanShiftModel> = new Array<PlanShiftModel>()
@@ -23,9 +24,22 @@ export class DashboardManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.employee_id = this.authService.getUserid()
+    this.getDepartmentInfo()
+    this.intervalGetData = setInterval(() => {
+      this.getDepartmentInfo()
+    }, 30000);
+  }
 
+  ngOnDestroy() {
+    if (this.intervalGetData) {
+      clearInterval(this.intervalGetData);
+    }
+  }
+
+  getDepartmentInfo() {
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.manager_info = response
+      this.departments = []
 
       this.manager_info[0].department.forEach( (element:any) =>{
         this.departments.push(element)

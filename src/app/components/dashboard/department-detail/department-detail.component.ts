@@ -19,11 +19,12 @@ export class DepartmentDetailComponent implements OnInit {
   pageSize: any;
   table_option: NgOption[]
 
-  today_planshifts: Array<PlanShiftModel> = new Array<PlanShiftModel>()
-  today_plan_exist: boolean
+  today_plan: Array<PlanShiftModel> = new Array<PlanShiftModel>()
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
   today_timerecords: Array<TimeRecordModel> = new Array<TimeRecordModel>()
+  employees: Array<EmployeeModel> = new Array<EmployeeModel>()
   department: DepartmentModel = new DepartmentModel()
+  intervalGetData: any
 
   in_record: TimeRecordModel = new TimeRecordModel()
   out_record: TimeRecordModel = new TimeRecordModel()
@@ -31,6 +32,60 @@ export class DepartmentDetailComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    this.initTable()
+    this.date = new Date();
+    this.date = this.date.toLocaleDateString('th-TH', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    })
+
+    /* get data */
+    this.departmentId = Number(location.pathname.split("/")[2])
+    this.getDepartmentInfo()
+    this.getDepartmentPlan()
+    if(this.today_plan.length > 0) {
+      this.getEmployeeTimeRecord()
+    }
+
+    this.intervalGetData = setInterval(() => {
+      this.getDepartmentInfo()
+      this.getDepartmentPlan()
+      if(this.today_plan.length > 0) {
+        this.getEmployeeTimeRecord()
+      }
+    }, 30000);
+  }
+
+  ngOnDestroy() {
+    if (this.intervalGetData) {
+      clearInterval(this.intervalGetData);
+    }
+  }
+
+  getDepartmentInfo() {
+    this.dashboardService.getDepartmentInfo(this.departmentId).subscribe((response) => {
+      this.department = response[0]
+    });
+  }
+
+  getDepartmentPlan() {
+    this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
+      let plan = response
+      if (plan[0]){
+        this.today_plan = plan
+      }
+    });
+  }
+
+  getEmployeeTimeRecord() {
+    this.dashboardService.getTodayDepTimerecord(this.departmentId).subscribe((response) => {
+      this.today_timerecords = response
+      this.employees = this.today_timerecords[0].employee
+    });
+  }
+
+  initTable() {
     this.page = 1
     this.pageSize = 10  // row of each page table
     this.table_option = [
@@ -38,40 +93,13 @@ export class DepartmentDetailComponent implements OnInit {
       { value: 5 },
       { value: 10 }
     ];
-    this.date = new Date();
-    this.date = this.date.toLocaleDateString('th-TH', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
-
-    /* get data */
-    this.departmentId = Number(location.pathname.split("/")[2])
-
-    this.dashboardService.getDepartmentInfo(this.departmentId).subscribe((response) => {
-      this.department = response[0]
-    });
-
-    this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
-      let plan = response
-      if (plan[0]){
-        this.today_planshifts = plan
-        this.today_plan_exist = true
-      }
-    });
-
-    this.dashboardService.getTodayDepTimerecord(this.departmentId).subscribe((response) => {
-      this.today_timerecords = response
-    });
-
   }
-
 
   getPercentage(actual_emp: number, total_emp: number) {
     return this.dashboardService.getPercentage(actual_emp, total_emp)
   }
 
-  findTimeRecord(emp_id:any){
+  findTimeRecord(emp_id: number){
     this.in_record = new TimeRecordModel()
     this.out_record = new TimeRecordModel()
     let in_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "In")[0]
