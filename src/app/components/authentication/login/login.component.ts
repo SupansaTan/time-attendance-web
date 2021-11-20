@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit  {
 
     else{
       alert("incorrect username or password")
-      console.log('fail');
       this.router.navigate(['/auth/login']);
     }
 

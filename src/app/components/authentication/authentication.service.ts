@@ -16,15 +16,13 @@ export class AuthenticationService {
   user : EmployeeModel = new EmployeeModel();
   email : string;
   password : string;
+
+  private role = localStorage.getItem('UserRole') || ''
+  private id = localStorage.getItem('UserID') || ''
   
   
   //ประกาศเรียกใช้ service ไม่ก็ module 
   constructor(private http:HttpClient) {}
-
-  //ngOnInit ประกาศค่าเริ่มต้นให้กับตัวแปร def init()
-  ngOnInit(): void{
-    
-  }
 
   getAllEmployee(): Observable<Array<EmployeeModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/employees`
@@ -33,8 +31,14 @@ export class AuthenticationService {
 
   //emp คือตัวเก็บไว้ใช้ฟิลเตอร์
   getUser(all_employee: Array<any>,email: string, password: string){
+    this.role = localStorage.getItem('UserRole') || ''
+    this.id = localStorage.getItem('UserID') || ''
+
     this.all_employee = all_employee
     this.user = all_employee.filter((emp) => emp.email == email && emp.password == password )[0]
+    localStorage.setItem('UserRole', this.user.role)
+    localStorage.setItem('UserID', (this.user.id).toString())
+    
     return this.user
   }
 
@@ -49,12 +53,27 @@ export class AuthenticationService {
   }
 
   getUserRole(){
-    return this.user.role
+    console.log('service role ',this.role)
+    return this.role
   }
 
 
   getUserid(){
-    return this.user.id
+    console.log('service id ',this.id)
+    return Number(this.id)
   }
+
+  logout(){
+    localStorage.clear()
+  }
+
+  /* Note (Sample email for login)
+    email for manager: 5@gmail.com 
+    pass: 0005
+
+    email for employee: 1@gmail.com 
+    pass: 0001
+  */
+
 }
 
