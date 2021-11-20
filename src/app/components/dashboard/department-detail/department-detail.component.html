@@ -63,15 +63,15 @@
             <th scope="col" class="text-center">End Time</th>
           </tr>
         </thead>
-        <tbody *ngIf="employees.length > 0">
-          <tr  *ngFor="let emp of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findTimeRecord(emp.id).status? 'green':'grey'">
-            <th scope="row">{{ employees.indexOf(emp)+1 }}</th>
-            <th class="text-center">{{ emp.first_name + ' ' + emp.last_name }}</th>
+        <tbody *ngIf="today_plan.length > 0">
+          <tr  *ngFor="let plan of today_plan | slice: (page-1) * pageSize : page * pageSize" [class]="findTimeRecord(plan.employee[0].id).status? 'green':'grey'">
+            <th scope="row">{{ today_plan.indexOf(plan)+1 }}</th>
+            <th class="text-center">{{ plan.employee[0].first_name + ' ' + plan.employee[0].last_name }}</th>
             <th class="text-center">{{ in_record.status? in_record.time.slice(0,5) : '-' }}</th>
             <th class="text-center">{{ out_record.status? out_record.time.slice(0,5) : '-' }}</th>
           </tr>
         </tbody>
-        <tbody *ngIf="employees.length === 0">
+        <tbody *ngIf="today_plan.length === 0">
           <tr>
             <th colspan="4" class="text-center">No data</th>
           </tr>
