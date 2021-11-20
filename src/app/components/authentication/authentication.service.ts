@@ -53,13 +53,11 @@ export class AuthenticationService {
   }
 
   getUserRole(){
-    console.log('service role ',this.role)
     return this.role
   }
 
 
   getUserid(){
-    console.log('service id ',this.id)
     return Number(this.id)
   }
 

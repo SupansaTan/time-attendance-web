@@ -55,7 +55,6 @@ export class DepartmentDetailComponent implements OnInit {
     this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       let plan = response
       if (plan[0]){
-        console.log('found')
         this.today_planshifts = plan
         this.today_plan_exist = true
       }

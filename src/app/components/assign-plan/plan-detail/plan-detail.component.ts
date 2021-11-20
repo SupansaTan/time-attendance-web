@@ -159,29 +159,63 @@ export class PlanDetailComponent implements OnInit {
 
   addPlanshift(){
     this.getEmployeeSelected()
-    var val = {
+    if (this.countSelected==0){
+      alert('Select Employee to assign plan')
+    }
+    else{
+      var val = {
       "department": [this.departmentId],
       "employee_list": this.emp_select,
       "overtime": this.assign_form.controls['ot'].value,
       "start_date": this.assign_form.controls['start_date'].value,
       "end_date": this.assign_form.controls['end_date'].value,
       "start_time": this.assign_form.controls['shift'].value
-    }
-
-    this.shiftService.addPlanshift(val).subscribe(
-      (res) => {
-        alert(res.toString())
-        this.filter_select.date = this.date_option[0]
-        this.updateTable(this.date_option[0])
-        this.initAssignForm()
-        this.clearAllSelected()
-      },
-      (err) => alert('Can not add assign plan'),
-      () => {
-        console.warn(this.assign_form.value);
-        console.warn(this.emp_select);
       }
-    )
+
+      this.shiftService.addPlanshift(val).subscribe(
+        (res) => {
+          alert(res.toString())
+          this.filter_select.date = this.date_option[0]
+          this.updateTable(this.date_option[0])
+          this.initAssignForm()
+          this.clearAllSelected()
+        },
+        (err) => alert('Can not add assign plan'),
+        () => {
+          console.warn(this.assign_form.value);
+          console.warn(this.emp_select);
+        }
+      )
+    }
+  }
+
+  deletePlanshift(){
+    this.getEmployeeSelected()
+    if (this.countSelected==0){
+      alert('Select Employee to remove plan')
+    }
+    else{
+      this.emp_select.forEach((emp_id) => {
+        let plan = this.planshifts.filter((plan) => plan.date == this.date_option[0].split("/").reverse().join("-") && plan.employee[0].id == emp_id)[0]
+        if (plan){
+          this.shiftService.deletePlanshift(plan.id).subscribe(
+            (res) => {
+              console.warn(res.toString())
+              this.filter_select.date = this.date_option[0]
+              this.updateTable(this.date_option[0])
+              this.initAssignForm()
+              this.clearAllSelected()
+            },
+            (err) => alert('Can not remove assign plan')
+          )
+        }
+        /* if emp_id don't have plan on that day */
+        else{ 
+          return;
+        }
+      })
+    }
+    
   }
 
   setAssignMode(selectMode: string) {

@@ -34,8 +34,13 @@ export class ShiftService {
 
   // val = {data}
   addPlanshift(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/new`
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/action`
     return this.http.post(url, val)
+  }
+
+  deletePlanshift(plan_id:any){
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/action/` + plan_id
+    return this.http.delete(url)
   }
 
   getPercentage(actual: number, total: number) {
