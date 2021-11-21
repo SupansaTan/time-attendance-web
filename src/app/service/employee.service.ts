@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import { EmployeeModel } from 'src/app/model/employee.model';
+import {TimeRecordModel} from 'src/app/model/timerecord.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +25,23 @@ export class EmployeeService {
     const url = `${environment.apiTimeAttendanceUrl}/api/dashboard/`+ id
     return this.http.get<Array<EmployeeModel>>(url)
   }
+  
+  //get employee timerecord
+  getTimeRecord(id:any) : Observable<Array<TimeRecordModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/timerecord/employee/` + id
+    return this.http.get<Array<TimeRecordModel>>(url)
+  }
+
+  //get ot
+  getOT(id:any) : Observable<Array<EmployeeModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/` + id
+    return this.http.get<Array<EmployeeModel>>(url)
+  }
+
+  //get shift
+  getShift(id:any) : Observable<Array<EmployeeModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/today/` + id
+    return this.http.get<Array<EmployeeModel>>(url)
+  }
+
 }
