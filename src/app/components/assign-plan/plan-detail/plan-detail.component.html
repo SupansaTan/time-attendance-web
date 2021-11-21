@@ -86,30 +86,30 @@
                   <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey" type="text" list="times" id="time" formControlName="shift">
                   <datalist id="times">
                   	 <option value="00:00:00"><option value="00:30:00">
-   			 <option value="01:00:00"><option value="01:30:00">
-   			 <option value="02:00:00"><option value="02:30:00">
-    			 <option value="03:00:00"><option value="03:30:00">
-    			 <option value="04:00:00"><option value="04:30:00">
-    			 <option value="05:00:00"><option value="05:30:00">
-    			 <option value="06:00:00"><option value="06:30:00">
-    			 <option value="07:00:00"><option value="07:30:00">
-    			 <option value="08:00:00"><option value="08:30:00">
-    			 <option value="09:00:00"><option value="09:30:00">
-    			 <option value="10:00:00"><option value="10:30:00">
-    			 <option value="11:00:00"><option value="11:30:00">
-    			 <option value="12:00:00"><option value="12:30:00">
-    			 <option value="13:00:00"><option value="13:30:00">
-    			 <option value="14:00:00"><option value="14:30:00">
-    			 <option value="15:00:00"><option value="15:30:00">
-    			 <option value="16:00:00"><option value="16:30:00">
-    			 <option value="17:00:00"><option value="17:30:00">
-    			 <option value="18:00:00"><option value="18:30:00">
-    			 <option value="19:00:00"><option value="19:30:00">
-    			 <option value="20:00:00"><option value="20:30:00">
-    			 <option value="21:00:00"><option value="21:30:00">
-    			 <option value="22:00:00"><option value="22:30:00">
-    			 <option value="23:00:00"><option value="23:30:00">
-		   </datalist>
+                    <option value="01:00:00"><option value="01:30:00">
+                    <option value="02:00:00"><option value="02:30:00">
+                    <option value="03:00:00"><option value="03:30:00">
+                    <option value="04:00:00"><option value="04:30:00">
+                    <option value="05:00:00"><option value="05:30:00">
+                    <option value="06:00:00"><option value="06:30:00">
+                    <option value="07:00:00"><option value="07:30:00">
+                    <option value="08:00:00"><option value="08:30:00">
+                    <option value="09:00:00"><option value="09:30:00">
+                    <option value="10:00:00"><option value="10:30:00">
+                    <option value="11:00:00"><option value="11:30:00">
+                    <option value="12:00:00"><option value="12:30:00">
+                    <option value="13:00:00"><option value="13:30:00">
+                    <option value="14:00:00"><option value="14:30:00">
+                    <option value="15:00:00"><option value="15:30:00">
+                    <option value="16:00:00"><option value="16:30:00">
+                    <option value="17:00:00"><option value="17:30:00">
+                    <option value="18:00:00"><option value="18:30:00">
+                    <option value="19:00:00"><option value="19:30:00">
+                    <option value="20:00:00"><option value="20:30:00">
+                    <option value="21:00:00"><option value="21:30:00">
+                    <option value="22:00:00"><option value="22:30:00">
+                    <option value="23:00:00"><option value="23:30:00">
+		              </datalist>
                 </div>
               </div>
 
@@ -194,7 +194,7 @@
             <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
             <th class="text-center">{{ employee.first_name + ' ' + employee.last_name }}</th>
             <th class="text-center">{{ employee.start_time? filter_select.date : '-'}}</th>
-            <th class="text-center">{{ employee.start_time? ( employee.start_time + ' - ' + employee.end_time): '-' }}</th>
+            <th class="text-center">{{ (employee.start_time && (employee.start_time!="00:00" || employee.end_time!="00:00"))? ( employee.start_time + ' - ' + employee.end_time): '-' }}</th>
             <th class="text-center">{{ employee.overtime? employee.overtime : '-' }}</th>
             <th class="text-center">{{ employee.employee_type }}</th>
           </tr>
