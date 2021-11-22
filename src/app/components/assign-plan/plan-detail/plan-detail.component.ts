@@ -204,11 +204,7 @@ export class PlanDetailComponent implements OnInit {
           this.initAssignForm()
           this.clearAllSelected()
         },
-        (err) => alert('Can not add assign plan'),
-        () => {
-          console.warn(this.assign_form.value);
-          console.warn(this.emp_select);
-        }
+        (err) => alert('Can not add assign plan')
       )
     }
   }
@@ -264,6 +260,19 @@ export class PlanDetailComponent implements OnInit {
           employee.end_time = plan.end_time.slice(0,5)
           employee.overtime = plan.overtime
         }
+      })
+      console.log(this.employees)
+
+      /* sort employee that has plan to on top of array */
+      let employeeHasPlan = this.employees.filter(emp => emp.start_time)
+      employeeHasPlan.sort(function(a,b){
+        var t1 = a.start_time!;
+        var t2 = b.start_time!;
+        return t1<t2 ? 1 : t1>t2 ? -1 : 0;
+      });
+      employeeHasPlan.map(emp => {
+        this.employees.splice(this.employees.indexOf(emp), 1)
+        this.employees.unshift(emp)
       })
     })
   }
