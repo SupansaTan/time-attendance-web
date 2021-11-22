@@ -43,17 +43,23 @@ export class DepartmentDetailComponent implements OnInit {
     /* get data */
     this.departmentId = Number(location.pathname.split("/")[2])
     this.getDepartmentInfo()
-    this.getDepartmentPlan()
-    if(this.today_plan.length > 0) {
-      this.getEmployeeTimeRecord()
-    }
+    this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
+      let plan = response
+      if (plan[0]){
+        this.today_plan = plan
+        this.getEmployeeTimeRecord()
+      }
+    });
 
     this.intervalGetData = setInterval(() => {
       this.getDepartmentInfo()
-      this.getDepartmentPlan()
-      if(this.today_plan.length > 0) {
-        this.getEmployeeTimeRecord()
-      }
+      this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
+        let plan = response
+        if (plan[0]){
+          this.today_plan = plan
+          this.getEmployeeTimeRecord()
+        }
+      })
     }, 30000);
   }
 
@@ -72,6 +78,7 @@ export class DepartmentDetailComponent implements OnInit {
   getDepartmentPlan() {
     this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       let plan = response
+      console.log('today plan1 = ', plan)
       if (plan[0]){
         this.today_plan = plan
       }
@@ -107,6 +114,7 @@ export class DepartmentDetailComponent implements OnInit {
 
     in_? this.in_record = in_ : false
     out_? this.out_record = out_: false
+    
     return this.in_record
   }
 }

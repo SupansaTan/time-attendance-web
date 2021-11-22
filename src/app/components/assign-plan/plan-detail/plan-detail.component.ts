@@ -87,10 +87,10 @@ export class PlanDetailComponent implements OnInit {
     this.otBtnActive = false
     this.shiftBtnActive = false
     this.assign_form = new FormGroup({
-      start_date: new FormControl('',[Validators.required]),
-      end_date: new FormControl('',[Validators.required]),
-      shift: new FormControl('',[Validators.required]),
-      ot: new FormControl('',[Validators.required])
+      start_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
+      end_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
+      shift: new FormControl(''),
+      ot: new FormControl('0',[Validators.required])
     });
   }
 
@@ -163,15 +163,36 @@ export class PlanDetailComponent implements OnInit {
       alert('Select Employee to assign plan')
     }
     else{
-      var val = {
-      "department": [this.departmentId],
-      "employee_list": this.emp_select,
-      "overtime": this.assign_form.controls['ot'].value,
-      "start_date": this.assign_form.controls['start_date'].value,
-      "end_date": this.assign_form.controls['end_date'].value,
-      "start_time": this.assign_form.controls['shift'].value
+      var val = {}
+      if(this.otBtnActive && this.shiftBtnActive){
+        val = {
+              "department": [this.departmentId],
+              "employee_list": this.emp_select,
+              "overtime": this.assign_form.controls['ot'].value,
+              "start_date": this.assign_form.controls['start_date'].value,
+              "end_date": this.assign_form.controls['end_date'].value,
+              "start_time": this.assign_form.controls['shift'].value
+              }
       }
-
+      else if(this.otBtnActive){
+        val = {
+              "department": [this.departmentId],
+              "employee_list": this.emp_select,
+              "overtime": this.assign_form.controls['ot'].value,
+              "start_date": this.assign_form.controls['start_date'].value,
+              "end_date": this.assign_form.controls['end_date'].value,
+              }
+      }
+      else if(this.shiftBtnActive){
+        val = {
+              "department": [this.departmentId],
+              "employee_list": this.emp_select,
+              "start_date": this.assign_form.controls['start_date'].value,
+              "end_date": this.assign_form.controls['end_date'].value,
+              "start_time": this.assign_form.controls['shift'].value
+              }
+      }
+      
       this.shiftService.addPlanshift(val).subscribe(
         (res) => {
           alert(res.toString())

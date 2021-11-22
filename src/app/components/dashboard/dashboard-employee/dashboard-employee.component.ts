@@ -136,7 +136,7 @@ export class DashboardEmployeeComponent implements OnInit {
   }
 
   getActualOT(){
-    let timediff = this.calculateOT(new Date(this.today_plan.date+' '+this.today_plan.end_time), new Date(this.date_out+' '+this.time_out))
+    let timediff = this.calculateOT(new Date(this.date_out+' '+this.time_out), new Date(this.today_plan.date+' '+this.today_plan.end_time))
     if (timediff){
       this.actual_ot = timediff
     }
@@ -145,21 +145,17 @@ export class DashboardEmployeeComponent implements OnInit {
   }
 
   calculateOT(dateFuture:any, dateNow:any) {
-    let diffInMilliSeconds = Math.abs(dateFuture - dateNow) / 1000;
+    if (dateFuture > dateNow){
+      let diffInMilliSeconds = Math.abs(dateFuture - dateNow) / 1000;
 
-    // calculate days
-    const days = Math.floor(diffInMilliSeconds / 86400);
-    diffInMilliSeconds -= days * 86400;
-
-    // calculate hours
-    const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
-    diffInMilliSeconds -= hours * 3600;
-
-    // calculate minutes
-    const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
-    diffInMilliSeconds -= minutes * 60;
-
-    return hours;
+      // calculate hours
+      const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
+      diffInMilliSeconds -= hours * 3600;
+      return hours
+    }
+    else{
+      return 0
+    }
   }
 
 
