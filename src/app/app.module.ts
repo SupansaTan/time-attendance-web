@@ -12,15 +12,12 @@ import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IconsModule } from './icons/icons.module';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { AssignPlanComponent } from './components/assign-plan/assign-plan.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { LoginComponent } from './components/authentication/login/login.component';
 import { RouterModule } from '@angular/router';
-import { AuthGuardService } from './auth-guard.service';
 
 
 @NgModule({
@@ -30,7 +27,6 @@ import { AuthGuardService } from './auth-guard.service';
     NavigationBarComponent,
     NavbarComponent,
     BreadcrumbComponent,
-    AssignPlanComponent
   ],
   imports: [
     BrowserModule,
@@ -41,11 +37,9 @@ import { AuthGuardService } from './auth-guard.service';
     BrowserAnimationsModule,
     NgbModule,
     SocialLoginModule,
-    RouterModule.forRoot([
-      {path: 'auth/login', component: LoginComponent},
-      {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]}, // only accessible if authorised
-      {path: 'auth/login', component: LoginComponent}
-    ]),
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',
@@ -61,7 +55,7 @@ import { AuthGuardService } from './auth-guard.service';
         ]
       }
     },
-      AuthGuardService],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

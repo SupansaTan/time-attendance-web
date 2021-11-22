@@ -1,54 +1,63 @@
 <main>
-  <div class="card rounded-25 border-0 shadow-lg">
-    <div class="mt-4 mx-4">
-      <h3 class="mb-0 heading d-inline">Department</h3>
-      <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
+  <!-- loading -->
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise" [fullScreen]="true">
+    <p style="color: white" > Loading... </p>
+  </ngx-spinner>
+
+  <!-- department info card -->
+  <div class="card rounded-25 border-0 shadow-lg department-info-wrapper">
+    <!-- heading -->
+    <div class="mt-4 mx-4 row gy-2">
+      <h3 class="mb-0 heading col-auto">Department</h3>
+      <h3 class="name px-3 rounded-25 shadow text-white bg-blue col-auto">{{ department.name }}</h3>
     </div>
 
-    <div class="row mx-3 mt-2 mb-3 g-3">
-      <div class="col-2">
-        <div class="chart-wrapper w-75">
+    <div class="row mx-3 mb-3 g-1">
+      <!-- chart -->
+      <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+        <div class="chart-wrapper w-90 mx-auto">
           <svg viewBox="0 0 36 36" class="circular-chart green">
             <path class="circle-bg"
               d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
-            <path *ngIf="department.actual_emp > 0" class="circle"
-              [attr.stroke-dasharray]="getPercentage(department.actual_emp, department.total_emp) + ', 100'"
+            <path *ngIf="(today_plan.length > 0) && (department.active_employee > 0)" class="circle"
+              [attr.stroke-dasharray]="getPercentage(department.active_employee, department.total_employee) + ', 100'"
               d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
-            <text x="18" y="19.35" class="percentage">{{ getPercentage(department.actual_emp, department.total_emp) + '%' }}</text>
-            <text x="10" y="25.35" class="total-employee">{{ department.actual_emp + '/' + department.total_emp + ' คน' }}</text>
+            <text x="18" y="19.35" class="percentage">{{ getPercentage(department.active_employee, department.total_employee) + '%' }}</text>
+            <text x="10" y="25.35" class="total-employee">{{ department.active_employee + '/' + department.total_employee + ' คน' }}</text>
           </svg>
         </div>
       </div>
 
-      <div class="col align-self-center m-0 detail-wrapper">
+      <!-- date & plan shift -->
+      <div class="col-12 col-md-auto align-self-center m-0 detail-wrapper mx-2 mx-md-0">
         <div class="row my-3 d-flex align-items-center date-wrapper">
           <i class="col-auto fas fa-calendar text-blue"></i>
           <p class="col-auto mb-0 px-3 rounded-25 shadow text-white bg-blue">{{ date }}</p>
         </div>
 
         <div class="row my-3 d-flex align-items-center">
-          <i class="fas fa-clock me-2 col-auto"></i>
-          <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ department.start_time + ' - ' + department.end_time }}</p>
-        </div>
-
-        <div class="row my-3 ot-wrapper d-flex align-items-center">
-          <p class="fw-bold mb-0 col-auto">OT Plan</p>
-          <p class="hours rounded-25 shadow bg-white mb-0 px-2 col-auto">{{ department.ot_plan + " hours" }}</p>
+          <p class="col-auto mb-0">
+            <i class="fas fa-clock"></i>
+            Shift Plan
+          </p>
+          <p class="px-3 rounded-25 shadow bg-white col-auto mb-0">{{ (today_plan.length > 0)? (today_plan[0].start_time.slice(0,5) + ' - ' + today_plan[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
         </div>
       </div>
 
     </div>
   </div>
 
+  <!-- time record table card -->
   <div class="card rounded-25 border-0 shadow-lg mt-3">
     <h3 class="mt-4 mx-4 heading">Time Record</h3>
 
+    <!-- table -->
     <div class="table-responsive mx-4">
       <table class="table table-hover table-borderless">
         <thead class="text-white">
@@ -59,26 +68,32 @@
             <th scope="col" class="text-center">End Time</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="employee.start? 'green':'grey'">
-            <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
-            <th class="text-center">{{ employee.name }}</th>
-            <th class="text-center">{{ employee.start? employee.start : '-' }}</th>
-            <th class="text-center">{{ employee.end? employee.end : '-' }}</th>
+        <tbody *ngIf="employees.length > 0">
+          <tr  *ngFor="let emp of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findTimeRecord(emp.id).status? 'green':'grey'">
+            <th scope="row">{{ employees.indexOf(emp)+1 }}</th>
+            <th class="text-center">{{ emp.first_name + ' ' + emp.last_name }}</th>
+            <th class="text-center">{{ in_record.status? in_record.time.slice(0,5) : '-' }}</th>
+            <th class="text-center">{{ out_record.status? out_record.time.slice(0,5) : '-' }}</th>
+          </tr>
+        </tbody>
+        <tbody *ngIf="employees.length === 0">
+          <tr>
+            <th colspan="4" class="text-center">No data</th>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="row mx-4 my-2 align-items-center">
-      <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
+    <!-- table option -->
+    <div class="row my-2 mx-4 align-items-center">
+      <ng-select *ngIf="today_plan.length > 0" [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
         name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
       </ng-select>
-      <p class="d-flex align-items-center col-auto m-0">
-        {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
+      <p class="d-flex align-items-center col-auto m-0" [ngClass]="{ 'px-0': (today_plan.length === 0)}">
+        {{ 'Showing '+ (today_plan.length>0? pageSize*(page-1)+1 : 0) +' to '+ (pageSize*page>today_plan.length? today_plan.length:pageSize*page) +' of '+ today_plan.length +' results'}}
       </p>
-      <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
-        [collectionSize]="employees.length">
+      <ngb-pagination *ngIf="today_plan.length > 0" class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
+        [collectionSize]="today_plan.length">
       </ngb-pagination>
     </div>
   </div>

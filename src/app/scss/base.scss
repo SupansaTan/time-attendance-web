@@ -37,6 +37,24 @@
   }
 }
 
+/* text */
+.text {
+  &-black {
+    color: black;
+  }
+}
+
+/* width */
+.w {
+  &-90 {
+    width: 90% !important;
+  }
+
+  &-80 {
+    width: 80% !important;
+  }
+}
+
 /* table */
 thead {
   background-color: #3a538a;
@@ -176,20 +194,5 @@ ngb-pagination {
 @keyframes progress {
   0% {
     stroke-dasharray: 0 100;
-  }
-}
-
-/* responsive */
-$breakpoints: (
-  mobile : 0px,
-  tablet : 426px,
-  desktop: 992px
-);
-
-@mixin media($keys...){
-  @each $key in $keys {
-    @media (min-width: map-get($breakpoints, $key)){
-      @content
-    }
   }
 }

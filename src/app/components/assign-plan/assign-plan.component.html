@@ -1,5 +1,26 @@
 <main>
-  <div class="card rounded-3 border-0 shadow-lg">
-    <p class="m-3">assign-plan works!</p>
+  <div class="card rounded-25 border-0 shadow-lg">
+    <h3 class="mx-4 mt-3 mb-0 heading">Departments : เลือกแผนก</h3>
+
+    <!-- loading -->
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise" [fullScreen]="true">
+      <p style="color: white" > Loading... </p>
+    </ngx-spinner>
+
+    <!-- each department card -->
+    <div *ngIf="departments.length > 0" class="mx-3 mt-2 mb-3 row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3">
+      <div *ngFor="let department of departments" class="col">
+
+        <a [href]="'/assign-plan/' + department.id" class="card border-0 rounded-25 bg-grey text-black">
+          <h3 class="mb-0 py-2 text-center">{{ department.name }}</h3>
+        </a>
+      </div>
+    </div>
+
+    <!-- no department -->
+    <div *ngIf="isNoDepartment" class="row rounded-15 mx-3 mb-3 bg-grey mt-2">
+      <h5 class="mb-0 py-2 text-danger text-center col">No department</h5>
+    </div>
+
   </div>
 </main>

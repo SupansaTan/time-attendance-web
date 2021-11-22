@@ -1,46 +1,47 @@
-<section class="myform-area">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="form-area login-form">
-                    <div class="form-content">
-                        <p style="text-align:center">Welcome to</p>
-                        <h3 style="text-align:center">Time Attendance</h3>
-                        <div class="line"></div>
-                        <img src="../../../../assets/image/logo.png" alt="logo" height="150">
-                    </div>
-                    <div class="form-input">
-                        <h2 style="text-align:center">Login</h2>
-                        <div class='btn-google'>
-                            <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-                            <div class="google-btn">
-                                <div class="google-icon-wrapper">
-                                    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-                                </div>
-                                <p class="btn-text"><b (click)="loginWithGoogle()">Sign in with google</b> </p>
-                            </div>
-
-                        </div>
-                        <form>
-                            <div class="form-group">
-                                <input type="email" style='text-transform:lowercase' name="email" [(ngModel)]="email" required>
-                                <label>Email</label>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="password" name="password" [(ngModel)]="password" required>
-                                <label>Password</label>
-                            </div>
-
-                            <div class="myform-button">
-                                <button type="submit" class="myform-btn" (click)="LoginUser()">Login</button>
-                            </div>
-
-                        </form>
-                    </div>
-
-                </div>
-            </div>
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <!-- The image half -->
+    <div class="col-md-6 d-none d-md-flex bg-image">
+        <div class="mx-auto mt-auto mb-auto">
+            <h2 id="header"style="text-align:center">Welcome to</h2>
+            <h1 id="header"style="text-align:center">Time Attendance</h1>
+            <div class="line"></div>
+            <img src="../../../../assets/image/logo.png" alt="logo" height="230">
         </div>
     </div>
-</section>
+
+
+    <!-- The content half -->
+    <div class="col-md-6 bg-light">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <h2 class="display-5 mx-auto">Login</h2>
+            <div class="col-lg-5 col-xl-6 mx-auto">
+              <div class="d-grid mb-2">
+                <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit" (click)="loginWithGoogle()">
+                <i class="fab fa-google me-2" ><b > Sign up with Google</b></i>
+                </button>
+              </div>
+
+              <!-- login form -->
+              <form [formGroup]="loginForm" (ngSubmit)="submit()">
+                <div class="form-group mb-3">
+                  <input id="inputEmail" type="email" placeholder="Email address" formControlName="email" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4" name="email" [(ngModel)]="login.email" required>
+                </div>
+                <div class="form-group mb-3">
+                  <input id="inputPassword" type="password" placeholder="Password" formControlName="password" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary" name="password" [(ngModel)]="login.password" required>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
