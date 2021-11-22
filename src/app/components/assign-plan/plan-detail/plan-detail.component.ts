@@ -8,7 +8,7 @@ import { ShiftCodeModel, PlanShiftModel } from 'src/app/model/shift.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { NgOption } from "@ng-select/ng-select";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { shiftOptions, otOptions, typeOptions } from './filter-options';
+import { typeOptions } from './filter-options';
 import { blueTheme } from './timepicker-theme';
 
 @Component({
@@ -56,13 +56,9 @@ export class PlanDetailComponent implements OnInit {
   name_filter: string;
   filter_select = {
     date: '',
-    shift: 'All',
-    ot: 'All',
     type: 'All'
   }
-  shift_option: NgOption[] = shiftOptions
-  ot_option: NgOption[] = otOptions
-  type_option: NgOption[] = typeOptions
+  type_option: Array<any> = typeOptions
 
   constructor(private shiftService: ShiftService, private employeeService: EmployeeService,
     private departmentService: DepartmentService) { }
@@ -322,7 +318,7 @@ export class PlanDetailComponent implements OnInit {
     }
   }
 
-  filterEmployeeName(terms: string) {
+  filterEmployee(terms: string) {
     this.name_filter = terms
 
     if(this.name_filter == '') {
@@ -331,26 +327,11 @@ export class PlanDetailComponent implements OnInit {
     else {
       this.employees = this.all_employees.filter((emp) => (
         emp.first_name.includes(this.name_filter.toLowerCase()) ||
-        emp.last_name.includes(this.name_filter.toLowerCase())
+        emp.last_name.includes(this.name_filter.toLowerCase()) ||
+        emp.overtime == Number(terms) ||
+        emp.start_time?.includes(terms) ||
+        emp.employee_type.includes(terms)
       ))
-    }
-  }
-
-  filterOTPlan(option: string) {
-    if(option === 'All') {
-      this.employees = this.all_employees
-    }
-    else {
-
-    }
-  }
-
-  filterShift(option: string) {
-    if(option === 'All') {
-      this.employees = this.all_employees
-    }
-    else {
-
     }
   }
 }

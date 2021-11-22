@@ -126,21 +126,9 @@
 
     <!-- search & filter -->
     <div class="row my-3 mx-4 filter-group">
-      <div class="col-12 col-xl-6 position-relative px-0">
+      <div class="col-12 col-xl-10 position-relative px-0">
         <i-feather name="search" class="position-absolute feather-20"></i-feather>
-        <input class="form-control form-control-sm border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [ngModel]="name_filter" (ngModelChange)="filterEmployeeName($event)"/>
-      </div>
-      <div class="col-12 col-md-6 col-xl-2 row my-2 my-xl-0 mt-3 mt-xl-0">
-        <p class="mb-0 col-auto align-self-center">Shift</p>
-        <ng-select [(ngModel)]="filter_select.shift" [searchable]=false [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterShift(filter_select.shift)">
-          <ng-option *ngFor="let item of shift_option" [value]="item.value">{{ item.value }}</ng-option>
-        </ng-select>
-      </div>
-      <div class="col-12 col-md-6 col-xl-2 row mb-2 mt-md-3 mb-xl-0 mt-xl-0">
-        <p class="mb-0 col-auto align-self-center">OT Plan</p>
-        <ng-select [(ngModel)]="filter_select.ot" [searchable]=false [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterOTPlan(filter_select.ot)">
-          <ng-option *ngFor="let item of ot_option" [value]="item.value">{{ item.value }}</ng-option>
-        </ng-select>
+        <input class="form-control form-control-sm border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [ngModel]="name_filter" (ngModelChange)="filterEmployee($event)"/>
       </div>
       <div class="col-12 col-md-6 col-xl-2 row mb-2 mb-xl-0">
         <p class="mb-0 col-auto align-self-center">Type</p>
