@@ -87,8 +87,8 @@ export class PlanDetailComponent implements OnInit {
     this.otBtnActive = false
     this.shiftBtnActive = false
     this.assign_form = new FormGroup({
-      start_date: new FormControl('',[Validators.required]),
-      end_date: new FormControl('',[Validators.required]),
+      start_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
+      end_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
       shift: new FormControl(''),
       ot: new FormControl('0',[Validators.required])
     });
