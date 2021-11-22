@@ -29,10 +29,12 @@ export class NavbarComponent implements OnInit {
     //   this.username  = socialUser.name;
     // });
     let userId = Number(this.localStorageService.get<string>('empId'))
-    this.employeeService.getEmployee(userId).subscribe((res) => {
-      const emp = res[0]
-      this.username = emp.first_name + ' ' + emp.last_name
-    })
+    if(userId) {
+      this.employeeService.getEmployee(userId).subscribe((res) => {
+        const emp = res[0]
+        this.username = emp.first_name + ' ' + emp.last_name
+      })
+    }
   }
 
   @HostListener('window:resize', ['$event'])
