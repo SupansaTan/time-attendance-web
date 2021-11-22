@@ -9,6 +9,7 @@ import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { NgOption } from "@ng-select/ng-select";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { shiftOptions, otOptions, typeOptions } from './filter-options';
+import { blueTheme } from './timepicker-theme';
 
 @Component({
   selector: 'app-plan-detail',
@@ -40,6 +41,9 @@ export class PlanDetailComponent implements OnInit {
   mode: Array<string> = []
   otBtnActive: boolean
   shiftBtnActive: boolean
+  minDate: string
+  minEndDate: string
+  timepickerTheme = blueTheme
   ot_plan: number = 0
   assign_form = new FormGroup({
     start_date: new FormControl(''),
@@ -86,6 +90,8 @@ export class PlanDetailComponent implements OnInit {
     this.mode = []
     this.otBtnActive = false
     this.shiftBtnActive = false
+    this.minDate = this.today.toISOString().split("T")[0]
+    this.minEndDate = this.today.toISOString().split("T")[0]
     this.assign_form = new FormGroup({
       start_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
       end_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
@@ -130,6 +136,7 @@ export class PlanDetailComponent implements OnInit {
   setDateSelect(start: string, end?: string) {
     let currentDateSelect = this.filter_select.date
     let startDate = new Date(start)
+    this.minEndDate = startDate.toISOString().split("T")[0]
     this.date_option = []
 
     if(end) {
@@ -171,7 +178,7 @@ export class PlanDetailComponent implements OnInit {
               "overtime": this.assign_form.controls['ot'].value,
               "start_date": this.assign_form.controls['start_date'].value,
               "end_date": this.assign_form.controls['end_date'].value,
-              "start_time": this.assign_form.controls['shift'].value
+              "start_time": this.assign_form.controls['shift'].value + ':00'
               }
       }
       else if(this.otBtnActive){
@@ -189,10 +196,10 @@ export class PlanDetailComponent implements OnInit {
               "employee_list": this.emp_select,
               "start_date": this.assign_form.controls['start_date'].value,
               "end_date": this.assign_form.controls['end_date'].value,
-              "start_time": this.assign_form.controls['shift'].value
+              "start_time": this.assign_form.controls['shift'].value + ':00'
               }
       }
-      
+
       this.shiftService.addPlanshift(val).subscribe(
         (res) => {
           alert(res.toString())
@@ -230,13 +237,9 @@ export class PlanDetailComponent implements OnInit {
             (err) => alert('Can not remove assign plan')
           )
         }
-        /* if emp_id don't have plan on that day */
-        else{ 
-          return;
-        }
       })
     }
-    
+
   }
 
   setAssignMode(selectMode: string) {
