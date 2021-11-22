@@ -10,6 +10,7 @@ import { NgOption } from "@ng-select/ng-select";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { typeOptions } from './filter-options';
 import { blueTheme } from './timepicker-theme';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-plan-detail',
@@ -134,21 +135,23 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
-  setDateSelect(start: string, end?: string) {
+  setDateSelect(start: string, end: string) {
     let currentDateSelect = this.filter_select.date
     let startDate = new Date(start)
+    let endDate = new Date(end)
     this.minEndDate = startDate.toISOString().split("T")[0]
     this.date_option = []
 
-    if(end) {
-      let endDate = new Date(end)
-      while(startDate <= endDate) {
-        this.date_option.push(this.localeDateFormat(startDate))
-        startDate.setDate(startDate.getDate() + 1)
-      }
+    // when select date invalid
+    if(startDate > endDate) {
+      endDate = new Date(this.minEndDate)
+      this.assign_form.controls['end_date'].setValue(this.minEndDate)
     }
-    else {
+
+    // add to date option
+    while(startDate <= endDate) {
       this.date_option.push(this.localeDateFormat(startDate))
+      startDate.setDate(startDate.getDate() + 1)
     }
 
     this.filter_select.date = this.date_option[0]

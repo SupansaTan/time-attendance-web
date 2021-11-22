@@ -74,7 +74,7 @@
               <div class="col-6 row">
                 <h5 class="mb-0 col-auto align-self-center">From</h5>
                 <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col" type="date" id="start" [min]="minDate" formControlName="start_date"
-                (change)="setDateSelect(assign_form.controls['start_date'].value)">
+                (change)="setDateSelect(assign_form.controls['start_date'].value, assign_form.controls['end_date'].value)">
               </div>
               <div class="col-6 row">
                 <h5 class="mb-0 col-auto align-self-center">To</h5>
