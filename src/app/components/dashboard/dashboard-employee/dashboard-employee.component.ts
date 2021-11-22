@@ -6,6 +6,7 @@ import { DepartmentModel } from 'src/app/model/department.model';
 import { ShiftCodeModel } from 'src/app/model/shift.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { LocalStorageService } from 'src/app/service/localStorage.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-dashboard-employee',
@@ -31,10 +32,12 @@ export class DashboardEmployeeComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    private spinner: NgxSpinnerService,
     private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show()
     this.today = new Date()
     this.today = this.today.toLocaleDateString('th-TH', {
       year: 'numeric',
@@ -99,6 +102,7 @@ export class DashboardEmployeeComponent implements OnInit {
         this.time_out = OUT?.time.slice(0,8)
         this.date_out = OUT?.date
       }
+      this.spinner.hide()
     })
   }
 

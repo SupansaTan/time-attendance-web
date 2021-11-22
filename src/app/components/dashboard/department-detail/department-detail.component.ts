@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service'
 import { NgOption } from "@ng-select/ng-select";
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { PlanShiftModel } from 'src/app/model/shift.model';
 import { EmployeeModel } from 'src/app/model/employee.model';
@@ -29,9 +30,13 @@ export class DepartmentDetailComponent implements OnInit {
   in_record: TimeRecordModel = new TimeRecordModel()
   out_record: TimeRecordModel = new TimeRecordModel()
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit(): void {
+    this.spinner.show()
     this.initTable()
     this.date = new Date();
     this.date = this.date.toLocaleDateString('th-TH', {
@@ -48,6 +53,9 @@ export class DepartmentDetailComponent implements OnInit {
       if (plan[0]){
         this.today_plan = plan
         this.getEmployeeTimeRecord()
+      }
+      else {
+        this.spinner.hide()
       }
     });
 
@@ -89,6 +97,7 @@ export class DepartmentDetailComponent implements OnInit {
     this.dashboardService.getTodayDepTimerecord(this.departmentId).subscribe((response) => {
       this.today_timerecords = response
       this.employees = this.today_timerecords[0].employee
+      this.spinner.hide()
     });
   }
 
@@ -114,7 +123,7 @@ export class DepartmentDetailComponent implements OnInit {
 
     in_? this.in_record = in_ : false
     out_? this.out_record = out_: false
-    
+
     return this.in_record
   }
 }

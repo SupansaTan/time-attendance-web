@@ -60,10 +60,15 @@ export class PlanDetailComponent implements OnInit {
   }
   type_option: Array<any> = typeOptions
 
-  constructor(private shiftService: ShiftService, private employeeService: EmployeeService,
-    private departmentService: DepartmentService) { }
+  constructor(
+    private shiftService: ShiftService,
+    private employeeService: EmployeeService,
+    private departmentService: DepartmentService,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit(): void {
+    this.spinner.show()
     this.today = new Date();
     this.date = this.localeDateFormat(this.today)
 
@@ -274,6 +279,8 @@ export class PlanDetailComponent implements OnInit {
         this.employees.splice(this.employees.indexOf(emp), 1)
         this.employees.unshift(emp)
       })
+
+      this.spinner.hide()
     })
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 import { DashboardService } from '../dashboard.service'
 
 import { DepartmentModel } from 'src/app/model/department.model';
@@ -22,10 +23,12 @@ export class DashboardManagerComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show()
     this.employee_id = Number(this.localStorageService.get<string>('empId'))
     this.getDepartmentInfo()
     this.intervalGetData = setInterval(() => {
@@ -48,6 +51,7 @@ export class DashboardManagerComponent implements OnInit {
         this.departments.push(element)
         this.dashboardService.getTodayDepPlanShift(element.id).subscribe((res) => {
           this.all_today_planshift = this.all_today_planshift.concat(res)
+          this.spinner.hide()
         })
       })
     })
