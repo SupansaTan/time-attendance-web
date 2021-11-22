@@ -30,7 +30,7 @@ export class DashboardManagerComponent implements OnInit {
     this.getDepartmentInfo()
     this.intervalGetData = setInterval(() => {
       this.getDepartmentInfo()
-    }, 30000);
+    }, 10000);
   }
 
   ngOnDestroy() {

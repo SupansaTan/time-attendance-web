@@ -27,6 +27,7 @@ export class DashboardEmployeeComponent implements OnInit {
   date_out:any = '-'
   actual_ot: number = 0
   department_id:number
+  intervalGetData: any;
 
   constructor(
     private dashboardService: DashboardService,
@@ -42,13 +43,32 @@ export class DashboardEmployeeComponent implements OnInit {
     })
 
     this.employee_id = Number(this.localStorageService.get<string>('empId'))
+    this.getEmployeeInfo()
+    this.getAllPlan()
+    this.getAllShift()
+    this.getActualTime()
 
+    this.intervalGetData = setInterval(() => {
+      this.getAllPlan()
+      this.getActualTime()
+    }, 10000);
+  }
+
+  ngOnDestroy() {
+    if (this.intervalGetData) {
+      clearInterval(this.intervalGetData);
+    }
+  }
+
+  getEmployeeInfo() {
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.employee = response[0]
       this.department = this.employee.department[0]
       this.department_id = this.employee.department[0].id
     })
+  }
 
+  getAllPlan() {
     this.dashboardService.getEmpPlanShift(this.employee_id).subscribe((response) => {
       this.planshifts = response
       let today = new Date();
@@ -58,11 +78,15 @@ export class DashboardEmployeeComponent implements OnInit {
         this.today_plan = plan
       }
     })
+  }
 
+  getAllShift() {
     this.dashboardService.getAllShiftcode().subscribe((response) => {
       this.shiftcodes = response
     })
+  }
 
+  getActualTime() {
     this.dashboardService.getTodayEmpTimerecord(this.employee_id).subscribe((response) => {
       this.actual_times = response
       let IN = (this.actual_times.find(element => element["status"] == "In"))
@@ -76,7 +100,6 @@ export class DashboardEmployeeComponent implements OnInit {
         this.date_out = OUT?.date
       }
     })
-
   }
 
   start_work(){
@@ -95,6 +118,7 @@ export class DashboardEmployeeComponent implements OnInit {
     this.dashboardService.increase_active_emp(dep_data).subscribe(res=>{
       alert(res.toString());
     })
+    this.getActualTime()
   }
 
   end_work(){
@@ -114,6 +138,7 @@ export class DashboardEmployeeComponent implements OnInit {
     this.dashboardService.decrease_active_emp(dep_data).subscribe(res=>{
       alert(res.toString());
     })
+    this.getActualTime()
   }
 
   convertToThaiDate(d: string) {
