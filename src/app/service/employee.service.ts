@@ -19,8 +19,8 @@ export class EmployeeService {
   }
 
   /* get employee info by employee id */
-  getEmployee(id:any): Observable<Array<EmployeeModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/dashboard/`+ id
+  getEmployee(id: any): Observable<Array<EmployeeModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/employees/`+ id
     return this.http.get<Array<EmployeeModel>>(url)
   }
 }

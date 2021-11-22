@@ -1,46 +1,45 @@
 <section class="myform-area">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="form-area login-form">
-                    <div class="form-content">
-                        <p style="text-align:center">Welcome to</p>
-                        <h3 style="text-align:center">Time Attendance</h3>
-                        <div class="line"></div>
-                        <img src="../../../../assets/image/logo.png" alt="logo" height="150">
-                    </div>
-                    <div class="form-input">
-                        <h2 style="text-align:center">Login</h2>
-                        <div class='btn-google'>
-                            <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-                            <div class="google-btn">
-                                <div class="google-icon-wrapper">
-                                    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-                                </div>
-                                <p class="btn-text"><b (click)="loginWithGoogle()">Sign in with google</b> </p>
-                            </div>
+  <div class="container">
+    <div class="row justify-content-center col-lg-8">
+      <div class="form-area login-form">
 
-                        </div>
-                        <form>
-                            <div class="form-group">
-                                <input type="email" style='text-transform:lowercase' name="email" [(ngModel)]="email" required>
-                                <label>Email</label>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="password" name="password" [(ngModel)]="password" required>
-                                <label>Password</label>
-                            </div>
-
-                            <div class="myform-button">
-                                <button type="submit" class="myform-btn" (click)="LoginUser()">Login</button>
-                            </div>
-
-                        </form>
-                    </div>
-
-                </div>
-            </div>
+        <div class="form-content">
+            <p style="text-align:center">Welcome to</p>
+            <h3 style="text-align:center">Time Attendance</h3>
+            <div class="line"></div>
+            <img src="../../../../assets/image/logo.png" alt="logo" height="150">
         </div>
+
+        <div class="form-input">
+          <h2 style="text-align:center">Login</h2>
+          <div class='btn-google'>
+            <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+            <div class="google-btn">
+              <div class="google-icon-wrapper">
+                <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+              </div>
+              <p class="btn-text"><b (click)="loginWithGoogle()">Sign in with google</b> </p>
+            </div>
+          </div>
+
+          <form [formGroup]="loginForm" (ngSubmit)="submit()">
+            <div class="form-group">
+              <input type="email" style='text-transform:lowercase' name="email" formControlName="email" [(ngModel)]="login.email" required>
+              <label>Email</label>
+            </div>
+
+            <div class="form-group">
+              <input type="password" name="password" formControlName="password" [(ngModel)]="login.password" required>
+              <label>Password</label>
+            </div>
+
+            <div class="myform-button">
+              <button type="submit" class="myform-btn">Login</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
     </div>
+  </div>
 </section>

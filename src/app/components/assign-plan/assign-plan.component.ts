@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DepartmentModel } from 'src/app/model/department.model';
 
 import { ManagerService } from 'src/app/service/manager.service';
-import { AuthenticationService } from '../authentication/authentication.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { LocalStorageService } from 'src/app/service/localStorage.service';
 
 @Component({
   selector: 'app-assign-plan',
@@ -15,12 +15,15 @@ export class AssignPlanComponent implements OnInit {
   isNoDepartment: boolean = false;
   departments: Array<DepartmentModel> = new Array<DepartmentModel>();
 
-  constructor(private managerService: ManagerService, private authService: AuthenticationService,
-    private spinner: NgxSpinnerService) {}
+  constructor(
+    private managerService: ManagerService,
+    private spinner: NgxSpinnerService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.spinner.show()
-    this.manager_id = this.authService.getUserid()
+    this.manager_id = Number(this.localStorageService.get<string>('empId'))
 
     /* get all departments of manager */
     this.managerService.getManagerInfo(this.manager_id).subscribe(

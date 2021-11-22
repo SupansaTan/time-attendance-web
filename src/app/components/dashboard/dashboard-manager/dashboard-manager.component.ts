@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service'
-import { AuthenticationService } from '../../authentication/authentication.service';
 
 import { DepartmentModel } from 'src/app/model/department.model';
 import { PlanShiftModel } from 'src/app/model/shift.model';
 import { EmployeeModel } from 'src/app/model/employee.model';
+import { LocalStorageService } from 'src/app/service/localStorage.service';
 
 
 @Component({
@@ -14,18 +14,35 @@ import { EmployeeModel } from 'src/app/model/employee.model';
 })
 export class DashboardManagerComponent implements OnInit {
   employee_id: number;
+  intervalGetData: any;
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
   departments: Array<DepartmentModel> = new Array<DepartmentModel>()
   all_today_planshift: Array<PlanShiftModel> = new Array<PlanShiftModel>()
   each_dep_plan: PlanShiftModel = new PlanShiftModel()
 
-  constructor(private dashboardService: DashboardService, private authService: AuthenticationService) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
-    this.employee_id = this.authService.getUserid()
+    this.employee_id = Number(this.localStorageService.get<string>('empId'))
+    this.getDepartmentInfo()
+    this.intervalGetData = setInterval(() => {
+      this.getDepartmentInfo()
+    }, 30000);
+  }
 
+  ngOnDestroy() {
+    if (this.intervalGetData) {
+      clearInterval(this.intervalGetData);
+    }
+  }
+
+  getDepartmentInfo() {
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.manager_info = response
+      this.departments = []
 
       this.manager_info[0].department.forEach( (element:any) =>{
         this.departments.push(element)

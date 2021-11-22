@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
-import { AuthenticationService } from '../../authentication/authentication.service';
 import { EmployeeModel } from 'src/app/model/employee.model';
 import { PlanShiftModel } from 'src/app/model/shift.model';
 import { DepartmentModel } from 'src/app/model/department.model';
 import { ShiftCodeModel } from 'src/app/model/shift.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
+import { LocalStorageService } from 'src/app/service/localStorage.service';
 
 @Component({
   selector: 'app-dashboard-employee',
@@ -22,13 +22,16 @@ export class DashboardEmployeeComponent implements OnInit {
   shiftcodes: Array<ShiftCodeModel> = new Array<ShiftCodeModel>()
   actual_times: Array<TimeRecordModel> = new Array<TimeRecordModel>()
   time_in:any = '-'
-  time_out:any = '-' 
+  time_out:any = '-'
   date_in:any = '-'
   date_out:any = '-'
   actual_ot: number = 0
   department_id:number
 
-  constructor(private dashboardService: DashboardService, private authService: AuthenticationService) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
     this.today = new Date()
@@ -37,8 +40,8 @@ export class DashboardEmployeeComponent implements OnInit {
       month: 'long',
       day: 'numeric',
     })
-    
-    this.employee_id = this.authService.getUserid()
+
+    this.employee_id = Number(this.localStorageService.get<string>('empId'))
 
     this.dashboardService.getEmployeeInfo(this.employee_id).subscribe((response) => {
       this.employee = response[0]
@@ -49,7 +52,7 @@ export class DashboardEmployeeComponent implements OnInit {
     this.dashboardService.getEmpPlanShift(this.employee_id).subscribe((response) => {
       this.planshifts = response
       let today = new Date();
-      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();   
+      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       let plan = (this.planshifts.find(element => element["date"] == date))
       if (plan){
         this.today_plan = plan
@@ -73,7 +76,7 @@ export class DashboardEmployeeComponent implements OnInit {
         this.date_out = OUT?.date
       }
     })
-    
+
   }
 
   start_work(){
@@ -95,7 +98,7 @@ export class DashboardEmployeeComponent implements OnInit {
   }
 
   end_work(){
-    var val = { 
+    var val = {
                 "department": [this.department_id],
                 "employee": [this.employee_id],
                 "status": "Out",
@@ -119,7 +122,7 @@ export class DashboardEmployeeComponent implements OnInit {
     let year = parseInt(d.substring(0,4))
 
     let date_input = new Date(year, month-1, date)
-    
+
     return date_input.toLocaleDateString('th-TH', {
       year: 'numeric',
       month: 'long',
@@ -138,7 +141,7 @@ export class DashboardEmployeeComponent implements OnInit {
       this.actual_ot = timediff
     }
     return this.actual_ot
-    
+
   }
 
   calculateOT(dateFuture:any, dateNow:any) {
@@ -155,9 +158,9 @@ export class DashboardEmployeeComponent implements OnInit {
     // calculate minutes
     const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
     diffInMilliSeconds -= minutes * 60;
-    
+
     return hours;
   }
-  
- 
+
+
 }
