@@ -11,33 +11,42 @@ import { NavigationStart, Router } from '@angular/router';
 })
 export class BreadcrumbComponent implements OnInit {
   current_path: Array<string>
-  menu: MenuItems | any
-  menuChild: Array<ChildrenItem> | any = []
+  menu: MenuItems | any = new MenuItems()
+  menuChild: ChildrenItem | any
 
   constructor(private departmentService: DepartmentService, private router: Router) {}
 
   ngOnInit(): void {
-    this.router.events.subscribe(event => {
+    this.current_path = location.pathname.split("/");
 
-      if (event instanceof NavigationStart){
-        location.pathname == '/'? this.current_path = '/dashboard'.split('/') : this.current_path = event.url.split("/"); // config current path
-        this.menu = navigation.items.find((item) => item.url == '/' + this.current_path[1])
-
-        // department detail path
-        this.current_path.length > 2 ? this.addMenuChild() : false
-      }
-    })
-  }
-
-  addMenuChild() {
-    if(this.current_path[1] == 'dashboard' || 'assign-plan') {
-      this.menuChild.push(
-        {
-          url: location.pathname,
-          title: this.departmentService.getDepartmentName(Number(this.current_path[2]))
-        }
-      )
+    if(this.current_path.includes('dashboard') || this.current_path.includes('assign-plan')) {
+      this.menuName(this.current_path[1])
+      this.current_path.length > 2 && this.current_path[1] != 'auth' ? this.addMenuChild() : false
     }
   }
 
+  addMenuChild() {
+    this.menuChild = new ChildrenItem()
+    this.departmentService.getDepartmentInfo(Number(this.current_path[2])).subscribe(
+      (data) => {
+        this.menuChild.url = location.pathname
+        this.menuChild.title = data[0].name
+    })
+  }
+
+  menuName(path: string) {
+    switch (path) {
+      case 'dashboard':
+        this.menu.title = 'Dashboard'
+        this.menu.url = '/dashboard'
+        this.menu.icon = 'bi bi-display'
+        break
+
+      case 'assign-plan':
+        this.menu.title = 'Assign Plan'
+        this.menu.url = '/assign-plan'
+        this.menu.icon = 'bi bi-pen'
+        break
+    }
+  }
 }

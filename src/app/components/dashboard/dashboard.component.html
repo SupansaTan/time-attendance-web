@@ -1,8 +1,4 @@
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size ="medium" color="#fff" type="ball-spin" [fullScreen]="true">
-  <p style="color: white"> Loading... </p>
-</ngx-spinner>
-
-<main *ngIf="hideSpinner">
+<main>
   <app-dashboard-manager *ngIf="role=='manager'"></app-dashboard-manager>
   <app-dashboard-employee *ngIf="role=='employee'"></app-dashboard-employee>
 </main>

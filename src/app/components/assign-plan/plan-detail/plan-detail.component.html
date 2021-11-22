@@ -1,4 +1,9 @@
 <main>
+  <!-- loading -->
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise" [fullScreen]="true">
+    <p style="color: white" > Loading... </p>
+  </ngx-spinner>
+
   <div class="row row-cols-2 g-3">
 
     <!-- department info -->
@@ -26,8 +31,8 @@
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="19.35" class="percentage" *ngIf="department.active_employee">{{ getPercentage(department.active_employee, department.total_employee) + '%' }}</text>
-                <text x="10" y="25.35" class="total-employee" *ngIf="department.active_employee">{{ department.active_employee + '/' + department.total_employee + ' คน' }}</text>
+                <text x="18" y="19.35" class="percentage">{{ getPercentage(department.active_employee, department.total_employee) + '%' }}</text>
+                <text x="10" y="25.35" class="total-employee">{{ department.active_employee + '/' + department.total_employee + ' คน' }}</text>
               </svg>
             </div>
           </div>
@@ -66,27 +71,33 @@
           <form [formGroup]="assign_form" (ngSubmit)="addPlanshift()" class="mx-2 h-100 mt-3">
             <!-- select date -->
             <div class="row">
-              <div class="col-auto"><h5>From</h5></div>
-              <div class="col"><input type="date" id="start" formControlName="start_date"></div>
-              <div class="col-auto"><h5>To</h5></div>
-              <div class="col"><input type="date" id="last" formControlName="end_date"></div>
+              <div class="col-6 row">
+                <h5 class="mb-0 col-auto align-self-center">From</h5>
+                <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col" type="date" id="start" [min]="minDate" formControlName="start_date"
+                (change)="setDateSelect(assign_form.controls['start_date'].value, assign_form.controls['end_date'].value)">
+              </div>
+              <div class="col-6 row">
+                <h5 class="mb-0 col-auto align-self-center">To</h5>
+                <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col" type="date" id="last" [min]="minEndDate" formControlName="end_date"
+                  (change)="setDateSelect(assign_form.controls['start_date'].value, assign_form.controls['end_date'].value)">
+              </div>
             </div>
 
             <!-- select start shift / ot plan -->
             <div class="row my-2">
-              <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row align-self-center">
-                <p class="col-auto mb-0">Start Shift</p>
-                <div class="col time-picker position-relative">
-                  <div class="col"><input type="Time" step="1" id="time" formControlName="shift"></div>
+              <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row">
+                <h5 class="col-auto mb-0 align-self-center">Start Shift</h5>
+                <div class="col time-picker position-relative px-0">
+                  <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey" [format]=24 [ngxTimepicker]="picker" id="time" formControlName="shift">
+                  <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #picker [minutesGap]="30" [theme]="timepickerTheme"></ngx-material-timepicker>
                 </div>
               </div>
 
               <div *ngIf="otBtnActive" class="col-12 col-xl-6 row mt-2 mt-xl-0">
-                <p class="col-auto align-self-center mb-0">OT Plan</p>
-                <div class="col">
-                  <input type="number" formControlName="ot" min="0" class="form-control form-control-sm border-0 rounded-3 w-100 shadow-none bg-grey"
-                    [(ngModel)]="ot_plan" required>
-                </div>
+                <h5 class="col-auto align-self-center mb-0">OT Plan</h5>
+                <input type="number" formControlName="ot" min="0" class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col"
+                  [(ngModel)]="ot_plan" required>
               </div>
             </div>
 
@@ -105,11 +116,14 @@
   <!--heading over table -->
   <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
     <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
-    <p class="text-white bg-blue py-1 px-2 rounded-3 d-flex justify-content-start mb-0">
-      <i class="col-auto fas fa-calendar me-2"></i>
-      {{ (assign_form.controls['start_date'].value) + ' - ' + (assign_form.controls['end_date'].value) }}
-    </p>
+    <div class="position-relative date-select">
+      <ng-select [ngModel]="filter_select.date" [searchable]=false [clearable]=false class="pb-0 rounded-3 text-white bg-blue px-3 date-select" (ngModelChange)="updateTable($event)">
+        <ng-option *ngFor="let item of date_option" [value]="item">{{ item }}</ng-option>
+      </ng-select>
+      <i class="fas fa-calendar-day position-absolute top-50 translate-middle-y text-white"></i>
+    </div>
     <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
+    <button class="rounded-3 border-0 px-2 btn-danger" (click)="deletePlanshift()">Remove Plan</button>
     <p class="mb-0 ms-auto">{{ 'Total: ' + department.total_employee +' employees' }}</p>
   </div>
 
@@ -117,25 +131,13 @@
 
     <!-- search & filter -->
     <div class="row my-3 mx-4 filter-group">
-      <div class="col-12 col-xl-6 position-relative input-group input-group-sm px-0">
+      <div class="col-12 col-xl-10 position-relative px-0">
         <i-feather name="search" class="position-absolute feather-20"></i-feather>
-        <input class="form-control border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [ngModel]="name_filter" (ngModelChange)="filterEmployeeName($event)"/>
-      </div>
-      <div class="col-12 col-md-6 col-xl-2 row my-2 my-xl-0 mt-3 mt-xl-0">
-        <p class="mb-0 col-auto align-self-center">Shift</p>
-        <ng-select [(ngModel)]="filter_select.shift" [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterShift(filter_select.shift)">
-          <ng-option *ngFor="let item of shift_option" [value]="item.value">{{ item.value }}</ng-option>
-        </ng-select>
-      </div>
-      <div class="col-12 col-md-6 col-xl-2 row mb-2 mt-md-3 mb-xl-0 mt-xl-0">
-        <p class="mb-0 col-auto align-self-center">OT Plan</p>
-        <ng-select [(ngModel)]="filter_select.ot" [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterOTPlan(filter_select.ot)">
-          <ng-option *ngFor="let item of ot_option" [value]="item.value">{{ item.value }}</ng-option>
-        </ng-select>
+        <input class="form-control form-control-sm border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [ngModel]="name_filter" (ngModelChange)="filterEmployee($event)"/>
       </div>
       <div class="col-12 col-md-6 col-xl-2 row mb-2 mb-xl-0">
         <p class="mb-0 col-auto align-self-center">Type</p>
-        <ng-select [(ngModel)]="filter_select.type" [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterEmployeeType(filter_select.type)">
+        <ng-select [(ngModel)]="filter_select.type" [searchable]=false [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterEmployeeType(filter_select.type)">
           <ng-option *ngFor="let item of type_option" [value]="item.value">{{ item.value }}</ng-option>
         </ng-select>
       </div>
@@ -156,13 +158,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findPlanshift(employee.id).date? 'green':'grey'">
-            <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="updateEmployeeSelected()"></th>
+          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [ngClass]="(isToday && employee.start_time)? 'green':'grey'">
+            <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="getEmployeeSelected()"></th>
             <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
             <th class="text-center">{{ employee.first_name + ' ' + employee.last_name }}</th>
-            <th class="text-center">{{ emp_plan.date? emp_plan.date : '-'}}</th>
-            <th class="text-center">{{ emp_plan.date? (emp_plan.start_time + '-' + emp_plan.end_time): '-' }}</th>
-            <th class="text-center">{{ emp_plan.date? emp_plan.overtime : '-' }}</th>
+            <th class="text-center">{{ employee.start_time? filter_select.date : '-'}}</th>
+            <th class="text-center">{{ (employee.start_time && (employee.start_time!="00:00" || employee.end_time!="00:00"))? ( employee.start_time + ' - ' + employee.end_time): '-' }}</th>
+            <th class="text-center">{{ employee.overtime? employee.overtime : '-' }}</th>
             <th class="text-center">{{ employee.employee_type }}</th>
           </tr>
         </tbody>

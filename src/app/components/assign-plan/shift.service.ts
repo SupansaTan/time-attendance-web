@@ -15,13 +15,6 @@ export class ShiftService {
 
   constructor(private http:HttpClient) { }
 
-  // get department by department id
-
-  getDepartmentInfo(id: number) {
-    const url = `${environment.apiTimeAttendanceUrl}/api/departments/` + id
-    return this.http.get<Array<DepartmentModel>>(url)
-  }
-
   // get all shift
   getShiftCode(): Observable<Array<ShiftCodeModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/shiftcode`
@@ -39,23 +32,22 @@ export class ShiftService {
     return this.http.get<Array<PlanShiftModel>>(url)
   }
 
-  getManagerInfo(id:number): Observable<Array<EmployeeModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/employees/` + id
-    return this.http.get<Array<EmployeeModel>>(url)
-  }
-
   // val = {data}
   addPlanshift(val:any){
-    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/new`
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/action`
     return this.http.post(url, val)
-  } 
+  }
 
+  deletePlanshift(plan_id:any){
+    const url = `${environment.apiTimeAttendanceUrl}/api/planshift/action/` + plan_id
+    return this.http.delete(url)
+  }
 
   getPercentage(actual: number, total: number) {
     return Math.round(actual * 100 / total)
   }
 
-  // get time record by date 
+  // get time record by date
   getTimerecordByDepartment(dep_id:any): Observable<Array<TimeRecordModel>>{
     const url = `${environment.apiTimeAttendanceUrl}/api/timerecord/department/`+ dep_id
     return this.http.get<Array<TimeRecordModel>>(url)
@@ -71,18 +63,5 @@ export class ShiftService {
     const url = `${environment.apiTimeAttendanceUrl}/api/planshift/employee/`+ val
     return this.http.get<Array<PlanShiftModel>>(url)
   }
-
-  // get employee by employee id
-  getEmployee(id:any): Observable<Array<EmployeeModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/dashboard/`+ id
-    return this.http.get<Array<EmployeeModel>>(url)
-  }
-
-  // get all employee of department except manager
-  getDepEmployee(dep_id:any): Observable<Array<EmployeeModel>> {
-    const url = `${environment.apiTimeAttendanceUrl}/api/employees/department/` + dep_id
-    return this.http.get<Array<EmployeeModel>>(url)
-  }
-
 
 }

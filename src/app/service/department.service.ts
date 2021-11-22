@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Departments } from '../mock-department'
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+import { DepartmentModel } from 'src/app/model/department.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getDepartmentName(id: number) {
-    return Departments.find(department => department.id == id)?.name
-  }
-
-  getDepartment(id: number) {
-    return Departments.find(department => department.id == id)
-  }
-
-  getDepartments() {
-    return Departments
+  getDepartmentInfo(id: number) {
+    const url = `${environment.apiTimeAttendanceUrl}/api/departments/` + id
+    return this.http.get<Array<DepartmentModel>>(url)
   }
 }

@@ -6,7 +6,6 @@ export class PlanShiftModel {
     start_time: string;
     end_time: string;
     overtime: number;
-    checked?: boolean;
 }
 
 export class ShiftCodeModel {

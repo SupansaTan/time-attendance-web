@@ -1,50 +1,47 @@
 <div class="container-fluid">
-    <div class="row no-gutter">
-        <!-- The image half -->
-        <div class="col-md-6 d-none d-md-flex bg-image">
-            <div class="mx-auto mt-auto mb-auto">
-                <h2 id="header"style="text-align:center">Welcome to</h2>
-                <h1 id="header"style="text-align:center">Time Attendance</h1>
-                <div class="line"></div>
-                <img src="../../../../assets/image/logo.png" alt="logo" height="230">
-            </div>
+  <div class="row no-gutter">
+    <!-- The image half -->
+    <div class="col-md-6 d-none d-md-flex bg-image">
+        <div class="mx-auto mt-auto mb-auto">
+            <h2 id="header"style="text-align:center">Welcome to</h2>
+            <h1 id="header"style="text-align:center">Time Attendance</h1>
+            <div class="line"></div>
+            <img src="../../../../assets/image/logo.png" alt="logo" height="230">
         </div>
+    </div>
 
 
-        <!-- The content half -->
-        <div class="col-md-6 bg-light">
-            <div class="login d-flex align-items-center py-5">
-                <!-- Demo content-->
-                <div class="container">
-                    <div class="row">
-                        <h2 class="display-5 mx-auto">Login</h2>
-                        <div class="col-lg-5 col-xl-6 mx-auto">
-                             <div class="d-grid mb-2">
-                                <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit" (click)="loginWithGoogle()">
-                                <i class="fab fa-google me-2" ><b > Sign up with Google</b></i>
-                                </button>
-                            </div>
+    <!-- The content half -->
+    <div class="col-md-6 bg-light">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <h2 class="display-5 mx-auto">Login</h2>
+            <div class="col-lg-5 col-xl-6 mx-auto">
+              <div class="d-grid mb-2">
+                <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit" (click)="loginWithGoogle()">
+                <i class="fab fa-google me-2" ><b > Sign up with Google</b></i>
+                </button>
+              </div>
 
-                            <form>
-
-                                <div class="form-group mb-3">
-                                    <input id="inputEmail" type="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4" name="email" [(ngModel)]="email">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input id="inputPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary" name="password" [(ngModel)]="password">
-                                </div>
-                                
-                                <div class="text-center ">
-                                    <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div><!-- End -->
+              <!-- login form -->
+              <form [formGroup]="loginForm" (ngSubmit)="submit()">
+                <div class="form-group mb-3">
+                  <input id="inputEmail" type="email" placeholder="Email address" formControlName="email" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4" name="email" [(ngModel)]="login.email" required>
+                </div>
+                <div class="form-group mb-3">
+                  <input id="inputPassword" type="password" placeholder="Password" formControlName="password" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary" name="password" [(ngModel)]="login.password" required>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                </div>
+              </form>
 
             </div>
-        </div><!-- End -->
-
+          </div>
+        </div>
+      </div>
     </div>
+
+  </div>
 </div>

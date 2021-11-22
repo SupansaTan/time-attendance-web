@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DashboardEmployeeComponent } from './dashboard-employee/dashboard-employee.component';
 import { IconsModule } from '../../icons/icons.module';
+import { AuthGuardService } from 'src/app/service/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { IconsModule } from '../../icons/icons.module';
     FormsModule,
     NgSelectModule,
     IconsModule,
-  ]
+  ],
+  providers: [AuthGuardService],
 })
 export class DashboardModule { }

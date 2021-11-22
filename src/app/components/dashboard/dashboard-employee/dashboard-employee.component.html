@@ -1,3 +1,8 @@
+<!-- loading -->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise" [fullScreen]="true">
+  <p style="color: white" > Loading... </p>
+</ngx-spinner>
+
 <div class="card rounded-25 border-0 shadow-lg py-2">
   <!-- info -->
   <h3 class="mx-4 mt-3 mb-0 heading">Employee Informations</h3>
@@ -17,9 +22,9 @@
   </div>
 
   <!-- button for start & get of work -->
-  <div class="mx-4 gx-2">
-    <button class="rounded-3 border-0 px-2 me-2 btn-success" (click)="start_work()">Start Work</button>
-    <button class="rounded-3 border-0 px-2 btn-danger" (click)="end_work()">Get Off Work</button>
+  <div *ngIf="today_plan.id" class="mx-4 gx-2">
+    <button *ngIf=" time_in=='-' " class="rounded-3 border-0 px-2 me-2 btn-success" (click)="start_work()">Start Work</button>
+    <button *ngIf=" time_in!='-' && time_out=='-' " class="rounded-3 border-0 px-2 btn-danger" (click)="end_work()">Get Off Work</button>
   </div>
 
   <!-- actual -->

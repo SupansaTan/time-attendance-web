@@ -1,62 +1,51 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import{HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { EmployeeModel } from 'src/app/model/employee.model';
 import { environment } from 'src/environments/environment';
+import { ConfirmedRegisterModel, LoginModel, ResponseLoginModel, ResponseModel } from 'src/app/model/auth.model';
+import { CurrentRoleModel } from 'src/app/model/current-role.model'
 
+//import 'rxjs/add/operator/map'
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthenticationService {
-  //ประกาศ type ตัวแปรก่อนใช้
-  all_employee: Array<EmployeeModel> = new Array<EmployeeModel>() //ประกาศ type
-  user : Object;
-  email : Object;
-  password : Object;
-  
-  
-  //ประกาศเรียกใช้ service ไม่ก็ module 
-  constructor(private http:HttpClient) {}
+  sub: any;
 
-  //ngOnInit ประกาศค่าเริ่มต้นให้กับตัวแปร def init()
-  ngOnInit(): void{
-    //----------เรียกใช้ใน component
-    this.getAllEmployee().subscribe((response)=>{
-      this.all_employee = response //ข้อมูลทั้งหมด
-    });
-    }
+  constructor(private http:HttpClient) {
 
-  getAllEmployee(): Observable<Array<EmployeeModel>> {
-    const url = '${environment.apiTimeAttendanceUrl}/api/employees'
-    return this.http.get<Array<EmployeeModel>>(url)
   }
 
-  //emp คือตัวเก็บไว้ใช้ฟิลเตอร์
-  getUser(email: string, password: string){
-    this.user = this.all_employee.filter((emp) => emp.email == email && emp.password == password )
-    return this.user
+  /* Note (Sample email for login)
+    email for manager: 5@gmail.com
+    pass: 0005
+
+    email for employee: 1@gmail.com
+    pass: 0001
+  */
+
+  login(model: LoginModel): Observable<ResponseLoginModel> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/auth/login`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.sub = this.http.post<ResponseLoginModel>(url, model, { headers: headers });
+    return this.sub;
   }
 
-  getEmail(email: string){
-    this.email = this.all_employee.filter((emp) => emp.email == email )
-    return this.email
+  getCurrentUserRole(token: string): Observable<ResponseModel<CurrentRoleModel>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/auth/getCurrentUserRole`;
+    const headers = new HttpHeaders({ 'Authorization': token });
+    this.sub = this.http.get<ResponseModel<CurrentRoleModel>>(url, { headers: headers });
+    return this.sub;
   }
 
-  getPassword(password: string){
-    this.password = this.all_employee.filter((emp) => emp.password == password )
-    return this.password
-  }
-
-  getUserRole(){
-  return 'manager'
-  }
-
-
-  getUserid(){
-    return 7
+  confirmedRegister(model: ConfirmedRegisterModel): Observable<ResponseModel<string>> {
+    const url = `${environment.apiTimeAttendanceUrl}/api/auth/confirmedRegister`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.sub = this.http.post<ResponseModel<string>>(url, model, { headers: headers });
+    return this.sub;
   }
 }
 

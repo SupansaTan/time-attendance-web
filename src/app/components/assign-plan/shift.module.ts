@@ -16,6 +16,7 @@ import { ShiftRoutingModule } from './shift-routing.module';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { IconsModule } from 'src/app/icons/icons.module';
+import { AuthGuardService } from 'src/app/service/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { IconsModule } from 'src/app/icons/icons.module';
     NgxMaterialTimepickerModule.setLocale('th-TH'),
     IconsModule,
     NgxSpinnerModule
-  ]
+  ],
+  providers: [AuthGuardService],
 })
 export class ShiftModule { }
