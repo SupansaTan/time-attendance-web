@@ -1,0 +1,187 @@
+<main>
+  <!-- loading -->
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise" [fullScreen]="true">
+    <p style="color: white" > Loading... </p>
+  </ngx-spinner>
+
+  <div class="row row-cols-2 g-3">
+
+    <!-- department info -->
+    <div class="col-12 col-lg-6 col-xxl-5">
+      <div class="card rounded-25 border-0 shadow-lg h-100">
+        <!-- heading -->
+        <div class="mt-4 mx-4">
+          <h3 class="mb-0 heading d-inline">Department</h3>
+          <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
+        </div>
+
+        <!-- chart -->
+        <div class="row mx-3 mt-2 mb-4 g-3 h-100">
+          <div class="col-5 col-md-4 col-xl-6 d-flex justify-content-center align-items-center px-0 mt-0">
+            <div class="chart-wrapper w-80">
+              <svg viewBox="0 0 36 36" class="circular-chart green">
+                <path class="circle-bg"
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path *ngIf="department.active_employee > 0" class="circle"
+                  [attr.stroke-dasharray]="getPercentage(department.active_employee, department.total_employee) + ', 100'"
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <text x="18" y="19.35" class="percentage">{{ getPercentage(department.active_employee, department.total_employee) + '%' }}</text>
+                <text x="10" y="25.35" class="total-employee">{{ department.active_employee + '/' + department.total_employee + ' คน' }}</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- date &  -->
+          <div class="col-auto col-xl-6 align-self-center m-0 detail-wrapper">
+            <div class="row my-3 d-flex align-items-center date-wrapper">
+              <i class="col-auto fas fa-calendar text-blue"></i>
+              <p class="col-auto mb-0 px-3 rounded-25 shadow text-white bg-blue">{{ date }}</p>
+            </div>
+
+            <div class="row my-3 d-flex align-items-center">
+              <i class="fas fa-clock me-2 col-auto"></i>
+              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ (planshifts.length>0)? (planshifts[0].start_time + ' - ' + planshifts[0].end_time) : 'No Plan Today' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- assign card -->
+    <div class="col-12 col-lg-6 col-xxl-7 assign-wrapper">
+      <div class="card rounded-25 border-0 shadow-lg h-100">
+        <div class="mt-4 mx-4 align-items-center">
+
+          <!-- heading & select mode -->
+          <div class="assign-top align-items-center row gy-2">
+            <h3 class="mb-0 heading d-flex justify-content-start col-12 col-xl-auto">Assign</h3>
+            <div class="d-flex justify-content-start justify-content-xl-end col-12 col-xl mt-3 mt-xl-0 mx-2 mx-xl-0">
+              <h5 class="mb-0">Select Mode</h5>
+              <button [ngClass]="{'btn-active': shiftBtnActive}" class="border-0 rounded-15 mx-2 px-3" (click)="setAssignMode('shift')">Shift</button>
+              <button [ngClass]="{'btn-active': otBtnActive}" class="border-0 rounded-15 me-2 px-3" (click)="setAssignMode('ot')">OT</button>
+            </div>
+          </div>
+
+          <form [formGroup]="assign_form" (ngSubmit)="addPlanshift()" class="mx-2 h-100 mt-3">
+            <!-- select date -->
+            <div class="row">
+              <div class="col-6 row">
+                <h5 class="mb-0 col-auto align-self-center">From</h5>
+                <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col" type="date" id="start" [min]="minDate" formControlName="start_date"
+                (change)="setDateSelect(assign_form.controls['start_date'].value, assign_form.controls['end_date'].value)">
+              </div>
+              <div class="col-6 row">
+                <h5 class="mb-0 col-auto align-self-center">To</h5>
+                <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col" type="date" id="last" [min]="minEndDate" formControlName="end_date"
+                  (change)="setDateSelect(assign_form.controls['start_date'].value, assign_form.controls['end_date'].value)">
+              </div>
+            </div>
+
+            <!-- select start shift / ot plan -->
+            <div class="row my-2">
+              <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row">
+                <h5 class="col-auto mb-0 align-self-center">Start Shift</h5>
+                <div class="col time-picker position-relative px-0">
+                  <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey" [format]=24 [ngxTimepicker]="picker" id="time" formControlName="shift">
+                  <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #picker [minutesGap]="30" [theme]="timepickerTheme"></ngx-material-timepicker>
+                </div>
+              </div>
+
+              <div *ngIf="otBtnActive" class="col-12 col-xl-6 row mt-2 mt-xl-0">
+                <h5 class="col-auto align-self-center mb-0">OT Plan</h5>
+                <input type="number" formControlName="ot" min="0" class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col"
+                  [(ngModel)]="ot_plan" required>
+              </div>
+            </div>
+
+            <!-- submit button -->
+            <div class="row my-3">
+              <input type="submit" class="rounded-3 border-0 py-1 px-5 submit-btn mx-auto" placeholder="Submit"
+                [disabled]="mode.length==0 || assign_form.controls['end_date'].value==undefined || assign_form.pristine || assign_form.invalid"
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--heading over table -->
+  <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
+    <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
+    <div class="position-relative date-select">
+      <ng-select [ngModel]="filter_select.date" [searchable]=false [clearable]=false class="pb-0 rounded-3 text-white bg-blue px-3 date-select" (ngModelChange)="updateTable($event)">
+        <ng-option *ngFor="let item of date_option" [value]="item">{{ item }}</ng-option>
+      </ng-select>
+      <i class="fas fa-calendar-day position-absolute top-50 translate-middle-y text-white"></i>
+    </div>
+    <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
+    <button class="rounded-3 border-0 px-2 btn-danger" (click)="deletePlanshift()">Remove Plan</button>
+    <p class="mb-0 ms-auto">{{ 'Total: ' + department.total_employee +' employees' }}</p>
+  </div>
+
+  <div class="card rounded-25 border-0 shadow-lg mt-2">
+
+    <!-- search & filter -->
+    <div class="row my-3 mx-4 filter-group">
+      <div class="col-12 col-xl-10 position-relative px-0">
+        <i-feather name="search" class="position-absolute feather-20"></i-feather>
+        <input class="form-control form-control-sm border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [ngModel]="name_filter" (ngModelChange)="filterEmployee($event)"/>
+      </div>
+      <div class="col-12 col-md-6 col-xl-2 row mb-2 mb-xl-0">
+        <p class="mb-0 col-auto align-self-center">Type</p>
+        <ng-select [(ngModel)]="filter_select.type" [searchable]=false [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterEmployeeType(filter_select.type)">
+          <ng-option *ngFor="let item of type_option" [value]="item.value">{{ item.value }}</ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+    <!-- employees table -->
+    <div class="table-responsive mx-4">
+      <table class="table table-hover table-borderless">
+        <thead class="text-white">
+          <tr>
+            <th><input type="checkbox" class="form-check-input" [(ngModel)]="isAllChecked" (change)="setAllSelected()"></th>
+            <th scope="col">#</th>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Date</th>
+            <th scope="col" class="text-center">Shift</th>
+            <th scope="col" class="text-center">OT Plan</th>
+            <th scope="col" class="text-center">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [ngClass]="(isToday && employee.start_time)? 'green':'grey'">
+            <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="getEmployeeSelected()"></th>
+            <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
+            <th class="text-center">{{ employee.first_name + ' ' + employee.last_name }}</th>
+            <th class="text-center">{{ employee.start_time? filter_select.date : '-'}}</th>
+            <th class="text-center">{{ (employee.start_time && (employee.start_time!="00:00" || employee.end_time!="00:00"))? ( employee.start_time + ' - ' + employee.end_time): '-' }}</th>
+            <th class="text-center">{{ employee.overtime? employee.overtime : '-' }}</th>
+            <th class="text-center">{{ employee.employee_type }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- option of table -->
+    <div class="row mx-4 my-2 align-items-center">
+      <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-2 col-xl-1 rounded-50 pb-0"
+        name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
+      </ng-select>
+      <p class="d-flex align-items-center col-auto m-0">
+        {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
+      </p>
+      <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
+        [collectionSize]="employees.length">
+      </ngb-pagination>
+    </div>
+  </div>
+</main>

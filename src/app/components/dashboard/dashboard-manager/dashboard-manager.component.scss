@@ -7,15 +7,16 @@
 
 .card.department {
   color: black;
-  background-color: #f4f4f4;
+  min-height: 235px;
+  background-color: $bg-grey;
 
   &.grey {
-    background-color: #e5e5e5;
+    background-color: $bg-darkgrey;
   }
 }
 
-.ot-wrapper {
-  .hours {
+.shift-wrapper {
+  p.rounded-25 {
     width: fit-content;
   }
 }
@@ -23,5 +24,5 @@
 /* chart */
 .chart-wrapper {
   right: 0;
-  bottom: 5px;
+  bottom: .2rem;
 }

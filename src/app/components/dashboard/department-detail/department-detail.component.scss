@@ -1,12 +1,15 @@
 @import '../../../scss/variable';
 
-.heading {
-  color: #1f3054;
-  font-weight: 600;
-}
+.department-info-wrapper {
+  .heading {
+    color: #1f3054;
+    font-weight: 600;
+  }
 
-.name {
-  font-weight: 400;
+  .name {
+    width: fit-content;
+    font-weight: 400;
+  }
 }
 
 .detail-wrapper {
@@ -22,7 +25,7 @@
 }
 
 .bg-blue {
-  background-color: #3a538a;
+  background-color: $bg-blue;
 }
 
 .text-blue {
@@ -37,4 +40,12 @@
 
 .circle-bg {
   stroke: #eee;
+}
+
+.chart-wrapper {
+  width: 55% !important;
+
+  @include media(tablet) {
+    width: 90% !important;
+  }
 }

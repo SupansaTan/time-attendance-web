@@ -1,4 +1,13 @@
 @import '../../../scss/variable';
+@import '../../../scss/base';
+
+h5 {
+  font-size: 1rem;
+
+  @include media(tablet) {
+    font-size: 1.25rem;
+  }
+}
 
 .heading {
   color: #1f3054;
@@ -20,6 +29,8 @@
 }
 
 .date-wrapper {
+  margin: 0 1px;
+  padding: 10px 0;
   width: fit-content;
   border-radius: 15px 0;
   background-color: #1f3054;

@@ -1,4 +1,4 @@
-export interface MenuItems {
+export class MenuItems {
   id: string;
   title: string;
   type: string;
@@ -7,7 +7,7 @@ export interface MenuItems {
   children?: Array<ChildrenItem>
 }
 
-export interface ChildrenItem {
+export class ChildrenItem {
   id?: string;
   title: string;
   type?: string;

@@ -1,0 +1,109 @@
+@import '../../../scss/variable';
+@import '../../../scss/base';
+
+.heading {
+  color: #1f3054;
+  font-weight: 600;
+}
+
+.bg-blue {
+  background-color: $bg-blue;
+}
+
+.submit-btn {
+  width: fit-content;
+  background-color: #70e17b;
+}
+
+.btn-active {
+  color: white;
+  background-color: #4680ff;
+}
+
+/* assign group */
+ngx-material-timepicker-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.bg-grey {
+  background-color: #E9ECEF;
+}
+
+/* heading over table */
+.heading-wrapper {
+  p {
+    font-weight: 600;
+    width: fit-content;
+  }
+}
+
+.date-select {
+  &.ng-select ::ng-deep {
+    padding-left: 35px !important;
+
+    .ng-arrow-wrapper .ng-arrow {
+      margin-left: 10px;
+      color: white;
+    }
+  }
+
+  i {
+    left: 10px;
+  }
+}
+
+.filter-group {
+  p {
+    width: fit-content;
+  }
+
+  i-feather {
+    stroke: #d0d0d0;
+    z-index: 1000;
+    top: 50%;
+    transform: translateY(-60%);
+  }
+
+  &.ng-select ::ng-deep {
+    background-color: #e9ecef;
+
+    .ng-select-container {
+      .ng-arrow-wrapper {
+        .ng-arrow {
+          color: black;
+        }
+      }
+    }
+
+    .ng-value-container {
+      color: black;
+      font-weight: 400;
+      justify-content: left;
+    }
+
+    .ng-value-container {
+      color: black;
+
+      .ng-input > input {
+        padding-left: 20px;
+      }
+    }
+  }
+}
+
+/* chart */
+.circle-bg {
+  stroke: #e9ecef;
+}
+
+.chart-wrapper {
+  @include media(mobile) {
+    width: 100% !important;
+  }
+  @include media(large-desktop) {
+    width: 70% !important;
+  }
+}

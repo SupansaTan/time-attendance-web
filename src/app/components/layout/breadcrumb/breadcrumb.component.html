@@ -18,9 +18,9 @@
         </a>
       </li>
 
-      <li *ngFor="let item of menuChild" class="breadcrumb-item">
-        <a [href]="item.url">
-          {{ item.title }}
+      <li *ngIf="menuChild" class="breadcrumb-item">
+        <a [href]="menuChild.url">
+          {{ menuChild.title }}
         </a>
       </li>
     </ul>
