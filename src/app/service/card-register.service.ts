@@ -14,7 +14,7 @@ export class CardRegisterService {
   constructor(private http: HttpClient) { }
 
   //get employee timerecord
-  getTimeRecord(id:any) : Observable<Array<TimeRecordModel>> {
+  getTimeRecord(id: number) : Observable<Array<TimeRecordModel>> {
     const url = `${environment.apiTimeAttendanceUrl}/api/timerecord/employee/` + id
     return this.http.get<Array<TimeRecordModel>>(url)
   }

@@ -163,7 +163,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [ngClass]="(isToday && employee.start_time)? 'green':'grey'">
+          <tr *ngFor="let employee of employees | slice: (page-1) * pageSize : page * pageSize" [ngClass]="(isToday && employee.start_work)? 'green':(employee.start_time)? '':'grey'">
             <th><input type="checkbox" class="form-check-input" [(ngModel)]="employee.checked" (change)="getEmployeeSelected()"></th>
             <th scope="row">{{ employees.indexOf(employee)+1 }}</th>
             <th class="text-center">{{ employee.first_name + ' ' + employee.last_name }}</th>

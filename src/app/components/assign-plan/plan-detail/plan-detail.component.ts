@@ -11,6 +11,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { typeOptions } from './filter-options';
 import { blueTheme } from './timepicker-theme';
 import { NgxSpinnerService } from "ngx-spinner";
+import { CardRegisterService } from 'src/app/service/card-register.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-plan-detail',
@@ -65,7 +67,8 @@ export class PlanDetailComponent implements OnInit {
     private shiftService: ShiftService,
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private cardRegisterService: CardRegisterService
   ) { }
 
   ngOnInit(): void {
@@ -267,9 +270,9 @@ export class PlanDetailComponent implements OnInit {
           employee.start_time = plan.start_time.slice(0,5)
           employee.end_time = plan.end_time.slice(0,5)
           employee.overtime = plan.overtime
+          this.getEmpTimeRecord(employee.id)
         }
       })
-      console.log(this.employees)
 
       /* sort employee that has plan to on top of array */
       let employeeHasPlan = this.employees.filter(emp => emp.start_time)
@@ -284,6 +287,15 @@ export class PlanDetailComponent implements OnInit {
       })
 
       this.spinner.hide()
+    })
+  }
+
+  getEmpTimeRecord(id: number) {
+    let cardRegis: TimeRecordModel
+    this.cardRegisterService.getTimeRecord(id).subscribe((res) => {
+      cardRegis = res[0]
+      let emp = this.employees.filter(emp => emp.id === id)[0]
+      emp.start_work = (cardRegis && cardRegis.time)? true:false
     })
   }
 
