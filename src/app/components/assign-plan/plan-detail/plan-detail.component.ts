@@ -106,9 +106,9 @@ export class PlanDetailComponent implements OnInit {
     this.page = 1
     this.pageSize = 10  // row of each page table
     this.table_option = [
-      { value: 2 },
       { value: 5 },
-      { value: 10 }
+      { value: 10 },
+      { value: 15 }
     ];
 
     // default table is today plan

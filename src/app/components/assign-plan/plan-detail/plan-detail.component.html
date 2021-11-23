@@ -10,9 +10,9 @@
     <div class="col-12 col-lg-6 col-xxl-5">
       <div class="card rounded-25 border-0 shadow-lg h-100">
         <!-- heading -->
-        <div class="mt-4 mx-4">
-          <h3 class="mb-0 heading d-inline">Department</h3>
-          <h3 class="name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue">{{ department.name }}</h3>
+        <div class="mt-4 mx-4 row gy-2 gy-md-0">
+          <h3 class="mb-0 heading d-inline col-auto px-0">Department</h3>
+          <h3 class="mb-0 name d-inline px-3 ms-4 rounded-25 shadow text-white bg-blue col-auto">{{ department.name }}</h3>
         </div>
 
         <!-- chart -->
@@ -46,7 +46,7 @@
 
             <div class="row my-3 d-flex align-items-center">
               <i class="fas fa-clock me-2 col-auto"></i>
-              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ (planshifts.length>0)? (planshifts[0].start_time + ' - ' + planshifts[0].end_time) : 'No Plan Today' }}</p>
+              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ (planshifts.length>0)? (planshifts[0].start_time.slice(0,5) + ' - ' + planshifts[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
             </div>
           </div>
         </div>
@@ -71,13 +71,13 @@
           <form [formGroup]="assign_form" (ngSubmit)="addPlanshift()" class="mx-2 h-100 mt-3">
             <!-- select date -->
             <div class="row">
-              <div class="col-6 row">
-                <h5 class="mb-0 col-auto align-self-center">From</h5>
+              <div class="col-12 col-md-6 col-lg-12 col-xl-6 row">
+                <h5 class="mb-0 col-4 align-self-center">From</h5>
                 <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col" type="date" id="start" [min]="minDate" formControlName="start_date"
                 (change)="setDateSelect(assign_form.controls['start_date'].value, assign_form.controls['end_date'].value)">
               </div>
-              <div class="col-6 row">
-                <h5 class="mb-0 col-auto align-self-center">To</h5>
+              <div class="col-12 col-md-6 col-lg-12 col-xl-6 row mt-2 mt-md-0 mt-lg-2 mt-xl-0">
+                <h5 class="mb-0 col-4 align-self-center">To</h5>
                 <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col" type="date" id="last" [min]="minEndDate" formControlName="end_date"
                   (change)="setDateSelect(assign_form.controls['start_date'].value, assign_form.controls['end_date'].value)">
               </div>
@@ -85,7 +85,7 @@
 
             <!-- select start shift / ot plan -->
             <div class="row my-2">
-              <div *ngIf="shiftBtnActive" class="col-12 col-xl-6 row">
+              <div *ngIf="shiftBtnActive" class="col-12 col-md-6 col-lg-12 col-xl-6 row">
                 <h5 class="col-auto mb-0 align-self-center">Start Shift</h5>
                 <div class="col time-picker position-relative px-0">
                   <input class="form-control border-0 rounded-3 w-100 shadow-none bg-grey" [format]=24 [ngxTimepicker]="picker" id="time" formControlName="shift">
@@ -94,7 +94,7 @@
                 </div>
               </div>
 
-              <div *ngIf="otBtnActive" class="col-12 col-xl-6 row mt-2 mt-xl-0">
+              <div *ngIf="otBtnActive" class="col-12 col-md-6 col-lg-12 col-xl-6 row mt-2 mt-md-0 mt-lg-2 mt-xl-0">
                 <h5 class="col-auto align-self-center mb-0">OT Plan</h5>
                 <input type="number" formControlName="ot" min="0" class="form-control border-0 rounded-3 w-100 shadow-none bg-grey col"
                   [(ngModel)]="ot_plan" required>
@@ -114,29 +114,34 @@
   </div>
 
   <!--heading over table -->
-  <div class="mt-4 my-2 mx-2 heading-wrapper d-flex align-items-center">
-    <h3 class="ms-2 me-2 heading mb-0">Employees</h3>
-    <div class="position-relative date-select">
+  <div class="mt-4 my-2 heading-wrapper d-flex align-items-center row gy-2 mx-0">
+    <h3 class="ms-2 heading mb-0 col-12 col-md-auto">Employees</h3>
+    <div class="position-relative date-select col-12 col-md-auto">
       <ng-select [ngModel]="filter_select.date" [searchable]=false [clearable]=false class="pb-0 rounded-3 text-white bg-blue px-3 date-select" (ngModelChange)="updateTable($event)">
         <ng-option *ngFor="let item of date_option" [value]="item">{{ item }}</ng-option>
       </ng-select>
       <i class="fas fa-calendar-day position-absolute top-50 translate-middle-y text-white"></i>
     </div>
-    <p class="mb-0 mx-2">{{ '('+ countSelected +' selected)' }}</p>
-    <button class="rounded-3 border-0 px-2 btn-danger" (click)="deletePlanshift()">Remove Plan</button>
-    <p class="mb-0 ms-auto">{{ 'Total: ' + department.total_employee +' employees' }}</p>
+    <p class="mb-0 col-5 col-md-auto col-xl-8 order-2 order-md-1">{{ '('+ countSelected +' selected)' }}</p>
+    <div class="col-12 col-md-6 order-1 order-md-2">
+      <button class="rounded-3 border-0 px-2 btn-danger py-1" (click)="deletePlanshift()">
+        <i class="fas fa-trash me-2"></i>
+        Remove Plan
+      </button>
+    </div>
+    <p class="mb-0 text-end col-7 col-md-6 order-3">{{ 'Total: ' + department.total_employee +' employees' }}</p>
   </div>
 
   <div class="card rounded-25 border-0 shadow-lg mt-2">
 
     <!-- search & filter -->
     <div class="row my-3 mx-4 filter-group">
-      <div class="col-12 col-xl-10 position-relative px-0">
+      <div class="col-12 col-md-8 col-xl-10 position-relative px-0">
         <i-feather name="search" class="position-absolute feather-20"></i-feather>
         <input class="form-control form-control-sm border-0 border-bottom rounded-0 ps-5 shadow-none" type="text" [ngModel]="name_filter" (ngModelChange)="filterEmployee($event)"/>
       </div>
-      <div class="col-12 col-md-6 col-xl-2 row mb-2 mb-xl-0">
-        <p class="mb-0 col-auto align-self-center">Type</p>
+      <div class="col-12 col-md-4 col-xl-2 row mb-1 mb-md-0 mx-0 mt-3 mt-md-0 px-0">
+        <p class="mb-0 col-auto align-self-center ps-0">Type</p>
         <ng-select [(ngModel)]="filter_select.type" [searchable]=false [clearable]=false class="pb-0 rounded-3 filter-group col" (change)="filterEmployeeType(filter_select.type)">
           <ng-option *ngFor="let item of type_option" [value]="item.value">{{ item.value }}</ng-option>
         </ng-select>
@@ -150,10 +155,10 @@
           <tr>
             <th><input type="checkbox" class="form-check-input" [(ngModel)]="isAllChecked" (change)="setAllSelected()"></th>
             <th scope="col">#</th>
-            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center" style="min-width:170px">Name</th>
             <th scope="col" class="text-center">Date</th>
-            <th scope="col" class="text-center">Shift</th>
-            <th scope="col" class="text-center">OT Plan</th>
+            <th scope="col" class="text-center" style="min-width:120px">Shift</th>
+            <th scope="col" class="text-center" style="min-width:100px">OT Plan</th>
             <th scope="col" class="text-center">Type</th>
           </tr>
         </thead>
@@ -173,10 +178,10 @@
 
     <!-- option of table -->
     <div class="row mx-4 my-2 align-items-center">
-      <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-2 col-xl-1 rounded-50 pb-0"
+      <ng-select [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-3 col-md-2 col-xl-1 rounded-50 pb-0"
         name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
       </ng-select>
-      <p class="d-flex align-items-center col-auto m-0">
+      <p class="d-flex align-items-center col-auto m-0 px-0 ps-1 ps-lg-2">
         {{ 'Showing '+ (pageSize*(page-1)+1) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
       </p>
       <ngb-pagination class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"

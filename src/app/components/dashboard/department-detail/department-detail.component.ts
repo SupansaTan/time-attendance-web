@@ -68,7 +68,7 @@ export class DepartmentDetailComponent implements OnInit {
           this.getEmployeeTimeRecord()
         }
       })
-    }, 30000);
+    }, 10000);
   }
 
   ngOnDestroy() {
@@ -96,7 +96,9 @@ export class DepartmentDetailComponent implements OnInit {
   getEmployeeTimeRecord() {
     this.dashboardService.getTodayDepTimerecord(this.departmentId).subscribe((response) => {
       this.today_timerecords = response
-      this.employees = this.today_timerecords[0].employee
+      if(response[0]) {
+        this.employees = this.today_timerecords[0].employee
+      }
       this.spinner.hide()
     });
   }
