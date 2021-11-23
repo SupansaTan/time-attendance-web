@@ -4,18 +4,18 @@ Feature: Department Head Dashboard
 
   Scenario: See all departments
     Given I visit on the login page
-    When I fill in "email" with "test@email.com"
-    And I fill in "password" with "1234"
+    When I fill in "email" with "7@gmail.com"
+    And I fill in "password" with "0007"
     And I press "Login"
     Then I should be on the dashboard page
-    And I should see "งานเชือดไก่", "งานถอนขนไก่" and "งานไก่ตกราว"
+    And I should see "เชือดไก่ 1" and "ถอนขนไก่ 1"  
 
   Scenario: See employees time record
     Given I visit on the login page
-    When I fill in "email" with "test@email.com"
-    And I fill in "password" with "1234"
+    When I fill in "email" with "7@gmail.com"
+    And I fill in "password" with "0007"
     And I press "Login"
     Then I should be on the dashboard page
-    When I press "งานเชือดไก่"
-    And I should see "Department" and "งานเชือดไก่"
+    When I press "เชือดไก่ 1"
+    And I should see "Department" and "เชือดไก่ 1"
     And I should see "Time Record"
