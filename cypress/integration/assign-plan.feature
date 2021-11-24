@@ -42,13 +42,8 @@ Feature: Department Head Assign Plan
     When I click Assign Plan
     Then I should be on the assign plan page
     Then I should see "Departments"
-<<<<<<< HEAD
-    And I should see "เชือดไก่ 1" and "ถอนขนไก่ 1" 
-    When I press "เชือดไก่ 1"
-=======
     And I should see "ถอนขนไก่ 1" and "งานไก่ตกราว 1" 
     When I press "ถอนขนไก่ 1"
->>>>>>> BDD
     Then I should be on the Assign Plan Page
     And I should see "Assign"
     When I click on "OT" Mode
@@ -68,13 +63,8 @@ Feature: Department Head Assign Plan
     When I click Assign Plan
     Then I should be on the assign plan page
     Then I should see "Departments"
-<<<<<<< HEAD
-    And I should see "เชือดไก่ 1" and "ถอนขนไก่ 1"  
-    When I press "เชือดไก่ 1"
-=======
     And I should see "ถอนขนไก่ 1" and "งานไก่ตกราว 1"   
     When I press "ถอนขนไก่ 1"
->>>>>>> BDD
     Then I should be on the Assign Plan Page
     And I should see "Assign"
     When I click on "Shift" and "OT" Mode
