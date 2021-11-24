@@ -25,5 +25,6 @@ Then('I should be on the dashboard page', () => {
 
 And('I should see "เชือดไก่ 1" and "ถอนขนไก่ 1"', () => {
   cy.get('.card.department').contains('เชือดไก่ 1');
+  cy.contains('ถอนขนไก่ 1');
 })
 

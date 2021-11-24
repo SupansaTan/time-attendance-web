@@ -26,12 +26,12 @@ And('I should see "Employee Informations"', () => {
   cy.get('.card.information-wrapper').contains('Employee Informations')
 })
 
-And('I should see "Dapartment" with "เชือดไก่ 1"', () => {
-  cy.get('.card.information-wrapper').contains('Dapartment')
+And('I should see "Department" with "เชือดไก่ 1"', () => {
+  cy.get('.card.information-wrapper').contains('Department')
   cy.contains('เชือดไก่ 1')
 })
 
-And('I should see "Employee Type" with "Monthly"', () => {
+And('I should see "Employee Type" with "daily"', () => {
   cy.get('.card.information-wrapper').contains('Employee Type')
   cy.contains('daily')
 })

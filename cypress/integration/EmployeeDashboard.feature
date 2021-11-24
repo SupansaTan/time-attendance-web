@@ -8,7 +8,7 @@ Feature: Employee Dashboard
     And I press "Login"
     Then I should be on the dashboard page
     And I should see "Employee Informations"
-    And I should see "Dapartment" with "เชือดไก่ 1"
+    And I should see "Department" with "เชือดไก่ 1"
     And I should see "Employee Type" with "daily"
 
  Scenario: see Shift and OT actual
