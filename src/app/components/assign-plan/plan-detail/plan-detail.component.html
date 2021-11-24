@@ -26,13 +26,13 @@
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path *ngIf="department.active_employee > 0" class="circle"
-                  [attr.stroke-dasharray]="getPercentage(department.active_employee, (now_shift? now_shift.length:0)) + ', 100'"
+                  [attr.stroke-dasharray]="getPercentage(department.active_employee, (current_shift? current_shift.length:0)) + ', 100'"
                   d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="19.35" class="percentage">{{ getPercentage(department.active_employee, (now_shift? now_shift.length:0)) + '%' }}</text>
-                <text x="12" y="25.35" class="total-employee">{{ department.active_employee + '/' + (now_shift? now_shift.length:0) + ' คน' }}</text>
+                <text x="18" y="19.35" class="percentage">{{ getPercentage(department.active_employee, (current_shift? current_shift.length:0)) + '%' }}</text>
+                <text x="12" y="25.35" class="total-employee">{{ department.active_employee + '/' + (current_shift? current_shift.length:0) + ' คน' }}</text>
               </svg>
             </div>
           </div>
@@ -46,7 +46,7 @@
 
             <div class="row my-3 d-flex align-items-center">
               <i class="fas fa-clock col-auto text-blue"></i>
-              <p class="px-3 rounded-25 shadow col-auto mb-0 text-white bg-blue">{{ now_shift? (now_shift[0].start_time.slice(0,5) + ' - ' + now_shift[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
+              <p class="px-3 rounded-25 shadow col-auto mb-0 text-white bg-blue">{{ current_shift? (current_shift[0].start_time.slice(0,5) + ' - ' + current_shift[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
             </div>
           </div>
         </div>
@@ -122,14 +122,14 @@
       </ng-select>
       <i class="fas fa-calendar-day position-absolute top-50 translate-middle-y text-white"></i>
     </div>
-    <p class="mb-0 col-5 col-md-auto col-xl-8 order-2 order-md-1">{{ '('+ countSelected +' selected)' }}</p>
-    <div class="col-12 col-md-6 order-1 order-md-2">
+    <p class="mb-0 col-5 col-md-auto order-2 order-md-1" [ngClass]="(countSelected>0? 'col-xl-8':'col-xl-auto')">{{ '('+ countSelected +' selected)' }}</p>
+    <div class="col-12 col-md-6 order-1 order-md-2" [ngClass]="{ 'd-none':countSelected==0 }">
       <button class="rounded-3 border-0 px-2 btn-danger py-1" (click)="deletePlanshift()">
         <i class="fas fa-trash me-2"></i>
         Remove Plan
       </button>
     </div>
-    <p class="mb-0 text-end col-7 col-md-6 order-3">{{ 'Total: ' + department.total_employee +' employees' }}</p>
+    <p class="mb-0 text-end col-7 order-3" [ngClass]="(countSelected>0? 'col-md-6':'col-md')">{{ 'Total: ' + department.total_employee +' employees' }}</p>
   </div>
 
   <div class="card rounded-25 border-0 shadow-lg mt-2">
