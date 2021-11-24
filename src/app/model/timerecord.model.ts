@@ -2,7 +2,7 @@ export class TimeRecordModel {
     id: number;
     date: string;
     time: string;
-    department:any;
+    department?:any;
     employee: any;
     status: string;
 }
