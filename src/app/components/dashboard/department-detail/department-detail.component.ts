@@ -7,6 +7,7 @@ import { PlanShiftModel } from 'src/app/model/shift.model';
 import { EmployeeModel } from 'src/app/model/employee.model';
 import { TimeRecordModel } from 'src/app/model/timerecord.model';
 import { DepartmentModel } from 'src/app/model/department.model';
+import { CardRegisterService } from 'src/app/service/card-register.service';
 
 @Component({
   selector: 'app-department-detail',
@@ -22,17 +23,16 @@ export class DepartmentDetailComponent implements OnInit {
 
   today_plan: Array<PlanShiftModel> = new Array<PlanShiftModel>()
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
-  today_timerecords: Array<TimeRecordModel> = new Array<TimeRecordModel>()
   employees: Array<EmployeeModel> = new Array<EmployeeModel>()
   department: DepartmentModel = new DepartmentModel()
+  current_shift: Array<PlanShiftModel>
+  active_emp: number = 0
   intervalGetData: any
-
-  in_record: TimeRecordModel = new TimeRecordModel()
-  out_record: TimeRecordModel = new TimeRecordModel()
 
   constructor(
     private dashboardService: DashboardService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private cardRegisterService: CardRegisterService
   ) { }
 
   ngOnInit(): void {
@@ -48,27 +48,12 @@ export class DepartmentDetailComponent implements OnInit {
     /* get data */
     this.departmentId = Number(location.pathname.split("/")[2])
     this.getDepartmentInfo()
-    this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
-      let plan = response
-      if (plan[0]){
-        this.today_plan = plan
-        this.getEmployeeTimeRecord()
-      }
-      else {
-        this.spinner.hide()
-      }
-    });
+    this.getDepartmentPlan()
 
     this.intervalGetData = setInterval(() => {
       this.getDepartmentInfo()
-      this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
-        let plan = response
-        if (plan[0]){
-          this.today_plan = plan
-          this.getEmployeeTimeRecord()
-        }
-      })
-    }, 30000);
+      this.getDepartmentPlan()
+    }, 10000);
   }
 
   ngOnDestroy() {
@@ -86,18 +71,13 @@ export class DepartmentDetailComponent implements OnInit {
   getDepartmentPlan() {
     this.dashboardService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       let plan = response
-      console.log('today plan1 = ', plan)
-      if (plan[0]){
+      if (plan.length > 0){
         this.today_plan = plan
+        this.findNowShift()
       }
-    });
-  }
-
-  getEmployeeTimeRecord() {
-    this.dashboardService.getTodayDepTimerecord(this.departmentId).subscribe((response) => {
-      this.today_timerecords = response
-      this.employees = this.today_timerecords[0].employee
-      this.spinner.hide()
+      else {
+        this.spinner.hide()
+      }
     });
   }
 
@@ -115,15 +95,40 @@ export class DepartmentDetailComponent implements OnInit {
     return this.dashboardService.getPercentage(actual_emp, total_emp)
   }
 
-  findTimeRecord(emp_id: number){
-    this.in_record = new TimeRecordModel()
-    this.out_record = new TimeRecordModel()
-    let in_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "In")[0]
-    let out_ = this.today_timerecords.filter(element => element.employee[0].id == emp_id && element.status == "Out")[0]
+  findNowShift() {
+    let allShifts: Array<string> = []
+    let today = new Date()
+    let now = today.getHours() + ':' + today.getMinutes()
+    this.employees = []
 
-    in_? this.in_record = in_ : false
-    out_? this.out_record = out_: false
+    this.today_plan.map((plan) => { allShifts.push(plan.start_time) })
+    allShifts.push(now)
+    allShifts.sort(function(a, b) {
+      return Date.parse('1970/01/01 ' + a) - Date.parse('1970/01/01 ' + b)  // sort shift
+    });
 
-    return this.in_record
+    let index = allShifts.indexOf(now)<0? allShifts.length-2: allShifts.indexOf(now)==0? 1: allShifts.indexOf(now)-1
+    this.current_shift = this.today_plan.filter((plan) => plan.start_time === allShifts[index])
+    this.current_shift.forEach((plan) => { this.employees.push(plan.employee[0]) })
+    this.findTimeRecord()
+    this.cardRegisterService.getActiveEmployee(this.departmentId, this.current_shift[0].start_time).subscribe(res => {
+      if(res.length > 0) {
+        this.active_emp = res.length
+      }
+      this.spinner.hide()
+    })
+  }
+
+  findTimeRecord() {
+    this.employees.forEach(emp => {
+      this.cardRegisterService.getTimeRecord(emp.id).subscribe(res => {
+        let IN = res.filter(record => record.status == 'In')[0]
+        let OUT = res.filter(record => record.status == 'Out')[0]
+
+        IN? emp.in = IN.time : false
+        OUT? emp.out = OUT.time : false
+      })
+      this.spinner.hide()
+    })
   }
 }

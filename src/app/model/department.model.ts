@@ -4,4 +4,6 @@ export class DepartmentModel {
   name: string;
   active_employee: number;
   total_employee: number;
+  currentShift?: string;
+  endCurrentShift?: string;
 }
