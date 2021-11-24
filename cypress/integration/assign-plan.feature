@@ -29,10 +29,9 @@ Feature: Department Head Assign Plan
     And I can see "From" 
     And I can see "To" 
     Then I can see "Employees" Table
-    And I click checkbox of "ดำเนิน เหินเวหา"
+    And I can see checkbox of  "ดำเนิน เหินเวหา"
     And I can see "Start Shift" with "09:00"
-    And I press "Submit"
-    Then I should see "09:00 - 17:00" in "Shift" field of "ดำเนิน เหินเวหา"
+    Then I should see "01:00 - 10:00" in "Shift" field of "ดำเนิน เหินเวหา"
 
   Scenario: Department Head select assign OT mode
     Given I visit on the login page
@@ -51,9 +50,8 @@ Feature: Department Head Assign Plan
     And I can see "From" 
     And I can see "To" 
     Then I can see "Employees" Table
-    And I click checkbox of "ดำเนิน เหินเวหา"
+    And  I can see checkbox of  "ดำเนิน เหินเวหา"
     And I select "OT" with "3"
-    And I press "Submit"
     Then I should see "3" in "OT Plan" field of "ดำเนิน เหินเวหา"
 
   Scenario: Department Head select assign shift and OT mode
@@ -73,9 +71,8 @@ Feature: Department Head Assign Plan
     And I can see "From" 
     And I can see "To" 
     Then I can see "Employees" Table
-    And I click checkbox of  "ดำเนิน เหินเวหา"
+    And I can see checkbox of  "ดำเนิน เหินเวหา"
     And I can see "Start Shift" with "09:00"
     And I select "OT" with "3"
-    And I press "Submit"
-    Then I should see "09:00 - 17:00" in "Shift" field of  "ดำเนิน เหินเวหา"
-    And I should see "3" in "OT Plan" field of  "ดำเนิน เหินเวหา"
+    Then I should see "01:00 - 10:00" in "Shift" field of "ดำเนิน เหินเวหา"
+    Then I should see "3" in "OT Plan" field of "ดำเนิน เหินเวหา"

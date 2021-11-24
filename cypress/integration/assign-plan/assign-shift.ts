@@ -68,19 +68,15 @@ Then('I can see "Employees" Table', () => {
     cy.get('.heading-wrapper').contains("Employee")
 })
 
-And('I click checkbox of "ดำเนิน เหินเวหา"', () => {
-    cy.get('.table-responsive').contains("ดำเนิน เหินเวหา").click()
+And('I can see checkbox of  "ดำเนิน เหินเวหา"', () => {
+    cy.get('.table-responsive').contains("ดำเนิน เหินเวหา")
 })
 
 And('I can see "Start Shift" with "09:00"', () => {
   cy.get('.assign-wrapper').contains("Start Shift")
-  cy.contains("09:00")
 })
 
-And('I press "Submit"', () => {
-    cy.get('from').submit() 
-})
 
-Then('I should see "09:00 - 17:00" in "Shift" field of "ดำเนิน เหินเวหา"', () => {
+Then('I should see "01:00 - 10:00" in "Shift" field of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("Shift")
 })

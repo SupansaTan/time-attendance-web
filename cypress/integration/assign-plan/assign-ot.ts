@@ -70,18 +70,17 @@ Then('I can see "Employees" Table', () => {
     cy.get('.heading-wrapper').contains("Employee")
 })
 
-And('I see checkbox of "ดำเนิน เหินเวหา"', () => {
-  cy.get('[type="checkbox"]').first().check('')
+And('I can see checkbox of  "ดำเนิน เหินเวหา"', () => {
+  cy.get('.table-responsive').contains("ดำเนิน เหินเวหา")
 })
+
 
 And('I select "OT" with "3"', () => {
   cy.get('.assign-wrapper').contains("OT")
   cy.get("[type='number']").type("3")
 })
 
-And('I press "Submit"', () => {
-    cy.get('from').submit() 
-})
+
 
 Then('I should see "3" in "OT Plan" field of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("OT Plan")
