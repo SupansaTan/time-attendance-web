@@ -43,8 +43,23 @@ Feature: Department Head Assign Plan
     When I click Assign Plan
     Then I should be on the assign plan page
     Then I should see "Departments"
+<<<<<<< HEAD
     And I should see "เชือดไก่ 1" and "ถอนขนไก่ 1" 
     When I press "เชือดไก่ 1"
+=======
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+    And I should see "เชือดไก่ 1" and "ถอนขนไก่ 1" 
+    When I press "เชือดไก่ 1"
+=======
+    And I should see "ถอนขนไก่ 1" and "งานไก่ตกราว 1"
+    When I press "ถอนขนไก่ 1"
+>>>>>>> 6e20f585534c433e51d3ee50fefc3da991527bb7
+=======
+    And I should see "เชือดไก่ 1" and "ถอนขนไก่ 1" 
+    When I press "เชือดไก่ 1"
+>>>>>>> Stashed changes
+>>>>>>> d10ef94b5ccbd440a2281171868c94612ac8ae91
     Then I should be on the Assign Plan Page
     And I should see "Assign"
     When I click on "OT" Mode
@@ -65,17 +80,22 @@ Feature: Department Head Assign Plan
     When I click Assign Plan
     Then I should be on the assign plan page
     Then I should see "Departments"
+<<<<<<< Updated upstream
     And I should see "เชือดไก่ 1" and "ถอนขนไก่ 1"  
     When I press "เชือดไก่ 1"
+=======
+    And I should see see "ถอนขนไก่ 1" and "งานไก่ตกราว 1"
+    When I press "ถอนขนไก่ 1"
+>>>>>>> Stashed changes
     Then I should be on the Assign Plan Page
     And I should see "Assign"
     When I click on "Shift" and "OT" Mode
     And I select "From" with "12/09/2564"
     And I select "To" with "12/09/2564"
     Then I can see "Employees" Table
-    And I click checkbox of "ภูวดล พาสกุล"
+    And I click checkbox of  "ดำเนิน เหินเวหา"
     And I select "Shift" with "09:00"
     And I select "OT" with "2.5"
     And I press "Submit"
-    Then I should see "09:00 - 17:00" in "Shift" field of "ภูวดล พาสกุล"
-    And I should see "2.5" in "OT Plan" field of "ภูวดล พาสกุล"
+    Then I should see "09:00 - 17:00" in "Shift" field of  "ดำเนิน เหินเวหา"
+    And I should see "2.5" in "OT Plan" field of  "ดำเนิน เหินเวหา"
