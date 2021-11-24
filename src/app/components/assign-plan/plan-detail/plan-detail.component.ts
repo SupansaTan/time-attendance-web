@@ -12,7 +12,6 @@ import { typeOptions } from './filter-options';
 import { blueTheme } from './timepicker-theme';
 import { NgxSpinnerService } from "ngx-spinner";
 import { CardRegisterService } from 'src/app/service/card-register.service';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-plan-detail',
@@ -31,6 +30,7 @@ export class PlanDetailComponent implements OnInit {
   timerecord: Array<TimeRecordModel> = new Array<TimeRecordModel>();
   emp_plan: PlanShiftModel = new PlanShiftModel()
   emp_select: Array<number> = []  // employees selected by checkbox
+  now_shift: Array<PlanShiftModel>
 
   page: any;
   pageSize: any;
@@ -120,6 +120,7 @@ export class PlanDetailComponent implements OnInit {
     this.shiftService.getTodayDepPlanShift(this.departmentId).subscribe((response) => {
       if (response[0]) {
         this.planshifts = response
+        this.findNowShift()
       }
       this.getEmployees()
     })
@@ -133,6 +134,7 @@ export class PlanDetailComponent implements OnInit {
       if (response[0]) {
         this.planshifts = response
         this.planshifts = this.planshifts.filter(plan => plan.date === this.convertDateFormat(date))
+        this.isToday? this.findNowShift(): ''
       }
       this.getEmployees()
     })
@@ -297,6 +299,19 @@ export class PlanDetailComponent implements OnInit {
       let emp = this.employees.filter(emp => emp.id === id)[0]
       emp.start_work = (cardRegis && cardRegis.time)? true:false
     })
+  }
+
+  findNowShift() {
+    let allShifts: Array<string> = []
+    let now = this.today.getHours() + ':' + this.today.getMinutes()
+    this.planshifts.map((plan) => { allShifts.push(plan.start_time) })
+    allShifts.push(now)
+
+    allShifts.sort(function(a, b) {
+      return Date.parse('1970/01/01 ' + a) - Date.parse('1970/01/01 ' + b)  // sort shift
+    });
+    let index = allShifts.indexOf(now)<0? allShifts.length-2: allShifts.indexOf(now)==0? 1: allShifts.indexOf(now)-1
+    this.now_shift = this.planshifts.filter((plan) => plan.start_time === allShifts[index])
   }
 
   /* select box */

@@ -17,7 +17,7 @@
 
         <!-- chart -->
         <div class="row mx-3 mt-2 mb-4 g-3 h-100">
-          <div class="col-5 col-md-4 col-xl-6 d-flex justify-content-center align-items-center px-0 mt-0">
+          <div class="col-5 col-md-4 col-lg-6 col-xl-4 d-flex justify-content-center align-items-center px-0 mt-0">
             <div class="chart-wrapper w-80">
               <svg viewBox="0 0 36 36" class="circular-chart green">
                 <path class="circle-bg"
@@ -26,27 +26,27 @@
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path *ngIf="department.active_employee > 0" class="circle"
-                  [attr.stroke-dasharray]="getPercentage(department.active_employee, department.total_employee) + ', 100'"
+                  [attr.stroke-dasharray]="getPercentage(department.active_employee, (now_shift? now_shift.length:0)) + ', 100'"
                   d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="19.35" class="percentage">{{ getPercentage(department.active_employee, department.total_employee) + '%' }}</text>
-                <text x="10" y="25.35" class="total-employee">{{ department.active_employee + '/' + department.total_employee + ' คน' }}</text>
+                <text x="18" y="19.35" class="percentage">{{ getPercentage(department.active_employee, (now_shift? now_shift.length:0)) + '%' }}</text>
+                <text x="12" y="25.35" class="total-employee">{{ department.active_employee + '/' + (now_shift? now_shift.length:0) + ' คน' }}</text>
               </svg>
             </div>
           </div>
 
           <!-- date &  -->
-          <div class="col-auto col-xl-6 align-self-center m-0 detail-wrapper">
+          <div class="col-auto col-lg-6 col-xl-8 align-self-center m-0 detail-wrapper">
             <div class="row my-3 d-flex align-items-center date-wrapper">
               <i class="col-auto fas fa-calendar text-blue"></i>
               <p class="col-auto mb-0 px-3 rounded-25 shadow text-white bg-blue">{{ date }}</p>
             </div>
 
             <div class="row my-3 d-flex align-items-center">
-              <i class="fas fa-clock me-2 col-auto"></i>
-              <p class="px-2 rounded-25 shadow bg-white col-auto mb-0">{{ (planshifts.length>0)? (planshifts[0].start_time.slice(0,5) + ' - ' + planshifts[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
+              <i class="fas fa-clock col-auto text-blue"></i>
+              <p class="px-3 rounded-25 shadow col-auto mb-0 text-white bg-blue">{{ now_shift? (now_shift[0].start_time.slice(0,5) + ' - ' + now_shift[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
             </div>
           </div>
         </div>

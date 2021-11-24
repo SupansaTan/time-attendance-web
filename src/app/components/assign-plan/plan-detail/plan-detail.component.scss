@@ -10,6 +10,10 @@
   background-color: $bg-blue;
 }
 
+.text-blue {
+  color: $bg-blue;
+}
+
 .submit-btn {
   width: fit-content;
   background-color: #70e17b;
@@ -103,6 +107,6 @@ ngx-material-timepicker-toggle {
     width: 100% !important;
   }
   @include media(large-desktop) {
-    width: 70% !important;
+    width: 80% !important;
   }
 }
