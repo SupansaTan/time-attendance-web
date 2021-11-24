@@ -31,6 +31,7 @@ export class PlanDetailComponent implements OnInit {
   emp_plan: PlanShiftModel = new PlanShiftModel()
   emp_select: Array<number> = []  // employees selected by checkbox
   current_shift: Array<PlanShiftModel>
+  active_emp: number = 0
 
   page: any;
   pageSize: any;
@@ -307,6 +308,7 @@ export class PlanDetailComponent implements OnInit {
     let allShifts: Array<string> = []
     let now = this.today.getHours() + ':' + this.today.getMinutes()
     this.planshifts.map((plan) => { allShifts.push(plan.start_time) })
+    this.active_emp = 0
     allShifts.push(now)
 
     allShifts.sort(function(a, b) {
@@ -314,6 +316,12 @@ export class PlanDetailComponent implements OnInit {
     });
     let index = allShifts.indexOf(now)<0? allShifts.length-2: allShifts.indexOf(now)==0? 1: allShifts.indexOf(now)-1
     this.current_shift = this.planshifts.filter((plan) => plan.start_time === allShifts[index])
+
+    this.cardRegisterService.getActiveEmployee(this.departmentId, this.current_shift[0].start_time).subscribe(res => {
+      if(res.length > 0) {
+        this.active_emp = res.length
+      }
+    })
   }
 
   /* select box */
