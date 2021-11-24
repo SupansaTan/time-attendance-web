@@ -4,39 +4,39 @@ import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 /* Department Head select assign shift mode */
 
 Given('I visit on the login page', () => {
-    cy.visit('/auth/login');
+  cy.visit('/auth/login');
   })
   
-  When('I fill in "email" with "7@gmail.com"', () => {
-    cy.get("[type='email']").type('7@gmail.com')
-  })
+When('I fill in "email" with "5@gmail.com"', () => {
+  cy.get("[type='email']").type('5@gmail.com')
+})
   
-  And('I fill in "password" with "0007"', () => {
-    cy.get('[type="password"]').type('0007')
+And('I fill in "password" with "0005"', () => {
+    cy.get('[type="password"]').type('0005')
   }) 
   
-  And('I press "Login"', () => {
-    cy.get('form').submit() 
-  })
+And('I press "Login"', () => {
+  cy.get('form').submit() 
+})
   
-  Then('I should be on the dashboard page', () => {
-    cy.visit('/dashboard')
-  })
+Then('I should be on the dashboard page', () => {
+  cy.visit('/dashboard')
+})
   
-  When('I click Assign Plan', () => {
-    cy.get('.navbar-wrapper').contains('Assign Plan').click() /*get เอามาจาก class tag*/
-  })
+When('I click Assign Plan', () => {
+  cy.get('.navbar-wrapper').contains('Assign Plan').click() /*get เอามาจาก class tag*/
+})
   
-  Then('I should be on the assign plan page', () => {
-    cy.visit('/assign-plan')
-  })  
+Then('I should be on the assign plan page', () => {
+  cy.visit('/assign-plan')
+})  
 
 Then('I should see "Departments"', () => {
     cy.get('.contain-wrapper').contains('Departments')
 })
 
-And('I should see "เชือดไก่ 1" and "ถอนขนไก่ 1"', () => {
-    cy.get('.contain-wrapper').contains("เชือดไก่ 1")
+And('I should see "ถอนขนไก่ 1" and "งานไก่ตกราว 1"', () => {
+    cy.get('.contain-wrapper').contains("งานไก่ตกราว 1")
     cy.contains("ถอนขนไก่ 1")
 })
 
@@ -56,14 +56,12 @@ When('I click on "Shift" Mode', () => {
     cy.get('.assign-wrapper').contains("Shift").click()
 })
 
-And('I select "From" with "11/25/2021"', () => {
-    cy.get('input[id="start"]').type('11/25/2021');
-    
-
+And('I select "From" with "24/11/2021"', () => {
+    cy.get('input[id="start"]').type('24-11-2021');
 })
 
-And('I select "To" with "11/25/2021"', () => {
-    cy.get('input[id="last"]').type('11/25/2021');
+And('I select "To" with "24/11/2021"', () => {
+    cy.get('input[id="last"]').type('24/11/2021');
 })
 
 Then('I can see "Employees" Table', () => {

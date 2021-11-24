@@ -2,48 +2,42 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 
 /* Department Head select both of assign and ot mode */
-<<<<<<< HEAD
+
 
 Given('I visit on the login page', () => {
     cy.visit('/auth/login');
   })
   
-  When('I fill in "email" with "7@gmail.com"', () => {
-    cy.get("[type='email']").type('7@gmail.com')
-  })
+When('I fill in "email" with "5@gmail.com"', () => {
+    cy.get("[type='email']").type('5@gmail.com')
+})
   
-  And('I fill in "password" with "0007"', () => {
-    cy.get('[type="password"]').type('0007')
-  }) 
+And('I fill in "password" with "0005"', () => {
+    cy.get('[type="password"]').type('0005')
+}) 
   
-  And('I press "Login"', () => {
+And('I press "Login"', () => {
     cy.get('form').submit() 
-  })
+})
   
-  Then('I should be on the dashboard page', () => {
+Then('I should be on the dashboard page', () => {
     cy.visit('/dashboard')
-  })
+})
   
-  When('I click Assign Plan', () => {
+When('I click Assign Plan', () => {
     cy.get('.navbar-wrapper').contains('Assign Plan').click() /*get เอามาจาก class tag*/
-  })
-  
-  Then('I should be on the assign plan page', () => {
-    cy.visit('/assign-plan')
-  })
-  
-=======
-Given('I visit on the Assign Plan Page', () => {
+})
+Then('I should be on the assign plan page', () => {
     cy.visit('/assign-plan')
 })
->>>>>>> d10ef94b5ccbd440a2281171868c94612ac8ae91
-
+  
 Then('I should see "Departments"', () => {
     cy.get('.contain-wrapper').contains('Departments')
 })
 
 And('I should see "ถอนขนไก่ 1" and "งานไก่ตกราว 1"', () => {
-    cy.get('.contain-wrapper').contains("ถอนขนไก่ 1", "งานไก่ตกราว 1")
+    cy.get('.contain-wrapper').contains("ถอนขนไก่ 1")
+    cy.contains("งานไก่ตกราว 1")
 })
 
 When('I press "ถอนขนไก่ 1"', () => {
@@ -58,16 +52,17 @@ And('I should see "Assign"', () => {
     cy.get('.assign-wrapper').contains("Assign")
 })
 
-When('I click on "Shift" Mode', () => {
+When('I click on "Shift" and "OT" Mode', () => {
     cy.get('.assign-wrapper').contains("Shift").click()
+    cy.contains("OT").click()
 })
 
-And('I select "From" with "12/09/2564"', () => {
-    cy.get('.assign-wrapper').contains("From","12/09/2564").select("12/09/2564")
+And('I select "From" with "24/11/2021"', () => {
+    cy.get('input[id="last"]').type('24/11/2021');
 })
 
-And('I select "To" with "12/09/2564"', () => {
-    cy.get('.assign-wrapper').contains("To","12/09/2564").select("12/09/2564")
+And('I select "From" with "24/11/2021"', () => {
+    cy.get('input[id="last"]').type('24/11/2021');
 })
 
 Then('I can see "Employees" Table', () => {

@@ -7,12 +7,12 @@ Given('I visit on the login page', () => {
     cy.visit('/auth/login');
   })
   
-  When('I fill in "email" with "7@gmail.com"', () => {
-    cy.get("[type='email']").type('7@gmail.com')
+  When('I fill in "email" with "5@gmail.com"', () => {
+    cy.get("[type='email']").type('5@gmail.com')
   })
   
-  And('I fill in "password" with "0007"', () => {
-    cy.get('[type="password"]').type('0007')
+  And('I fill in "password" with "0005"', () => {
+    cy.get('[type="password"]').type('0005')
   }) 
   
   And('I press "Login"', () => {
@@ -36,9 +36,9 @@ Then('I should see "Departments"', () => {
     cy.get('.contain-wrapper').contains('Departments')
 })
 
-And('I should see "เชือดไก่ 1" and "ถอนขนไก่ 1"', () => {
-    cy.get('.contain-wrapper').contains("เชือดไก่ 1")
-    cy.contains("ถอนขนไก่ 1")
+And('I should see "ถอนขนไก่ 1" and "งานไก่ตกราว 1"', () => {
+    cy.get('.contain-wrapper').contains("ถอนขนไก่ 1")
+    cy.contains("งานไก่ตกราว 1")
 })
 
 When('I press "ถอนขนไก่ 1"', () => {
