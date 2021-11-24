@@ -66,29 +66,31 @@ And('I can see "To"', () => {
 })
 
 Then('I can see "Employees" Table', () => {
-    cy.get('.heading-wrapper).contains("Employee")
+    cy.get('.heading-wrapper').contains("Employee");
 })
 
 And('I click checkbox of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("ดำเนิน เหินเวหา").click()
 })
 
-And('I select "Shift" with "09:00"', () => {
-    cy.get('.assign-wrapper').contains("Shift","09:00").select("09:00")
+And('I can see "Start Shift" with "09:00"', () => {
+    cy.get('.assign-wrapper').contains("Start Shift")
+    cy.contains("09:00")
 })
 
-And('I select "OT" with "2.5"', () => {
-    cy.get('.assign-wrapper').contains("OT","2.5").select("2.5")
+And('I select "OT" with "3"', () => {
+    cy.get('.assign-wrapper').contains("OT")
+    cy.get("[type='number']").type("3")
 })
 
 And('I press "Submit"', () => {
-    cy.get('.assign-wrapper').submit() 
+    cy.get('from').submit() 
 })
 
 Then('I should see "09:00 - 17:00" in "Shift" field of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("Shift")
 })
 
-And('I should see "2.5" in "OT Plan" field of "ดำเนิน เหินเวหา"', () => {
+And('I should see "3" in "OT Plan" field of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("OT Plan")
 })

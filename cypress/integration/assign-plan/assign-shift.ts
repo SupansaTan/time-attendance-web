@@ -72,12 +72,13 @@ And('I click checkbox of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("ดำเนิน เหินเวหา").click()
 })
 
-And('I select "Shift" with "09:00"', () => {
-    cy.get('.assign-wrapper').contains("Shift","09:00").select("09:00")
+And('I can see "Start Shift" with "09:00"', () => {
+  cy.get('.assign-wrapper').contains("Start Shift")
+  cy.contains("09:00")
 })
 
 And('I press "Submit"', () => {
-    cy.get('.assign-wrapper').submit() 
+    cy.get('from').submit() 
 })
 
 Then('I should see "09:00 - 17:00" in "Shift" field of "ดำเนิน เหินเวหา"', () => {

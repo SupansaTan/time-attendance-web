@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
+import { first } from 'cypress/types/lodash';
 
 /* Department Head select assign ot mode */
 
@@ -69,18 +70,19 @@ Then('I can see "Employees" Table', () => {
     cy.get('.heading-wrapper').contains("Employee")
 })
 
-And('I click checkbox of "ดำเนิน เหินเวหา"', () => {
-    cy.get('.table-responsive').contains("ดำเนิน เหินเวหา").click()
+And('I see checkbox of "ดำเนิน เหินเวหา"', () => {
+  cy.get('[type="checkbox"]').first().check('')
 })
 
-And('I select "OT" with "2.5"', () => {
-    cy.get('.assign-wrapper').contains("OT","2.5").select("2.5")
+And('I select "OT" with "3"', () => {
+  cy.get('.assign-wrapper').contains("OT")
+  cy.get("[type='number']").type("3")
 })
 
 And('I press "Submit"', () => {
-    cy.get('.assign-wrapper').submit() 
+    cy.get('from').submit() 
 })
 
-Then('I should see "2.5" in "OT Plan" field of "ดำเนิน เหินเวหา"', () => {
+Then('I should see "3" in "OT Plan" field of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("OT Plan")
 })
