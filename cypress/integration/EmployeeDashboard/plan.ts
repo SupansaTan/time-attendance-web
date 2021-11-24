@@ -23,7 +23,7 @@ Then('I should be on the dashboard page', () => {
 })
 
 And('I should see "Shift", "OT" and "Break Time"', () => {
-  cy.get('.plan-wrapper').contains('Shift')
-  cy.get('.plan-wrapper').contains('OT')
-  cy.get('.plan-wrapper').contains('Break Time')
+  cy.get('.d-inline').contains('Shift')
+  cy.contains('OT')
+  cy.contains('Break Time')
 })

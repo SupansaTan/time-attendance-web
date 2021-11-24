@@ -23,13 +23,15 @@ Then('I should be on the dashboard page', () => {
 })
 
 And('I should see "Employee Informations"', () => {
-  cy.get('.information-wrapper').contains('Employee Informations')
+  cy.get('.card.information-wrapper').contains('Employee Informations')
 })
 
 And('I should see "Dapartment" with "เชือดไก่ 1"', () => {
-  cy.get('.information-wrapper').contains('Dapartment', 'เชือดไก่ 1')
+  cy.get('.card.information-wrapper').contains('Dapartment')
+  cy.contains('เชือดไก่ 1')
 })
 
 And('I should see "Employee Type" with "Monthly"', () => {
-  cy.get('.information-wrapper').contains('Employee Type', 'daily')
+  cy.get('.card.information-wrapper').contains('Employee Type')
+  cy.contains('daily')
 })
