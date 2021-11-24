@@ -74,6 +74,8 @@ export class PlanDetailComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show()
     this.today = new Date();
+    const offset = this.today.getTimezoneOffset()
+    this.today = new Date(this.today.getTime() - (offset*60*1000))
     this.date = this.localeDateFormat(this.today)
 
     this.departmentId = Number(location.pathname.split("/")[2])
@@ -98,8 +100,8 @@ export class PlanDetailComponent implements OnInit {
     this.minDate = this.today.toISOString().split("T")[0]
     this.minEndDate = this.today.toISOString().split("T")[0]
     this.assign_form = new FormGroup({
-      start_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
-      end_date: new FormControl((new Date()).toISOString().substring(0,10),[Validators.required]),
+      start_date: new FormControl(this.today.toISOString().split("T")[0],[Validators.required]),
+      end_date: new FormControl(this.today.toISOString().split("T")[0],[Validators.required]),
       shift: new FormControl(''),
       ot: new FormControl('0',[Validators.required])
     });
