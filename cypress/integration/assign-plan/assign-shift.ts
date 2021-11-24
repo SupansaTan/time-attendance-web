@@ -31,11 +31,11 @@ When('I click on "Shift" Mode', () => {
 })
 
 And('I select "From" with "12/09/2564"', () => {
-    cy.get('.assign-wrapper').contains("From","12/09/2564").select()
+    cy.get('.assign-wrapper').contains("From","12/09/2564").select("12/09/2564")
 })
 
 And('I select "To" with "12/09/2564"', () => {
-    cy.get('.assign-wrapper').contains("To","12/09/2564").select()
+    cy.get('.assign-wrapper').contains("To","12/09/2564").select("12/09/2564")
 })
 
 Then('I can see "Employees" Table', () => {
@@ -47,7 +47,7 @@ And('I click checkbox of "ดำเนิน เหินเวหา"', () => {
 })
 
 And('I select "Shift" with "09:00"', () => {
-    cy.get('.assign-wrapper').contains("Shift","09:00").select()
+    cy.get('.assign-wrapper').contains("Shift","09:00").select("09:00")
 })
 
 And('I press "Submit"', () => {
