@@ -14,4 +14,6 @@ export class EmployeeModel {
   end_time?: string | undefined;
   overtime?: number | undefined;
   start_work?: boolean
+  in?: string | undefined;
+  out?: string | undefined;
 }

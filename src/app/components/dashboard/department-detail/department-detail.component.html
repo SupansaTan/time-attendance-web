@@ -69,11 +69,11 @@
           </tr>
         </thead>
         <tbody *ngIf="employees.length > 0">
-          <tr  *ngFor="let emp of employees | slice: (page-1) * pageSize : page * pageSize" [class]="findTimeRecord(emp.id).status? 'green':'grey'">
+          <tr  *ngFor="let emp of employees | slice: (page-1) * pageSize : page * pageSize" [class]="emp.in? 'green':'grey'">
             <th scope="row">{{ employees.indexOf(emp)+1 }}</th>
             <th class="text-center">{{ emp.first_name + ' ' + emp.last_name }}</th>
-            <th class="text-center">{{ in_record.status? in_record.time.slice(0,5) : '-' }}</th>
-            <th class="text-center">{{ out_record.status? out_record.time.slice(0,5) : '-' }}</th>
+            <th class="text-center">{{ emp.in? emp.in.slice(0,5) : '-' }}</th>
+            <th class="text-center">{{ emp.out? emp.out.slice(0,5) : '-' }}</th>
           </tr>
         </tbody>
         <tbody *ngIf="employees.length === 0">

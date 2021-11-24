@@ -23,5 +23,4 @@ export class CardRegisterService {
     const url = `${environment.apiTimeAttendanceUrl}/api/timerecord/department/` + id + '/' + shift
     return this.http.get<Array<TimeRecordModel>>(url)
   }
-
 }
