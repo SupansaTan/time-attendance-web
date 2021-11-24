@@ -55,5 +55,5 @@ And('I press "Submit"', () => {
 })
 
 Then('I should see "2.5" in "OT Plan" field of "ดำเนิน เหินเวหา"', () => {
-    cy.get('.table-responsive').contains("OT")
+    cy.get('.table-responsive').contains("OT Plan")
 })
