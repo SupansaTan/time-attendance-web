@@ -57,16 +57,16 @@ When('I click on "OT" Mode', () => {
     cy.get('.assign-wrapper').contains("OT").click()
 })
 
-And('I select "From" with "12/09/2564"', () => {
-    cy.get('.assign-wrapper').contains("From","12/09/2564").select("12/09/2564")
+And('I can see "From"', () => {
+  cy.get('.from-wrapper').contains('From');
 })
 
-And('I select "To" with "12/09/2564"', () => {
-    cy.get('.assign-wrapper').contains("To","12/09/2564").select("12/09/2564")
+And('I can see "To"', () => {
+  cy.get('.from-wrapper').contains('To');
 })
 
 Then('I can see "Employees" Table', () => {
-    cy.get('.table-responsive').contains("Employee")
+    cy.get('.heading-wrapper').contains("Employee")
 })
 
 And('I click checkbox of "ดำเนิน เหินเวหา"', () => {

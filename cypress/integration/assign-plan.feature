@@ -26,8 +26,8 @@ Feature: Department Head Assign Plan
     Then I should be on the Assign Plan Page
     And I should see "Assign"
     When I click on "Shift" Mode
-    And I select "From" with "24/11/2021"
-    And I select "To" with "24/11/2021"
+    And I can see "From" 
+    And I can see "To" 
     Then I can see "Employees" Table
     And I click checkbox of "ดำเนิน เหินเวหา"
     And I select "Shift" with "09:00"
@@ -48,8 +48,8 @@ Feature: Department Head Assign Plan
     Then I should be on the Assign Plan Page
     And I should see "Assign"
     When I click on "OT" Mode
-    And I select "From" with "24/11/2021"
-    And I select "To" with "24/11/2021"
+    And I can see "From" 
+    And I can see "To" 
     Then I can see "Employees" Table
     And I click checkbox of "ดำเนิน เหินเวหา"
     And I select "OT" with "2.5"
@@ -70,8 +70,8 @@ Feature: Department Head Assign Plan
     Then I should be on the Assign Plan Page
     And I should see "Assign"
     When I click on "Shift" and "OT" Mode
-    And I select "From" with "24/11/2021"
-    And I select "To" with "24/11/2021"
+    And I can see "From" 
+    And I can see "To" 
     Then I can see "Employees" Table
     And I click checkbox of  "ดำเนิน เหินเวหา"
     And I select "Shift" with "09:00"

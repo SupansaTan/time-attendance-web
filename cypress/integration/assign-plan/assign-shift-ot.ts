@@ -57,16 +57,16 @@ When('I click on "Shift" and "OT" Mode', () => {
     cy.contains("OT").click()
 })
 
-And('I select "From" with "24/11/2021"', () => {
-    cy.get('input[id="last"]').type('24/11/2021');
+And('I can see "From"', () => {
+    cy.get('.from-wrapper').contains('From');
 })
 
-And('I select "From" with "24/11/2021"', () => {
-    cy.get('input[id="last"]').type('24/11/2021');
+And('I can see "To"', () => {
+    cy.get('.from-wrapper').contains('To');
 })
 
 Then('I can see "Employees" Table', () => {
-    cy.get('.table-responsive').contains("Employee")
+    cy.get('.heading-wrapper).contains("Employee")
 })
 
 And('I click checkbox of "ดำเนิน เหินเวหา"', () => {
