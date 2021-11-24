@@ -112,7 +112,7 @@ export class DashboardEmployeeComponent implements OnInit {
                 status: "In",
               }
     var dep_data = {
-                    "dep_code": this.department.dep_code,
+                    "id": this.department.id,
                     "active_employee": this.department.active_employee + 1,
                     "total_employee": this.department.total_employee,
                     }
@@ -132,7 +132,7 @@ export class DashboardEmployeeComponent implements OnInit {
                 "status": "Out",
               }
     var dep_data = {
-                    "dep_code": this.department.dep_code,
+                    "id": this.department.id,
                     "active_employee": this.department.active_employee - 1,
                     "total_employee": this.department.total_employee,
                   }

@@ -4,39 +4,39 @@ import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 /* Department Head select assign shift mode */
 
 Given('I visit on the login page', () => {
-    cy.visit('/auth/login');
+  cy.visit('/auth/login');
   })
   
-  When('I fill in "email" with "7@gmail.com"', () => {
-    cy.get("[type='email']").type('7@gmail.com')
-  })
+When('I fill in "email" with "5@gmail.com"', () => {
+  cy.get("[type='email']").type('5@gmail.com')
+})
   
-  And('I fill in "password" with "0007"', () => {
-    cy.get('[type="password"]').type('0007')
+And('I fill in "password" with "0005"', () => {
+    cy.get('[type="password"]').type('0005')
   }) 
   
-  And('I press "Login"', () => {
-    cy.get('form').submit() 
-  })
+And('I press "Login"', () => {
+  cy.get('form').submit() 
+})
   
-  Then('I should be on the dashboard page', () => {
-    cy.visit('/dashboard')
-  })
+Then('I should be on the dashboard page', () => {
+  cy.visit('/dashboard')
+})
   
-  When('I click Assign Plan', () => {
-    cy.get('.navbar-wrapper').contains('Assign Plan').click() /*get เอามาจาก class tag*/
-  })
+When('I click Assign Plan', () => {
+  cy.get('.navbar-wrapper').contains('Assign Plan').click() /*get เอามาจาก class tag*/
+})
   
-  Then('I should be on the assign plan page', () => {
-    cy.visit('/assign-plan')
-  })  
+Then('I should be on the assign plan page', () => {
+  cy.visit('/assign-plan')
+})  
 
 Then('I should see "Departments"', () => {
     cy.get('.contain-wrapper').contains('Departments')
 })
 
-And('I should see "เชือดไก่ 1" and "ถอนขนไก่ 1"', () => {
-    cy.get('.contain-wrapper').contains("เชือดไก่ 1")
+And('I should see "ถอนขนไก่ 1" and "งานไก่ตกราว 1"', () => {
+    cy.get('.contain-wrapper').contains("งานไก่ตกราว 1")
     cy.contains("ถอนขนไก่ 1")
 })
 
@@ -56,32 +56,27 @@ When('I click on "Shift" Mode', () => {
     cy.get('.assign-wrapper').contains("Shift").click()
 })
 
-And('I select "From" with "11/25/2021"', () => {
-    cy.get('input[id="start"]').type('11/25/2021');
-    
-
+And('I can see "From"', () => {
+    cy.get('.from-wrapper').contains('From');
 })
 
-And('I select "To" with "11/25/2021"', () => {
-    cy.get('input[id="last"]').type('11/25/2021');
+And('I can see "To"', () => {
+    cy.get('.from-wrapper').contains('To');
 })
 
 Then('I can see "Employees" Table', () => {
-    cy.get('.table-responsive').contains("Employee")
+    cy.get('.heading-wrapper').contains("Employee")
 })
 
-And('I click checkbox of "ดำเนิน เหินเวหา"', () => {
-    cy.get('.table-responsive').contains("ดำเนิน เหินเวหา").click()
+And('I can see checkbox of  "ดำเนิน เหินเวหา"', () => {
+    cy.get('.table-responsive').contains("ดำเนิน เหินเวหา")
 })
 
-And('I select "Shift" with "09:00"', () => {
-    cy.get('.assign-wrapper').contains("Shift","09:00").select("09:00")
+And('I can see "Start Shift" with "09:00"', () => {
+  cy.get('.assign-wrapper').contains("Start Shift")
 })
 
-And('I press "Submit"', () => {
-    cy.get('.assign-wrapper').submit() 
-})
 
-Then('I should see "09:00 - 17:00" in "Shift" field of "ดำเนิน เหินเวหา"', () => {
+Then('I should see "01:00 - 10:00" in "Shift" field of "ดำเนิน เหินเวหา"', () => {
     cy.get('.table-responsive').contains("Shift")
 })

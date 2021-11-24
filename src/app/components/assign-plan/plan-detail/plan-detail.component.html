@@ -25,14 +25,14 @@
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <path *ngIf="department.active_employee > 0" class="circle"
-                  [attr.stroke-dasharray]="getPercentage(department.active_employee, (current_shift? current_shift.length:0)) + ', 100'"
+                <path *ngIf="active_emp > 0" class="circle"
+                  [attr.stroke-dasharray]="getPercentage(active_emp, (current_shift? current_shift.length:0)) + ', 100'"
                   d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="19.35" class="percentage">{{ (current_shift? getPercentage(department.active_employee, current_shift.length):0) + '%' }}</text>
-                <text [attr.x]="(current_shift? current_shift.length:0)>10? 11:12" y="25.35" class="total-employee">{{ department.active_employee + '/' + (current_shift? current_shift.length:0) + ' คน' }}</text>
+                <text x="18" y="19.35" class="percentage">{{ (current_shift? getPercentage(active_emp, current_shift.length):0) + '%' }}</text>
+                <text [attr.x]="(current_shift? current_shift.length:0)>10? 11:12" y="25.35" class="total-employee">{{ active_emp + '/' + (current_shift? current_shift.length:0) + ' คน' }}</text>
               </svg>
             </div>
           </div>
@@ -68,7 +68,7 @@
             </div>
           </div>
 
-          <form [formGroup]="assign_form" (ngSubmit)="addPlanshift()" class="mx-2 h-100 mt-3">
+          <form [formGroup]="assign_form" (ngSubmit)="addPlanshift()" class="mx-2 h-100 mt-3 from-wrapper">
             <!-- select date -->
             <div class="row">
               <div class="col-12 col-md-6 col-lg-12 col-xl-6 row">
