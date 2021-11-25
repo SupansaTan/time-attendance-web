@@ -46,7 +46,10 @@
             <i class="fas fa-clock"></i>
             Shift Plan
           </p>
-          <p class="px-3 rounded-25 shadow bg-white col-auto mb-0">{{ (today_plan.length > 0)? (current_shift[0].start_time.slice(0,5) + ' - ' + current_shift[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
+          <ng-select *ngIf="shiftSelect" [(ngModel)]="shiftSelect" [searchable]=false [clearable]=false class="pb-0 rounded-3 text-white bg-blue px-3 date-select col-auto" (ngModelChange)="optionChange()">
+            <ng-option *ngFor="let item of shift_option" [value]="item.start">{{ item.val }}</ng-option>
+          </ng-select>
+          <p *ngIf="!shiftSelect" class="px-3 rounded-25 shadow bg-white col-auto mb-0">{{ 'No Plan Today' }}</p>
         </div>
       </div>
 
