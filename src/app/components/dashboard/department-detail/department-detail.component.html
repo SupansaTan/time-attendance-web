@@ -46,7 +46,10 @@
             <i class="fas fa-clock"></i>
             Shift Plan
           </p>
-          <p class="px-3 rounded-25 shadow bg-white col-auto mb-0">{{ (today_plan.length > 0)? (current_shift[0].start_time.slice(0,5) + ' - ' + current_shift[0].end_time.slice(0,5)) : 'No Plan Today' }}</p>
+          <ng-select *ngIf="shiftSelect" [(ngModel)]="shiftSelect" [searchable]=false [clearable]=false class="pb-0 rounded-3 text-white bg-blue px-3 date-select col-auto" (ngModelChange)="optionChange()">
+            <ng-option *ngFor="let item of shift_option" [value]="item.start">{{ item.val }}</ng-option>
+          </ng-select>
+          <p *ngIf="!shiftSelect" class="px-3 rounded-25 shadow bg-white col-auto mb-0">{{ 'No Plan Today' }}</p>
         </div>
       </div>
 
@@ -63,7 +66,7 @@
         <thead class="text-white">
           <tr>
             <th scope="col">#</th>
-            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center" style="min-width:170px">Name</th>
             <th scope="col" class="text-center">Start Time</th>
             <th scope="col" class="text-center">End Time</th>
           </tr>
@@ -86,14 +89,14 @@
 
     <!-- table option -->
     <div class="row my-2 mx-4 align-items-center">
-      <ng-select *ngIf="today_plan.length > 0" [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-1 rounded-50 pb-0"
+      <ng-select *ngIf="employees.length > 0" [items]="table_option" bindLabel="value" bindValue="value" class="custom d-flex justify-content-start align-items-center col-3 col-md-2 col-lg-1 rounded-50 pb-0"
         name="pageSize" [(ngModel)]="pageSize" [searchable]="false" [clearable]="false">
       </ng-select>
       <p class="d-flex align-items-center col-auto m-0" [ngClass]="{ 'px-0': (today_plan.length === 0)}">
-        {{ 'Showing '+ (today_plan.length>0? pageSize*(page-1)+1 : 0) +' to '+ (pageSize*page>today_plan.length? today_plan.length:pageSize*page) +' of '+ today_plan.length +' results'}}
+        {{ 'Showing '+ (employees.length>0? pageSize*(page-1)+1 : 0) +' to '+ (pageSize*page>employees.length? employees.length:pageSize*page) +' of '+ employees.length +' results'}}
       </p>
-      <ngb-pagination *ngIf="today_plan.length > 0" class="d-flex justify-content-end col align-items-center" [pageSize]="pageSize" [(page)]="page"
-        [collectionSize]="today_plan.length">
+      <ngb-pagination *ngIf="employees.length > 0" class="d-flex justify-content-end col-12 col-lg align-items-center" [pageSize]="pageSize" [(page)]="page"
+        [collectionSize]="employees.length">
       </ngb-pagination>
     </div>
   </div>

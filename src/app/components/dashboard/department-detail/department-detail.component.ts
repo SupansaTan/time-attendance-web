@@ -20,6 +20,7 @@ export class DepartmentDetailComponent implements OnInit {
   page: any;
   pageSize: any;
   table_option: NgOption[]
+  shift_option: Array<any>
 
   today_plan: Array<PlanShiftModel> = new Array<PlanShiftModel>()
   manager_info: Array<EmployeeModel> = new Array<EmployeeModel>()
@@ -28,6 +29,8 @@ export class DepartmentDetailComponent implements OnInit {
   current_shift: Array<PlanShiftModel>
   active_emp: number = 0
   intervalGetData: any
+  changeSelect: boolean = false
+  shiftSelect: string
 
   constructor(
     private dashboardService: DashboardService,
@@ -73,7 +76,8 @@ export class DepartmentDetailComponent implements OnInit {
       let plan = response
       if (plan.length > 0){
         this.today_plan = plan
-        this.findNowShift()
+        this.initShiftOptions()
+        this.changeSelect? this.updateCurrentShift() : this.findNowShift()
       }
       else {
         this.spinner.hide()
@@ -91,6 +95,20 @@ export class DepartmentDetailComponent implements OnInit {
     ];
   }
 
+  initShiftOptions() {
+    this.shift_option = []
+    this.today_plan.forEach((plan) => {
+      let planExist = this.shift_option.filter(s => s.start == plan.start_time)
+      if(planExist.length == 0) {
+        this.shift_option.push({
+          start: plan.start_time,
+          end: plan.end_time,
+          val: plan.start_time.slice(0,5) + ' - ' + plan.end_time.slice(0,5)
+        })
+      }
+    })
+  }
+
   getPercentage(actual_emp: number, total_emp: number) {
     return this.dashboardService.getPercentage(actual_emp, total_emp)
   }
@@ -99,7 +117,6 @@ export class DepartmentDetailComponent implements OnInit {
     let allShifts: Array<string> = []
     let today = new Date()
     let now = today.getHours() + ':' + today.getMinutes()
-    this.employees = []
 
     this.today_plan.map((plan) => { allShifts.push(plan.start_time) })
     allShifts.push(now)
@@ -108,15 +125,30 @@ export class DepartmentDetailComponent implements OnInit {
     });
 
     let index = allShifts.indexOf(now)<0? allShifts.length-2: allShifts.indexOf(now)==0? 1: allShifts.indexOf(now)-1
-    this.current_shift = this.today_plan.filter((plan) => plan.start_time === allShifts[index])
+    this.shiftSelect = this.shift_option.filter(s => s.start == allShifts[index])[0].start
+    this.updateCurrentShift()
+  }
+
+  updateCurrentShift() {
+    this.employees = []
+    this.current_shift = this.today_plan.filter((plan) => plan.start_time === this.shiftSelect)
     this.current_shift.forEach((plan) => { this.employees.push(plan.employee[0]) })
     this.findTimeRecord()
-    this.cardRegisterService.getActiveEmployee(this.departmentId, this.current_shift[0].start_time).subscribe(res => {
-      if(res.length > 0) {
+
+    if(this.current_shift.length > 0) {
+      this.cardRegisterService.getActiveEmployee(this.departmentId, this.shiftSelect).subscribe(res => {
         this.active_emp = res.length
-      }
+        this.spinner.hide()
+      })
+    }
+    else {
       this.spinner.hide()
-    })
+    }
+  }
+
+  optionChange() {
+    this.changeSelect = true
+    this.updateCurrentShift()
   }
 
   findTimeRecord() {

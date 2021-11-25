@@ -24,6 +24,19 @@
   }
 }
 
+.date-select {
+  &.ng-select ::ng-deep {
+    .ng-arrow-wrapper .ng-arrow {
+      margin-left: 10px;
+      color: white;
+    }
+  }
+
+  i {
+    left: 20px;
+  }
+}
+
 .bg-blue {
   background-color: $bg-blue;
 }
